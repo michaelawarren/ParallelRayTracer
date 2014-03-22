@@ -21,5 +21,15 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>mpi</groupId>
+      <artifactId>mpi</artifactId>
+      <version>1</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j-local</artifactId>
+      <version>1</version>
+    </dependency>
   </dependencies>
 </project>
