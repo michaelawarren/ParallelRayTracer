@@ -10,8 +10,8 @@ public class PlayGround
    {
       try
       {
-         Runtime.getRuntime().exec("ssh AUS213L24; wall hello; exit");
-//         Runtime.getRuntime().exec("wall hello;");
+         Runtime.getRuntime().exec("ssh AUS213L24");
+         Runtime.getRuntime().exec("wall hello;");
       }
       catch (Exception e)
       {
