@@ -4,17 +4,13 @@ package com.playground.playground;
  * Hello world!
  *
  */
-public class App
+public class PlayGround
 {
    public static void main(String[] args)
    {
       try
       {
-         while (true)
-         {
-            Runtime.getRuntime().exec("ssh AUS213L24");
-            Runtime.getRuntime().exec("wall 'hello world'");
-         }
+         Runtime.getRuntime().exec("ssh AUS213L24; wall hello;");
       }
       catch (Exception e)
       {
