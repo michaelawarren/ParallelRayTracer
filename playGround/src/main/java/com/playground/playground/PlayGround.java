@@ -12,10 +12,14 @@ public class PlayGround
       {
          final Process exec
              = Runtime.getRuntime().exec("ssh AUS213L24 \"wall hello\"");
+         Runtime.getRuntime().exec("ssh", new String[]
+         {
+            "AUS213L24", "wall hello"
+         });
          if (exec.waitFor() != 0)
          {
-            byte [] bytes = new byte[10];
-            exec.getInputStream().read(bytes);
+            byte[] bytes = new byte[255];
+            exec.getErrorStream().read(bytes, 0, 255);
             String string = new String(bytes);
             System.out.print(string);
          }
