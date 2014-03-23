@@ -8,9 +8,7 @@ public class PlayGround
 {
    public static void main(String[] args)
    {
-      
       sshCall();
-
    }
 
    private static void sshCall()
@@ -18,8 +16,10 @@ public class PlayGround
       long start = System.nanoTime();
       try
       {
-         final Process exec
-             = Runtime.getRuntime().exec(new String[]{"ssh", "-p215", "AUS213L24", "\"\"wall hello\"\""});
+         final Process exec = Runtime.getRuntime().exec(new String[]
+         {
+            "ssh", "-p215", "AUS213L24", "\"\"wall hello\"\""
+         });
          if (exec.waitFor() != 0)
          {
             byte[] bytes = new byte[255];
