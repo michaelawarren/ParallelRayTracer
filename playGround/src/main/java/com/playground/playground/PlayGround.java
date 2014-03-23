@@ -14,7 +14,7 @@ public class PlayGround
       long start = System.nanoTime();
       try
       {
-         ProcessBuilder processBuilder = new ProcessBuilder("ssh",  "-p215", "AUS213L24", "\"wall hello\"");
+         ProcessBuilder processBuilder = new ProcessBuilder("ssh",  "-p215", "AUS213L24", "\"\"wall hello\"\"");
          final Process process = processBuilder.start();
          if (process.waitFor() != 0)
          {
@@ -33,7 +33,7 @@ public class PlayGround
          System.out.println(ex.toString());
       }
       long end = System.nanoTime();
-      System.out.println(end - start);
+      System.out.println((end - start) / 1_000_000);
    }
 
    private static void sshCall()
@@ -58,6 +58,6 @@ public class PlayGround
          System.out.println(e.toString());
       }
       long end = System.nanoTime();
-      System.out.println(end - start);
+      System.out.println((end - start) / 1_000_000);
    }
 }
