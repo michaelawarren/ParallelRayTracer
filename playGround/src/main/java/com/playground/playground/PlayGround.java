@@ -8,11 +8,14 @@ public class PlayGround
 {
    public static void main(String[] args)
    {
+      
       sshCall();
+
    }
 
    private static void sshCall()
    {
+      long start = System.nanoTime();
       try
       {
          final Process exec
@@ -29,5 +32,7 @@ public class PlayGround
       {
          System.out.println(e.toString());
       }
+      long end = System.nanoTime();
+      System.out.println(end - start);
    }
 }
