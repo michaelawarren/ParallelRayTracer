@@ -6,12 +6,15 @@ public class PlayGround
 {
    public static void main(String[] args)
    {
+      System.out.println("Process: ");
       processSsh();
+      System.out.println("RunTime: ");
+      sshCall();
    }
 
    private static void processSsh()
    {
-      long start = System.nanoTime();
+      long start = System.currentTimeMillis();
       try
       {
          ProcessBuilder processBuilder = new ProcessBuilder("ssh",  "-p215", "AUS213L24", "\"\"wall hello\"\"");
@@ -32,13 +35,13 @@ public class PlayGround
       {
          System.out.println(ex.toString());
       }
-      long end = System.nanoTime();
+      long end = System.currentTimeMillis();
       System.out.println((end - start) / 1_000_000);
    }
 
    private static void sshCall()
    {
-      long start = System.nanoTime();
+      long start = System.currentTimeMillis();
       try
       {
          final Process exec = Runtime.getRuntime().exec(new String[]
@@ -57,7 +60,7 @@ public class PlayGround
       {
          System.out.println(e.toString());
       }
-      long end = System.nanoTime();
+      long end = System.currentTimeMillis();
       System.out.println((end - start) / 1_000_000);
    }
 }
