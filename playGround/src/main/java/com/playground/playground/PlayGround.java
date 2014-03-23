@@ -1,4 +1,4 @@
-//package com.playground.playground;
+package com.playground.playground;
 
 import java.io.IOException;
 
@@ -6,13 +6,27 @@ public class PlayGround
 {
    public static void main(String[] args)
    {
+      long start = System.currentTimeMillis();
+      System.out.println("Println: ");
+      long end = System.currentTimeMillis();
+      System.out.println((end - start));
+      
       System.out.println("Process: ");
-      processSsh();
+      processSshOverHead();
       System.out.println("RunTime: ");
-      sshCall();
+      runTimeSshOverhead();
+      System.out.println("Sockets: ");
+      try
+      {
+         SocketsOverHead.timeOverhead();
+      }
+      catch(UnsupportedOperationException ex)
+      {
+         // intentially left open
+      }
    }
 
-   private static void processSsh()
+   private static void processSshOverHead()
    {
       long start = System.currentTimeMillis();
       try
@@ -36,10 +50,10 @@ public class PlayGround
          System.out.println(ex.toString());
       }
       long end = System.currentTimeMillis();
-      System.out.println((end - start) / 1_000_000);
+      System.out.println((end - start));
    }
 
-   private static void sshCall()
+   private static void runTimeSshOverhead()
    {
       long start = System.currentTimeMillis();
       try
@@ -61,6 +75,6 @@ public class PlayGround
          System.out.println(e.toString());
       }
       long end = System.currentTimeMillis();
-      System.out.println((end - start) / 1_000_000);
+      System.out.println((end - start));
    }
 }
