@@ -11,10 +11,10 @@ public class PlayGround
       try
       {
          final Process exec
-             = Runtime.getRuntime().exec("ssh AUS213L24 \"wall hello\"");
+             = Runtime.getRuntime().exec("ssh -p215 AUS213L24 \"wall hello\"");
          Runtime.getRuntime().exec("ssh", new String[]
          {
-            "AUS213L24", "wall hello"
+            "-p215" ,"AUS213L24", "wall hello"
          });
          if (exec.waitFor() != 0)
          {
