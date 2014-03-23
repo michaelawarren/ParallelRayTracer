@@ -8,14 +8,15 @@ public class PlayGround
 {
    public static void main(String[] args)
    {
+      sshCall();
+   }
+
+   private static void sshCall()
+   {
       try
       {
          final Process exec
-             = Runtime.getRuntime().exec("ssh -p215 AUS213L24 \"wall hello\"");
-         Runtime.getRuntime().exec("ssh", new String[]
-         {
-            "-p215" ,"AUS213L24", "wall hello"
-         });
+             = Runtime.getRuntime().exec(new String[]{"ssh", "-p215", "AUS213L24", "\"\"wall hello\"\""});
          if (exec.waitFor() != 0)
          {
             byte[] bytes = new byte[255];
