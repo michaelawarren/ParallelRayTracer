@@ -10,20 +10,13 @@ public class PlayGround
       System.out.println("Println: ");
       long end = System.currentTimeMillis();
       System.out.println((end - start));
-      
+
       System.out.println("Process: ");
-      processSshOverHead();
+      //processSshOverHead();
       System.out.println("RunTime: ");
-      runTimeSshOverhead();
+      //runTimeSshOverhead();
       System.out.println("Sockets: ");
-      try
-      {
-         SocketsOverHead.timeOverhead();
-      }
-      catch(UnsupportedOperationException ex)
-      {
-         // intentially left open
-      }
+      SocketsOverHead.timeOverhead();
    }
 
    private static void processSshOverHead()
@@ -31,7 +24,8 @@ public class PlayGround
       long start = System.currentTimeMillis();
       try
       {
-         ProcessBuilder processBuilder = new ProcessBuilder("ssh",  "-p215", "AUS213L24", "\"\"wall hello\"\"");
+         ProcessBuilder processBuilder = new ProcessBuilder("ssh", "-p215",
+             "AUS213L24", "\"\"wall hello\"\"");
          final Process process = processBuilder.start();
          if (process.waitFor() != 0)
          {
