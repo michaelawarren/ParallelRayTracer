@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>60</x>
+      <y>30</y>
+      <w>130</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>Master
+--
+-Scene
+-Sender
+-Receiver
+-Acceptor
+-Image
+-Workers
+--
++Start
+-StartWorkers*
+-LoadScene
+-BuildImage
+-StartSending*
+-StartRecieve*
+-KillWorkers</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>260</x>
+      <y>210</y>
+      <w>150</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Note:Do I want to 
+*Send small batches*
+or divide work 'evenly'
+upfront.
+bg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>160</x>
+      <y>200</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;100;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>60</x>
+      <y>310</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Job
+--
+-Pixels
+-Scene?
+-numThreads?
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>200</x>
+      <y>310</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Note: Send the 
+scene each time or
+do i initialize it once?
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>130</x>
+      <y>310</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;70;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>460</x>
+      <y>20</y>
+      <w>120</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Worker
+--
+-Scene
+--
+-ReciveMessage
+-ProcessJob
+-SendResponse</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>350</x>
+      <y>310</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Note: Does the
+Worker or the Master
+work more like a web
+server?
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
