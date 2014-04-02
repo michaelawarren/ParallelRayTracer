@@ -1,13 +1,10 @@
 package com.personal.parallelraytracer;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class ParallelRayTracer 
 {
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
+        
     }
 }
