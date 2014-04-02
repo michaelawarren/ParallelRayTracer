@@ -4,8 +4,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>60</x>
-      <y>30</y>
+      <x>20</x>
+      <y>40</y>
       <w>130</w>
       <h>260</h>
     </coordinates>
@@ -30,15 +30,26 @@
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>260</x>
-      <y>210</y>
-      <w>150</w>
-      <h>90</h>
+      <x>200</x>
+      <y>190</y>
+      <w>240</w>
+      <h>270</h>
     </coordinates>
-    <panel_attributes>Note:Do I want to 
-*Send small batches*
-or divide work 'evenly'
-upfront.
+    <panel_attributes>*Send small batches*
+This means that a batch that takes
+less time will allow the worker to
+work on more batches while other
+workers work on longer batches.
+*How many pixels in a batch*
+This may take a little bit of trial and
+error. If a send goes to one
+processor than 1000. But a worker may
+just be one computer so 
+1000*numProcessors? We want to give
+so that overhead has as small impact
+on time as possible. its possible we
+may want to send 10 per processor
+on a worker.
 bg=blue
 </panel_attributes>
     <additional_attributes/>
@@ -46,66 +57,40 @@ bg=blue
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>160</x>
-      <y>200</y>
-      <w>120</w>
+      <x>120</x>
+      <y>210</y>
+      <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;100;30</additional_attributes>
+    <additional_attributes>30;30;80;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>60</x>
-      <y>310</y>
+      <x>290</x>
+      <y>40</y>
       <w>100</w>
-      <h>60</h>
+      <h>50</h>
     </coordinates>
     <panel_attributes>Job
 --
 -Pixels
--Scene?
--numThreads?
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Note</type>
-    <coordinates>
-      <x>200</x>
-      <y>310</y>
-      <w>140</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>Note: Send the 
-scene each time or
-do i initialize it once?
-bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>130</x>
-      <y>310</y>
-      <w>90</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;70;30</additional_attributes>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>460</x>
-      <y>20</y>
+      <x>160</x>
+      <y>40</y>
       <w>120</w>
-      <h>100</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Worker
 --
 -Scene
+-ThreadPool
 --
 -ReciveMessage
 -ProcessJob
@@ -115,9 +100,9 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>350</x>
-      <y>310</y>
-      <w>140</w>
+      <x>290</x>
+      <y>100</y>
+      <w>150</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>Note: Does the
@@ -125,6 +110,277 @@ Worker or the Master
 work more like a web
 server?
 bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>710</x>
+      <y>200</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GeometricObject
+--
+-visible
+-reflective
+-position
+-material/color
+--
++hit
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>610</x>
+      <y>390</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Sphere</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>720</x>
+      <y>390</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Box</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>830</x>
+      <y>390</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Plane</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>630</x>
+      <y>290</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+</panel_attributes>
+    <additional_attributes>140;30;140;70;30;70;30;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>740</x>
+      <y>290</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>740</x>
+      <y>290</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;70;140;70;140;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>710</x>
+      <y>40</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>LightSource</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>710</x>
+      <y>80</y>
+      <w>100</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Window
+&lt;&lt;Image&gt;&gt;
+--
+-pixels
+--
+-save
+-draw</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>300</y>
+      <w>150</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Ray3D
+--
+-Orgin (Point3D)
+-Direction (Vector3D)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>180</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>ShadingUtils
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>220</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>ReflectionUtils</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>260</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>ShadowUtils</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>40</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>World
+--
+-GeometricObjects
+-LightSources
+-Window
+-BackgroundColor
+--
++Render</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>580</x>
+      <y>30</y>
+      <w>150</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>130;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>580</x>
+      <y>30</y>
+      <w>150</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>130;60;70;60;70;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>580</x>
+      <y>30</y>
+      <w>150</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>130;190;70;190;70;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>470</x>
+      <y>450</y>
+      <w>390</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Most of the math will be taken care of by an external library
+The vector, point, and normal classes are just an interface to
+be used to make code more readable when interfacing with
+the apache-commons math3 library.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Package</type>
+    <coordinates>
+      <x>470</x>
+      <y>10</y>
+      <w>470</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>RayTracer.Draw
+--
+
+bg=gray
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>20</x>
+      <y>310</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>*Threaded to maximize
+performance.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Package</type>
+    <coordinates>
+      <x>10</x>
+      <y>10</y>
+      <w>440</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>Cluster
+--
+bg=gray
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
