@@ -6,7 +6,9 @@
 
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.math.Normal3;
 import com.personal.parallelraytracer.math.Point3;
+import com.personal.parallelraytracer.math.Ray;
 
 /**
  *
@@ -14,19 +16,22 @@ import com.personal.parallelraytracer.math.Point3;
  */
 public abstract class GeometricShape
 {
+   public final double EPSIOLON = 10e-6d;
    private boolean visible;
    private boolean reflective;
    private Point3 position;
+   private Normal3 normal3;
    private Object material;
 
    public GeometricShape(boolean visible, boolean reflective, Point3 position,
-       Object material)
+       Normal3 normal3, Object material)
    {
       this.visible = visible;
       this.reflective = reflective;
       this.position = position;
+      this.normal3 = normal3;
       this.material = material;
    }
-   
-   public abstract boolean hit(Object par0);
+
+   public abstract boolean hit(Ray ray, double tMin);
 }
