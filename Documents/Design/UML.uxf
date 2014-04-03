@@ -4,8 +4,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>20</x>
-      <y>40</y>
+      <x>90</x>
+      <y>30</y>
       <w>130</w>
       <h>260</h>
     </coordinates>
@@ -30,9 +30,9 @@
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>200</x>
-      <y>190</y>
-      <w>240</w>
+      <x>270</x>
+      <y>180</y>
+      <w>260</w>
       <h>270</h>
     </coordinates>
     <panel_attributes>*Send small batches*
@@ -57,8 +57,8 @@ bg=blue
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>120</x>
-      <y>210</y>
+      <x>190</x>
+      <y>200</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
@@ -68,8 +68,8 @@ bg=blue
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>290</x>
-      <y>40</y>
+      <x>360</x>
+      <y>30</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
@@ -82,8 +82,8 @@ bg=blue
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>160</x>
-      <y>40</y>
+      <x>230</x>
+      <y>30</y>
       <w>120</w>
       <h>120</h>
     </coordinates>
@@ -100,8 +100,8 @@ bg=blue
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>290</x>
-      <y>100</y>
+      <x>360</x>
+      <y>90</y>
       <w>150</w>
       <h>80</h>
     </coordinates>
@@ -115,8 +115,8 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>710</x>
-      <y>200</y>
+      <x>200</x>
+      <y>750</y>
       <w>120</w>
       <h>120</h>
     </coordinates>
@@ -134,8 +134,8 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>610</x>
-      <y>390</y>
+      <x>100</x>
+      <y>890</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -145,8 +145,8 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>720</x>
-      <y>390</y>
+      <x>210</x>
+      <y>890</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -156,8 +156,8 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>830</x>
-      <y>390</y>
+      <x>320</x>
+      <y>890</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -167,43 +167,43 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>630</x>
-      <y>290</y>
+      <x>120</x>
+      <y>840</y>
       <w>160</w>
-      <h>120</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 </panel_attributes>
-    <additional_attributes>140;30;140;70;30;70;30;100</additional_attributes>
+    <additional_attributes>140;30;140;40;30;40;30;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>740</x>
-      <y>290</y>
+      <x>230</x>
+      <y>840</y>
       <w>50</w>
-      <h>120</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;30;30;100</additional_attributes>
+    <additional_attributes>30;30;30;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>740</x>
-      <y>290</y>
+      <x>230</x>
+      <y>840</y>
       <w>160</w>
-      <h>120</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;30;30;70;140;70;140;100</additional_attributes>
+    <additional_attributes>30;30;30;40;140;40;140;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>710</x>
-      <y>40</y>
-      <w>100</w>
+      <x>520</x>
+      <y>590</y>
+      <w>120</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>LightSource</panel_attributes>
@@ -212,40 +212,43 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>710</x>
-      <y>80</y>
-      <w>100</w>
-      <h>100</h>
+      <x>200</x>
+      <y>590</y>
+      <w>120</w>
+      <h>150</h>
     </coordinates>
-    <panel_attributes>Window
-&lt;&lt;Image&gt;&gt;
+    <panel_attributes>ViewWindow
 --
--pixels
+-width
+-height
+-pixelSize
+-gamma
+-invrtGamma
 --
--save
--draw</panel_attributes>
++getX
++getY</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>480</x>
-      <y>300</y>
-      <w>150</w>
+      <x>90</x>
+      <y>710</y>
+      <w>100</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>Ray3D
 --
--Orgin (Point3D)
--Direction (Vector3D)
+-Orgin
+-Direction
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>480</x>
-      <y>180</y>
+      <x>90</x>
+      <y>630</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -256,8 +259,8 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>480</x>
-      <y>220</y>
+      <x>90</x>
+      <y>590</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -267,8 +270,8 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>480</x>
-      <y>260</y>
+      <x>90</x>
+      <y>670</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -278,17 +281,18 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>480</x>
-      <y>40</y>
+      <x>360</x>
+      <y>590</y>
       <w>130</w>
-      <h>120</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>World
 --
 -GeometricObjects
 -LightSources
--Window
+-ViewWindow
 -BackgroundColor
+-Tracer
 --
 +Render</panel_attributes>
     <additional_attributes/>
@@ -296,71 +300,57 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>580</x>
-      <y>30</y>
-      <w>150</w>
+      <x>460</x>
+      <y>580</y>
+      <w>80</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>130;30;30;30</additional_attributes>
+    <additional_attributes>60;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>580</x>
-      <y>30</y>
-      <w>150</w>
-      <h>80</h>
+      <x>290</x>
+      <y>590</y>
+      <w>90</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>130;60;70;60;70;30;30;30</additional_attributes>
+    <additional_attributes>30;30;70;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>580</x>
-      <y>30</y>
-      <w>150</w>
-      <h>210</h>
+      <x>290</x>
+      <y>680</y>
+      <w>90</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>130;190;70;190;70;30;30;30</additional_attributes>
+    <additional_attributes>30;90;50;90;50;30;70;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>470</x>
-      <y>450</y>
-      <w>390</w>
+      <x>80</x>
+      <y>470</y>
+      <w>570</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>Most of the math will be taken care of by an external library
 The vector, point, and normal classes are just an interface to
 be used to make code more readable when interfacing with
 the apache-commons math3 library.
-bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Package</type>
-    <coordinates>
-      <x>470</x>
-      <y>10</y>
-      <w>470</w>
-      <h>420</h>
-    </coordinates>
-    <panel_attributes>RayTracer.Draw
---
 
-bg=gray
-</panel_attributes>
+bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>20</x>
-      <y>310</y>
+      <x>90</x>
+      <y>300</y>
       <w>170</w>
       <h>70</h>
     </coordinates>
@@ -372,15 +362,71 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Package</type>
     <coordinates>
-      <x>10</x>
-      <y>10</y>
-      <w>440</w>
+      <x>80</x>
+      <y>0</y>
+      <w>460</w>
       <h>460</h>
     </coordinates>
     <panel_attributes>Cluster
 --
 bg=gray
 fg=black</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>80</x>
+      <y>940</y>
+      <w>450</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>**Much of the design and code for the drawing functions comes from
+Kevin Suffern's 
+/Ray Tracing from the Ground Up/
+His code is in C++ as opposed to java which this program is written in.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>520</x>
+      <y>680</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Tracer
+--
+World
+--
+traceRay</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>460</x>
+      <y>660</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>60;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Package</type>
+    <coordinates>
+      <x>80</x>
+      <y>560</y>
+      <w>570</w>
+      <h>370</h>
+    </coordinates>
+    <panel_attributes>RayTracer.Draw**
+--
+
+bg=gray
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
