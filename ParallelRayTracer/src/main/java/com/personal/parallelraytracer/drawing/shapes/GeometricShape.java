@@ -17,11 +17,11 @@ import com.personal.parallelraytracer.math.Ray;
 public abstract class GeometricShape
 {
    public final double EPSIOLON = 10e-6d;
-   private boolean visible;
-   private boolean reflective;
-   private Point3 position;
-   private Normal3 normal3;
-   private Object material;
+   protected boolean visible;
+   protected boolean reflective;
+   protected Point3 position;
+   protected Normal3 normal3;
+   protected Object material;
 
    public GeometricShape(boolean visible, boolean reflective, Point3 position,
        Normal3 normal3, Object material)
