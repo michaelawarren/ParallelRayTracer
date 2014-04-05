@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.personal.parallelraytracer.math;
 
 import junit.framework.TestCase;
@@ -14,14 +13,8 @@ import junit.framework.TestCase;
  */
 public class RayTest extends TestCase
 {
-   
    public RayTest(String testName)
    {
       super(testName);
    }
-
-   public void testSomeMethod()
-   {
-   }
-   
 }
