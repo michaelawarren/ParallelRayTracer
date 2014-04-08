@@ -6,9 +6,11 @@
 
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.math.Normal3;
-import com.personal.parallelraytracer.math.Point3;
+import com.personal.parallelraytracer.math.Normal;
+import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -19,19 +21,22 @@ public abstract class GeometricShape
    public final double EPSIOLON = 10e-6d;
    protected boolean visible;
    protected boolean reflective;
-   protected Point3 position;
-   protected Normal3 normal3;
+   protected Point position;
+   protected Normal normal;
    protected Object material;
+   protected Map<String, Comparable> hitStats;
 
-   public GeometricShape(boolean visible, boolean reflective, Point3 position,
-       Normal3 normal3, Object material)
+   public GeometricShape(boolean visible, boolean reflective, Point position,
+       Normal normal3, Object material)
    {
       this.visible = visible;
       this.reflective = reflective;
       this.position = position;
-      this.normal3 = normal3;
+      this.normal = normal3;
       this.material = material;
+      this.hitStats = new HashMap<String, Comparable>();
    }
 
-   public abstract boolean hit(Ray ray, double tMin);
+   public abstract double hitPoint(Ray ray);
+   public abstract boolean cointains(Point origin);
 }

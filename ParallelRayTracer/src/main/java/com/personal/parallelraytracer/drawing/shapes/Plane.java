@@ -1,20 +1,37 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.math.Normal3;
-import com.personal.parallelraytracer.math.Point3;
+import com.personal.parallelraytracer.math.Normal;
+import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 
 public class Plane extends GeometricShape
 {
-   public Plane(boolean visible, boolean reflective, Point3 position,
-       Normal3 normal3, Object material)
+   public Plane(boolean visible, boolean reflective, Point position,
+       Normal normal3, Object material)
    {
       super(visible, reflective, position, normal3, material);
    }
 
    @Override
-   public boolean hit(Ray ray, double tMin)
+   public double hitPoint(Ray ray)
    {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      double t = position.subtract(ray.origin).dotProduct(normal)
+          / ray.direction.dotProduct(normal);
+      if ((Double.isInfinite(t) || Double.isNaN(t)) && cointains(ray.origin))
+      {
+         return t;
+      }
+      else if (t > EPSIOLON && !Double.isInfinite(t))
+      {
+         return t;
+      }
+      return EPSIOLON;
+   }
+
+   @Override
+   public boolean cointains(Point origin)
+   {
+      return Double.compare(position.subtract(origin)
+          .dotProduct(normal), 0.0d) == 0;
    }
 }
