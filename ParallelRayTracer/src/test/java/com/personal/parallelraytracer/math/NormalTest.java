@@ -1,8 +1,12 @@
 package com.personal.parallelraytracer.math;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class NormalTest extends TestCase
+public class NormalTest
 {
+   @Test
+   public void testMethod()
+   {
 
+   }
 }

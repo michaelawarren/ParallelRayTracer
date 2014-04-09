@@ -1,35 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.personal.parallelraytracer.drawing.shapes;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import com.personal.parallelraytracer.math.Normal;
+import com.personal.parallelraytracer.math.Point;
+import com.personal.parallelraytracer.math.Ray;
+import com.personal.parallelraytracer.math.Vector;
+import static org.junit.Assert.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-/**
- *
- * @author Michael
- */
-public class BoxTest extends TestCase
+public class BoxTest
 {
-   
-   public BoxTest(String testName)
+   static Box testBox;
+
+   @BeforeClass
+   public static void setUpClass() throws Exception
    {
-      super(testName);
+      Point point1 = new Point(1, 1, 1);
+      Point point2 = new Point(2, 3, 4);
+      Normal normal = new Normal(1, 1, 1);
+
+      testBox = new Box(true, true, point1, point2, normal, null);
    }
 
-   public static Test suite()
+   @Test
+   public void testHitPointCorner1()
    {
-      TestSuite suite = new TestSuite(BoxTest.class);
-      return suite;
+      double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
-   public void testHit()
+   @Test
+   public void testHitPointCorner2()
    {
    }
-   
+
+   @Test
+   public void testHitPointCorner3()
+   {
+   }
+
+   @Test
+   public void testHitPointCorner4()
+   {
+   }
+
+   @Test
+   public void testHitPointCorner5()
+   {
+   }
+
+   @Test
+   public void testHitPointCorner6()
+   {
+   }
+
+   @Test
+   public void testHitPointCorner7()
+   {
+   }
+
+   @Test
+   public void testHitPointCorner8()
+   {
+   }
+
+   @Test
+   public void testCointains()
+   {
+   }
+
+   @Test
+   public void testHitPoint()
+   {
+   }
 }

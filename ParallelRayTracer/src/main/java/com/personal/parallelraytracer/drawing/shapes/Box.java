@@ -6,10 +6,15 @@ import com.personal.parallelraytracer.math.Ray;
 
 public class Box extends GeometricShape
 {
-   public Box(boolean visible, boolean reflective, Point position,
-        Normal normal3, Object material)
+   Point point1;
+   Point point2;
+
+   public Box(boolean visible, boolean reflective, Point point1, Point point2,
+       Normal normal3, Object material)
    {
-      super(visible, reflective, position, normal3, material);
+      super(visible, reflective, point1, normal3, material);
+      this.point1 = point1;
+      this.point2 = point2;
    }
 
    @Override
