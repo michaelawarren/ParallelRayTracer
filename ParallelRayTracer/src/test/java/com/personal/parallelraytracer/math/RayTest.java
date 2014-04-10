@@ -1,20 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.personal.parallelraytracer.math;
 
-import junit.framework.TestCase;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
-/**
- *
- * @author Michael
- */
-public class RayTest extends TestCase
+public class RayTest
 {
-   public RayTest(String testName)
+   @Test
+   public void testFindPoint1()
    {
-      super(testName);
+      Ray testRay = new Ray(new Vector(1, 1, 1), new Point(0, 0, 0));
+      Point expected = new Point(1, 1, 1);
+      final Point testPoint = testRay.findPoint(1.0d);
+      assertTrue("Vectors " + testPoint.toString() + "and " + expected
+          .toString() + " are not equal", expected.equals(testPoint));
+   }
+
+   @Test
+   public void testFindPoint2()
+   {
+      Ray testRay = new Ray(new Vector(1, 1, 1), new Point(0, 0, 0));
+      Point expectedPoint = new Point(-1, -1, -1);
+      final Point testPoint = testRay.findPoint(-1.0d);
+      assertTrue("Vectors " + testPoint.toString() + "and " + expectedPoint
+          .toString() + " are not equal", expectedPoint.equals(testPoint));
+   }
+
+   @Test
+   public void testFindPoint3()
+   {
+      Ray testRay = new Ray(new Vector(1, 1, 1), new Point(0, 0, 0));
+      final double oneThird = 1.0d / 3.0d;
+      Point expectedPoint = new Point(oneThird, oneThird, oneThird);
+      final Point testPoint = testRay.findPoint(oneThird);
+
+      assertTrue("Vectors " + testPoint.toString() + "and " + expectedPoint
+          .toString() + " are not equal", expectedPoint.equals(testPoint));
    }
 }

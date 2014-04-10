@@ -10,4 +10,9 @@ public class Ray
       this.direction = direction;
       this.origin = point;
    }
+
+   public Point findPoint(double t)
+   {
+      return new Point(origin.add(direction.scalarMultiply(t)));
+   }
 }

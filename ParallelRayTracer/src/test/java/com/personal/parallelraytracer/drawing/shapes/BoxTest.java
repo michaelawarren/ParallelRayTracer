@@ -33,45 +33,58 @@ public class BoxTest
    @Test
    public void testHitPointCorner2()
    {
+            double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
    public void testHitPointCorner3()
    {
+            double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
    public void testHitPointCorner4()
    {
+      fail();
    }
 
    @Test
    public void testHitPointCorner5()
    {
+      fail();
    }
 
    @Test
    public void testHitPointCorner6()
    {
+      fail();
    }
 
    @Test
    public void testHitPointCorner7()
    {
+      fail();
    }
 
    @Test
    public void testHitPointCorner8()
    {
+      fail();
    }
 
    @Test
    public void testCointains()
    {
+      fail();
    }
 
    @Test
    public void testHitPoint()
    {
+      fail();
    }
 }

@@ -12,4 +12,9 @@ public class Point extends Vector3D
    {
       super(x, y, z);
    }
+   
+  public Point(Vector3D vector)
+  {
+     super(vector.toArray());
+  }
 }
