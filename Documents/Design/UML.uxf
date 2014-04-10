@@ -4,7 +4,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
+      <x>100</x>
       <y>30</y>
       <w>130</w>
       <h>260</h>
@@ -30,7 +30,7 @@
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>270</x>
+      <x>280</x>
       <y>180</y>
       <w>260</w>
       <h>270</h>
@@ -57,7 +57,7 @@ bg=blue
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>190</x>
+      <x>200</x>
       <y>200</y>
       <w>100</w>
       <h>50</h>
@@ -68,7 +68,7 @@ bg=blue
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>360</x>
+      <x>370</x>
       <y>30</y>
       <w>100</w>
       <h>50</h>
@@ -82,7 +82,7 @@ bg=blue
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>230</x>
+      <x>240</x>
       <y>30</y>
       <w>120</w>
       <h>120</h>
@@ -100,7 +100,7 @@ bg=blue
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>360</x>
+      <x>370</x>
       <y>90</y>
       <w>150</w>
       <h>80</h>
@@ -115,7 +115,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>200</x>
+      <x>210</x>
       <y>750</y>
       <w>120</w>
       <h>120</h>
@@ -134,7 +134,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>100</x>
+      <x>110</x>
       <y>890</y>
       <w>100</w>
       <h>30</h>
@@ -145,7 +145,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>210</x>
+      <x>220</x>
       <y>890</y>
       <w>100</w>
       <h>30</h>
@@ -156,7 +156,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>320</x>
+      <x>330</x>
       <y>890</y>
       <w>100</w>
       <h>30</h>
@@ -167,7 +167,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>120</x>
+      <x>130</x>
       <y>840</y>
       <w>160</w>
       <h>70</h>
@@ -179,7 +179,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>230</x>
+      <x>240</x>
       <y>840</y>
       <w>50</w>
       <h>70</h>
@@ -190,7 +190,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>230</x>
+      <x>240</x>
       <y>840</y>
       <w>160</w>
       <h>70</h>
@@ -201,7 +201,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>520</x>
+      <x>560</x>
       <y>590</y>
       <w>120</w>
       <h>30</h>
@@ -212,7 +212,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>200</x>
+      <x>210</x>
       <y>590</y>
       <w>120</w>
       <h>150</h>
@@ -232,22 +232,22 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
+      <x>100</x>
       <y>710</y>
       <w>100</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>Ray3D
 --
--Orgin
--Direction
++Orgin
++Direction
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
+      <x>100</x>
       <y>630</y>
       <w>100</w>
       <h>30</h>
@@ -259,7 +259,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
+      <x>100</x>
       <y>590</y>
       <w>100</w>
       <h>30</h>
@@ -270,7 +270,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
+      <x>100</x>
       <y>670</y>
       <w>100</w>
       <h>30</h>
@@ -281,7 +281,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>360</x>
+      <x>370</x>
       <y>590</y>
       <w>130</w>
       <h>140</h>
@@ -300,18 +300,18 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>460</x>
+      <x>470</x>
       <y>580</y>
-      <w>80</w>
+      <w>110</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>60;30;30;30</additional_attributes>
+    <additional_attributes>90;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>290</x>
+      <x>300</x>
       <y>590</y>
       <w>90</w>
       <h>50</h>
@@ -322,7 +322,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>290</x>
+      <x>300</x>
       <y>680</y>
       <w>90</w>
       <h>110</h>
@@ -333,7 +333,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>80</x>
+      <x>90</x>
       <y>470</y>
       <w>570</w>
       <h>80</h>
@@ -349,7 +349,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>90</x>
+      <x>100</x>
       <y>300</y>
       <w>170</w>
       <h>70</h>
@@ -362,7 +362,7 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Package</type>
     <coordinates>
-      <x>80</x>
+      <x>90</x>
       <y>0</y>
       <w>460</w>
       <h>460</h>
@@ -376,7 +376,7 @@ fg=black</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>80</x>
+      <x>90</x>
       <y>940</y>
       <w>450</w>
       <h>80</h>
@@ -391,35 +391,38 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>520</x>
+      <x>560</x>
       <y>680</y>
       <w>120</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>Tracer
 --
-World
+-World
 --
-traceRay</panel_attributes>
+-traceRay</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>460</x>
-      <y>660</y>
-      <w>80</w>
-      <h>50</h>
+      <x>470</x>
+      <y>640</y>
+      <w>110</w>
+      <h>108</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>60;30;30;30</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;-&gt;&gt;
+Has
+Each
+other</panel_attributes>
+    <additional_attributes>90;50;30;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Package</type>
     <coordinates>
-      <x>80</x>
+      <x>90</x>
       <y>560</y>
-      <w>570</w>
+      <w>600</w>
       <h>370</h>
     </coordinates>
     <panel_attributes>RayTracer.Draw**
