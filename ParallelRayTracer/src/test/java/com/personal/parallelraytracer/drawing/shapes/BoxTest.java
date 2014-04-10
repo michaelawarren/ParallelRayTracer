@@ -25,7 +25,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner1()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(3, 1, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -33,7 +33,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner2()
    {
-            double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(1, 2, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -41,7 +41,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner3()
    {
-            double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(3, 2, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -49,31 +49,41 @@ public class BoxTest
    @Test
    public void testHitPointCorner4()
    {
-      fail();
+      double testValue = testBox.hitPoint(new Ray(new Vector(3, 2, 1),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
    public void testHitPointCorner5()
    {
-      fail();
+      double testValue = testBox.hitPoint(new Ray(new Vector(2, 3, 4),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
    public void testHitPointCorner6()
    {
-      fail();
+      double testValue = testBox.hitPoint(new Ray(new Vector(2, 2, 4),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
    public void testHitPointCorner7()
    {
-      fail();
+      double testValue = testBox.hitPoint(new Ray(new Vector(0, 3, 4),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
    public void testHitPointCorner8()
    {
-      fail();
+      double testValue = testBox.hitPoint(new Ray(new Vector(0, 2, 4),
+          new Point(0, 0, 0)));
+      assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test

@@ -8,11 +8,12 @@ public class Box extends GeometricShape
 {
    Point point1;
    Point point2;
+   Point[] bounds = new Point[2];
 
    public Box(boolean visible, boolean reflective, Point point1, Point point2,
        Normal normal3, Object material)
    {
-      super(visible, reflective, point1, normal3, material);
+      super(visible, reflective, material, point1);
       this.point1 = point1;
       this.point2 = point2;
    }

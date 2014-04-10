@@ -22,17 +22,14 @@ public abstract class GeometricShape
    protected boolean visible;
    protected boolean reflective;
    protected Point position;
-   protected Normal normal;
    protected Object material;
    protected Map<String, Comparable> hitStats;
 
-   public GeometricShape(boolean visible, boolean reflective, Point position,
-       Normal normal3, Object material)
+   public GeometricShape(boolean visible, boolean reflective, Object material, Point position)
    {
       this.visible = visible;
       this.reflective = reflective;
       this.position = position;
-      this.normal = normal3;
       this.material = material;
       this.hitStats = new HashMap<String, Comparable>();
    }

@@ -6,10 +6,12 @@ import com.personal.parallelraytracer.math.Ray;
 
 public class Plane extends GeometricShape
 {
+   Normal normal;
    public Plane(boolean visible, boolean reflective, Point position,
-       Normal normal3, Object material)
+       Normal normal, Object material)
    {
-      super(visible, reflective, position, normal3, material);
+      super(visible, reflective, material, position);
+      normal = normal;
    }
 
    @Override

@@ -9,7 +9,7 @@ public class Sphere extends GeometricShape
    public Sphere(boolean visible, boolean reflective, Point position,
        Normal normal3, Object material)
    {
-      super(visible, reflective, position, normal3, material);
+      super(visible, reflective, material, position);
    }
 
    @Override

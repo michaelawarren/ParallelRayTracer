@@ -37,4 +37,17 @@ public class RayTest
       assertTrue("Vectors " + testPoint.toString() + "and " + expectedPoint
           .toString() + " are not equal", expectedPoint.equals(testPoint));
    }
+   
+   
+   @Test
+   public void testFindPoint4()
+   {
+      Ray testRay = new Ray(new Vector(1.0d, 2.0d, 3.0d), new Point(0, 0, 0));
+      final double tMin = 1.0d;
+      Point expectedPoint = new Point(1.0d, 2.0d, 3.0d);
+      final Point testPoint = testRay.findPoint(tMin);
+
+      assertTrue("Vectors " + testPoint.toString() + "and " + expectedPoint
+          .toString() + " are not equal", expectedPoint.equals(testPoint));
+   }
 }
