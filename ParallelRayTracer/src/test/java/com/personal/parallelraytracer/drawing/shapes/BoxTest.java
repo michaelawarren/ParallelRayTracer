@@ -1,31 +1,28 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class BoxTest
 {
-   static Box testBox;
+   final Box testBox;
+   final Point min = new Point(1, 1, 1);
+   final Point max = new Point(3, 2, 4);
 
-   @BeforeClass
-   public static void setUpClass() throws Exception
+   public BoxTest()
    {
-      Point point1 = new Point(1, 1, 1);
-      Point point2 = new Point(2, 3, 4);
-      Normal normal = new Normal(1, 1, 1);
-
-      testBox = new Box(true, true, point1, point2, normal, null);
+      testBox = new Box(true, true, null, min, max);
    }
 
    @Test
    public void testHitPointCorner1()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(3, 1, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -33,7 +30,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner2()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(1, 2, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(1, 1, 4),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -41,7 +38,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner3()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(3, 2, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(1, 2, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -49,7 +46,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner4()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(3, 2, 1),
+      double testValue = testBox.hitPoint(new Ray(new Vector(1, 2, 4),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -57,7 +54,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner5()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(2, 3, 4),
+      double testValue = testBox.hitPoint(new Ray(new Vector(3, 1, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -65,7 +62,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner6()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(2, 2, 4),
+      double testValue = testBox.hitPoint(new Ray(new Vector(3, 1, 4),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -73,7 +70,7 @@ public class BoxTest
    @Test
    public void testHitPointCorner7()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(0, 3, 4),
+      double testValue = testBox.hitPoint(new Ray(new Vector(3, 2, 1),
           new Point(0, 0, 0)));
       assertEquals(1.00d, testValue, 0.001d);
    }
@@ -81,20 +78,72 @@ public class BoxTest
    @Test
    public void testHitPointCorner8()
    {
-      double testValue = testBox.hitPoint(new Ray(new Vector(0, 2, 4),
-          new Point(0, 0, 0)));
+      double testValue = testBox.hitPoint(new Ray(new Vector(1.5, 1, 2),
+          new Point(1, 1, 1)));
       assertEquals(1.00d, testValue, 0.001d);
    }
 
    @Test
-   public void testCointains()
+   public void testContainsCorner1()
    {
-      fail();
+      final Point point = new Point(1, 1, 1);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
    }
 
    @Test
-   public void testHitPoint()
+   public void testContainsCorner2()
    {
-      fail();
+      final Point point = new Point(1, 1, 4);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
+   }
+
+   @Test
+   public void testContainsCorner3()
+   {
+      final Point point = new Point(1, 2, 1);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
+   }
+
+   @Test
+   public void testContainsCorner4()
+   {
+      final Point point = new Point(1, 2, 4);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
+   }
+
+   @Test
+   public void testContainsCorner5()
+   {
+      final Point point = new Point(3, 1, 1);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
+   }
+
+   @Test
+   public void testContainsCorner6()
+   {
+      final Point point = new Point(3, 1, 4);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
+   }
+
+   @Test
+   public void testContainsCorner7()
+   {
+      final Point point = new Point(3, 2, 1);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
+   }
+
+   @Test
+   public void testContainsCorner8()
+   {
+      final Point point = new Point(3, 2, 4);
+      boolean testValue = testBox.contains(point);
+      assertEquals("does not contan pont " + point.toString(), true, testValue);
    }
 }

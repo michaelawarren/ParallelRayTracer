@@ -11,29 +11,45 @@ public class Plane extends GeometricShape
        Normal normal, Object material)
    {
       super(visible, reflective, material, position);
-      normal = normal;
+      this.normal = normal;
    }
 
+   /**
+    * Algorithm based off plane algorithm found in 
+    * "Ray Tracing From the Ground Up" by Kevin Suffern
+    * 
+    * @param ray
+    * @return 
+    */
    @Override
    public double hitPoint(Ray ray)
    {
       double t = position.subtract(ray.origin).dotProduct(normal)
           / ray.direction.dotProduct(normal);
-      if ((Double.isInfinite(t) || Double.isNaN(t)) && cointains(ray.origin))
+      
+      if (Double.isInfinite(t) || Double.isNaN(t))
+      {
+         return intractableValue(ray);
+      }
+      if (t > EPSIOLON)
       {
          return t;
       }
-      else if (t > EPSIOLON && !Double.isInfinite(t))
-      {
-         return t;
-      }
-      return EPSIOLON;
+      return Double.NaN;
    }
 
    @Override
-   public boolean cointains(Point origin)
+   public boolean contains(Point point)
    {
-      return Double.compare(position.subtract(origin)
+      return Double.compare(position.subtract(point)
           .dotProduct(normal), 0.0d) == 0;
+   }
+
+   protected double intractableValue(Ray ray)
+   {
+      if (contains(ray.origin))
+         return 1.0;
+      else 
+         return Double.NaN;
    }
 }

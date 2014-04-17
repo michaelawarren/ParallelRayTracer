@@ -32,7 +32,7 @@ public class PlaneTest
           new Normal(3, 3, 3), null);
       final Ray testRay = new Ray(new Vector(3, 3, 3), new Point(0, 0, 0));
       double tMin = testPlane2.hitPoint(testRay);
-      assertEquals(0.0d, tMin, .001d);
+      assertEquals(Double.NaN, tMin, .001d);
    }
 
    @Test
@@ -43,34 +43,34 @@ public class PlaneTest
 
       double tMin = testPlane.hitPoint(new Ray(direction, orgin));
 
-      assertEquals(testPlane.EPSIOLON, tMin, .0000001d);
+      assertEquals(Double.NaN, tMin, .0000001d);
    }
 
    @Test
    public void testHitRayIsOnPlane1()
    {
       final Point orgin = new Point(3, 1.5, 1.5);
-      assertTrue(testPlane.cointains(orgin));
+      assertTrue(testPlane.contains(orgin));
    }
 
    @Test
    public void testHitRayIsOnPlane2()
    {
       final Point orgin = new Point(2, 2, 2);
-      assertTrue(testPlane.cointains(orgin));
+      assertTrue(testPlane.contains(orgin));
    }
 
    @Test
    public void testContainsNo()
    {
       final Point orgin = new Point(0, 0, 2);
-      assertFalse(testPlane.cointains(orgin));
+      assertFalse(testPlane.contains(orgin));
    }
 
    @Test
    public void testContainsYes()
    {
       final Point orgin = new Point(0, 0, 0);
-      assertFalse(testPlane.cointains(orgin));
+      assertFalse(testPlane.contains(orgin));
    }
 }

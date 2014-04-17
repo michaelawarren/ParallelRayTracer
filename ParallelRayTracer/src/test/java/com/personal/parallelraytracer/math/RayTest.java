@@ -1,6 +1,5 @@
 package com.personal.parallelraytracer.math;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import static org.junit.Assert.*;
 import org.junit.Test;
 

@@ -6,7 +6,6 @@
 
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import java.util.HashMap;
@@ -35,5 +34,5 @@ public abstract class GeometricShape
    }
 
    public abstract double hitPoint(Ray ray);
-   public abstract boolean cointains(Point origin);
+   public abstract boolean contains(Point point);
 }
