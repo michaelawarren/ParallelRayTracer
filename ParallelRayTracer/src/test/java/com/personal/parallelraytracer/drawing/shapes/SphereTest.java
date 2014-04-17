@@ -88,8 +88,18 @@ public class SphereTest
    }
 
    @Test
-   public void testContains()
+   public void testContainsInnerShell()
    {
-      fail();
+      Point point = new Point(1, 2, 0);
+      assertTrue("Should contain " + point.toString(), testSphere
+          .contains(point));
+   }
+
+   @Test
+   public void testContainsOuterShell()
+   {
+      Point point = new Point(3, 2, 0);
+      assertTrue("Should contain " + point.toString(), testSphere
+          .contains(point));
    }
 }
