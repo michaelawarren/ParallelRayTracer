@@ -49,21 +49,14 @@ public class PlaneTest
    @Test
    public void testHitRayIsOnPlane1()
    {
-      // TODO: fix parallel test
       final Point orgin = new Point(3, 1.5, 1.5);
-      Vector vector = new Vector(1, 1, 1);
+      Vector vector = new Vector(-3, 3, 0);
+
+      // assert assumption that vector is parallel to the plane
       assertEquals(0d, vector.dotProduct(testPlane.normal), 0);
-      //double tMin = testPlane.hitPoint(new Ray(RaytestPlane., orgin));
 
-      assertEquals(testPlane.EPSIOLON + testPlane.EPSIOLON, 0, .0000001d);
-   }
-
-   @Test
-   public void testHitRayIsOnPlane2()
-   {
-      // TODO: fix parallel test
-      final Point orgin = new Point(2, 2, 2);
-      assertTrue(testPlane.contains(orgin));
+      double tMin = testPlane.hitPoint(new Ray(vector, orgin));
+      assertEquals(Double.NaN, tMin, .0000001d);
    }
 
    @Test

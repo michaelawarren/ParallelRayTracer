@@ -27,18 +27,12 @@ public class Plane extends GeometricShape
       double t = position.subtract(ray.origin).dotProduct(normal)
           / ray.direction.dotProduct(normal);
       
-      if (Double.isInfinite(t) || Double.isNaN(t))
-      {
-         t = intractableValue(ray);
-         //TODO: figure out ShadeRec
-         return t;
-      }
-      if (t > EPSIOLON)
+      if (!Double.isInfinite(t) && t > EPSIOLON)
       {
          //TODO: figure out ShadeRec
          return t;
       }
-      return Double.NaN;
+      return Double.NaN; // Nan == false
    }
 
    @Override
