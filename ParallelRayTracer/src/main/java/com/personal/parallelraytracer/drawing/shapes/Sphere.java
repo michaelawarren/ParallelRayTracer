@@ -1,5 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
@@ -71,5 +72,12 @@ public class Sphere extends GeometricShape
    public boolean contains(Point point)
    {
       return (point.subtract(position).dotProduct(point.subtract(position))) - (radius * radius) == 0;
+   }
+
+   @Override
+   public Normal getNormal(Ray ray, double t)
+   {
+      //TODO: write getNormal
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 }

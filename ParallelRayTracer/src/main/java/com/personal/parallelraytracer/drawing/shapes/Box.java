@@ -1,5 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 
@@ -81,5 +82,12 @@ public class Box extends GeometricShape
           && max.getY() >= point.getY()
           && position.getZ() <= point.getZ()
           && max.getZ() >= point.getZ();
+   }
+
+   @Override
+   public Normal getNormal(Ray ray, double t)
+   {
+      //TODO: write getNormal
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 }
