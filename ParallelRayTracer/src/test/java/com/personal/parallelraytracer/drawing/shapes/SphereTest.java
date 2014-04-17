@@ -73,7 +73,7 @@ public class SphereTest
       Ray ray = new Ray(vector, point);
       final double t = testSphere.hitPoint(ray);
       assertEquals(1.0d, t, 0.00001d);
-      assertTrue(Double.isNaN(t));
+      assertTrue(!Double.isNaN(t));
    }
 
    @Test
@@ -84,7 +84,7 @@ public class SphereTest
       Ray ray = new Ray(vector, point);
       final double t = testSphere.hitPoint(ray);
       assertEquals(2.0d, t, 0.00001d);
-      assertTrue(Double.isNaN(t));
+      assertTrue(!Double.isNaN(t));
    }
 
    @Test

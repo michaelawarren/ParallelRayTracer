@@ -29,10 +29,13 @@ public class Plane extends GeometricShape
       
       if (Double.isInfinite(t) || Double.isNaN(t))
       {
-         return intractableValue(ray);
+         t = intractableValue(ray);
+         //TODO: figure out ShadeRec
+         return t;
       }
       if (t > EPSIOLON)
       {
+         //TODO: figure out ShadeRec
          return t;
       }
       return Double.NaN;
@@ -48,7 +51,7 @@ public class Plane extends GeometricShape
    protected double intractableValue(Ray ray)
    {
       if (contains(ray.origin))
-         return 1.0;
+         return EPSIOLON + EPSIOLON;
       else 
          return Double.NaN;
    }

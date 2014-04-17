@@ -12,4 +12,9 @@ public class Vector extends Vector3D
    {
       super(x, y, z);
    }
+   
+   public Vector(Vector3D vector)
+   {
+      super(vector.toArray());
+   }
 }
