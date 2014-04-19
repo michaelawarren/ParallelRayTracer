@@ -145,11 +145,11 @@ public class BoxTest
       boolean testValue = testBox.contains(point);
       assertEquals("does not contan pont " + point.toString(), true, testValue);
    }
-   
+
    @Test
    public void testGetNormal1()
    {
-      Point point = new Point(0, 3, 0);
+      Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(0, -1, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
@@ -157,63 +157,63 @@ public class BoxTest
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
-   
+
    @Test
    public void testGetNormal2()
    {
-      Point point = new Point(0, 3, 0);
-      Vector vector = new Vector(1, 0, 0);
+      Point point = new Point(2, 1.5, 2.5);
+      Vector vector = new Vector(0, 1, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 1, 0);
+      Normal expected = new Normal(0, -1, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
-   
+
    @Test
    public void testGetNormal3()
    {
-      Point point = new Point(0, 3, 0);
+      Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(1, 0, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 1, 0);
+      Normal expected = new Normal(-1, 0, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
-   
+
    @Test
    public void testGetNormal4()
    {
-      Point point = new Point(0, 3, 0);
-      Vector vector = new Vector(1, 0, 0);
+      Point point = new Point(2, 1.5, 2.5);
+      Vector vector = new Vector(-1, 0, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 1, 0);
+      Normal expected = new Normal(1, 0, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
-   
+
    @Test
    public void testGetNormal5()
    {
-      Point point = new Point(0, 3, 0);
-      Vector vector = new Vector(1, 0, 0);
+      Point point = new Point(2, 1.5, 2.5);
+      Vector vector = new Vector(0, 0, 1);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 1, 0);
+      Normal expected = new Normal(0, 0, -1);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
-   
+
    @Test
    public void testGetNormal6()
    {
-      Point point = new Point(0, 3, 0);
-      Vector vector = new Vector(1, 0, 0);
+      Point point = new Point(2, 1.5, 2.5);
+      Vector vector = new Vector(0, 0, -1);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 1, 0);
+      Normal expected = new Normal(0, 0, 1);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
