@@ -26,8 +26,6 @@ public class Box extends GeometricShape
     * Journal of graphics tools, 10(1):49-54, 2005
     *
     * @param ray
-    * @param t0
-    * @param t1
     * @return 
     */
    @Override
