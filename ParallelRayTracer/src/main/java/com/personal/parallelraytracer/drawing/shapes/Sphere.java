@@ -74,10 +74,18 @@ public class Sphere extends GeometricShape
       return (point.subtract(position).dotProduct(point.subtract(position))) - (radius * radius) == 0;
    }
 
+   /**
+    * Equation used from "Ray Tracing From the Ground Up"
+    * @param ray
+    * @param t
+    * @return 
+    */
    @Override
    public Normal getNormal(Ray ray, double t)
    {
-      //TODO: write getNormal
-      throw new UnsupportedOperationException("Not supported yet.");
+      if (Double.isNaN(t))
+         return null;
+      Vector temp = new Vector(ray.origin.subtract(position));
+      return new Normal(temp.add(ray.direction.scalarMultiply(t)));
    }
 }

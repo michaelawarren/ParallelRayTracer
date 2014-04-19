@@ -53,7 +53,6 @@ public class Plane extends GeometricShape
    @Override
    public Normal getNormal(Ray ray, double t)
    {
-      //TODO: write getNormal
-      throw new UnsupportedOperationException("Not supported yet.");
+      return normal;
    }
 }

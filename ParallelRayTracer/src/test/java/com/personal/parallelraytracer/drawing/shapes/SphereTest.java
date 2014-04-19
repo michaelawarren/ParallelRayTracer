@@ -1,5 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
@@ -101,5 +102,89 @@ public class SphereTest
       Point point = new Point(3, 2, 0);
       assertTrue("Should contain " + point.toString(), testSphere
           .contains(point));
+   }
+
+   @Test
+   public void testGetNormalTop()
+   {
+      try
+      {
+         // if this test fails than Get normal must fail
+         testHitPointTangent();
+      }
+      catch (AssertionError ae)
+      {
+         throw new AssertionError("Reliant Test failed", ae);
+      }
+      Point point = new Point(0, 3, 0);
+      Vector vector = new Vector(1, 0, 0);
+      Ray ray = new Ray(vector, point);
+      final double t = testSphere.hitPoint(ray);
+      Normal expected = new Normal(0, 1, 0);
+      Normal acutal = testSphere.getNormal(ray, t);
+      assertEquals("Invalid normal", expected, acutal);
+   }
+   
+   @Test
+   public void testGetNormalBottom()
+   {
+      try
+      {
+         // if this test fails than Get normal must fail
+         testHitPointTangent();
+      }
+      catch (AssertionError ae)
+      {
+         throw new AssertionError("Reliant Test failed", ae);
+      }
+      Point point = new Point(0, 1, 0);
+      Vector vector = new Vector(1, 0, 0);
+      Ray ray = new Ray(vector, point);
+      final double t = testSphere.hitPoint(ray);
+      Normal expected = new Normal(0, -1, 0);
+      Normal acutal = testSphere.getNormal(ray, t);
+      assertEquals("Invalid normal", expected, acutal);
+   }
+   
+   @Test
+   public void testGetNormalHeadOn()
+   {
+      try
+      {
+         // if this test fails than Get normal must fail
+         testHitPointTangent();
+      }
+      catch (AssertionError ae)
+      {
+         throw new AssertionError("Reliant Test failed", ae);
+      }
+      Point point = new Point(0, 2, 0);
+      Vector vector = new Vector(1, 0, 0);
+      Ray ray = new Ray(vector, point);
+      final double t = testSphere.hitPoint(ray);
+      Normal expected = new Normal(-1, 0, 0);
+      Normal acutal = testSphere.getNormal(ray, t);
+      assertEquals("Invalid normal", expected, acutal);
+   }
+   
+   @Test
+   public void testGetNormalNone()
+   {
+      try
+      {
+         // if this test fails than Get normal must fail
+         testHitPointTangent();
+      }
+      catch (AssertionError ae)
+      {
+         throw new AssertionError("Reliant Test failed", ae);
+      }
+      Point point = new Point(0, 4, 0);
+      Vector vector = new Vector(1, 0, 0);
+      Ray ray = new Ray(vector, point);
+      final double t = testSphere.hitPoint(ray);
+      Normal expected = null;
+      Normal acutal = testSphere.getNormal(ray, t);
+      assertEquals("Invalid normal", expected, acutal);
    }
 }
