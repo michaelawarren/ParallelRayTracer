@@ -5,8 +5,10 @@ import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class BoxTest
 {
    final Box testBox;

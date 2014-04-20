@@ -30,7 +30,7 @@ public class Ray
       };
    }
 
-   public Point findPoint(double t)
+   public Point findLocalHitPoint(double t)
    {
       return new Point(origin.add(direction.scalarMultiply(t)));
    }
