@@ -8,12 +8,15 @@ public class Box extends GeometricShape
 {
    Point[] parameters;
    Point max;
-   
+
    public Box(boolean visible, boolean reflective, Object material,
        Point min, Point max)
    {
       super(visible, reflective, material, min);
-      parameters = new Point[] {min, max};
+      parameters = new Point[]
+      {
+         min, max
+      };
       this.max = max;
    }
 
@@ -26,19 +29,22 @@ public class Box extends GeometricShape
     * Journal of graphics tools, 10(1):49-54, 2005
     *
     * @param ray
-    * @return 
+    * @return
     */
    @Override
    public double hitPoint(Ray ray)
    {
       double tmin, tmax, tymin, tymax, tzmin, tzmax;
 
-      tmin = (parameters[ray.sign[0]].getX() - ray.origin.getX()) * ray.invDirection.getX();
-      tmax = (parameters[1 - ray.sign[0]].getX() - ray.origin.getX()) * ray.invDirection
-          .getX();
-      tymin = (parameters[ray.sign[1]].getY() - ray.origin.getY()) * ray.invDirection.getY();
-      tymax = (parameters[1 - ray.sign[1]].getY() - ray.origin.getY()) * ray.invDirection
-          .getY();
+      tmin = (parameters[ray.sign[0]].getX() - ray.origin.getX())
+          * ray.invDirection.getX();
+      tmax = (parameters[1 - ray.sign[0]].getX() - ray.origin.getX())
+          * ray.invDirection.getX();
+      tymin = (parameters[ray.sign[1]].getY() - ray.origin.getY())
+          * ray.invDirection.getY();
+      tymax = (parameters[1 - ray.sign[1]].getY() - ray.origin.getY())
+          * ray.invDirection.getY();
+
       if ((tmin > tymax) || (tymin > tmax))
       {
          return Double.NaN;
@@ -51,9 +57,10 @@ public class Box extends GeometricShape
       {
          tmax = tymax;
       }
-      tzmin = (parameters[ray.sign[2]].getZ() - ray.origin.getZ()) * ray.invDirection.getZ();
-      tzmax = (parameters[1 - ray.sign[2]].getZ() - ray.origin.getZ()) * ray.invDirection
-          .getZ();
+      tzmin = (parameters[ray.sign[2]].getZ() - ray.origin.getZ())
+          * ray.invDirection.getZ();
+      tzmax = (parameters[1 - ray.sign[2]].getZ() - ray.origin.getZ())
+          * ray.invDirection.getZ();
       if ((tmin > tzmax) || (tzmin > tmax))
       {
          return Double.NaN;
@@ -67,7 +74,9 @@ public class Box extends GeometricShape
          tmax = tzmax;
       }
       if (tmax > EPSIOLON)
+      {
          return tmin > EPSIOLON ? tmin : tmax;
+      }
       return Double.NaN;
    }
 
