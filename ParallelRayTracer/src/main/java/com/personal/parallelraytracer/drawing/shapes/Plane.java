@@ -29,7 +29,6 @@ public class Plane extends GeometricShape
       
       if (!Double.isInfinite(t) && t > EPSIOLON)
       {
-         //TODO: figure out ShadeRec
          return t;
       }
       return Double.NaN; // Nan == false

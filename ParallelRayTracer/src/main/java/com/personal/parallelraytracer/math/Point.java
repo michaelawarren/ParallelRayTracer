@@ -17,4 +17,9 @@ public class Point extends Vector3D
   {
      super(vector.toArray());
   }
+  
+  public Point(double[] array)
+  {
+     super(array);
+  }
 }
