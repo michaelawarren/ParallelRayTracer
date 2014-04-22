@@ -10,8 +10,6 @@ public class Surface extends Plane
    Point topLeft;
    Point bottomRight;
    Point bottomLeft;
-   Point max;
-   Point min;
 
    /**
     *
@@ -33,17 +31,6 @@ public class Surface extends Plane
       this.bottomRight = bottomRight;
       this.topLeft = topLeft;
       this.topRight = topRight;
-      double [] mins = new double[3];
-      double [] maxs = new double[3];
-      final double[] bottomLeftArray = bottomLeft.toArray();
-      final double[] topRightArray = topRight.toArray();
-      for (int i = 0; i < bottomLeftArray.length; i++)
-      {
-         maxs[i] = (bottomLeftArray[i] > topRightArray[i]) ? bottomLeftArray[i] : topRightArray[i];
-         mins[i] = (bottomLeftArray[i] < topRightArray[i]) ? bottomLeftArray[i] : topRightArray[i];
-      }
-      this.max = new Point(maxs);
-      this.min = new Point(mins);
    }
 
    public Surface(Point bottomLeft, Point bottomRight, Point topLeft,
@@ -60,12 +47,12 @@ public class Surface extends Plane
    @Override
    public boolean contains(Point point)
    {
-      return super.contains(point) && min.getX() <= point.getX()
-          && max.getX() >= point.getX()
-          && min.getY() <= point.getY()
-          && max.getY() >= point.getY()
-          && min.getZ() <= point.getZ()
-          && max.getZ() >= point.getZ();
+      return super.contains(point) && bottomLeft.getX() <= point.getX()
+          && topRight.getX() >= point.getX()
+          && bottomLeft.getY() <= point.getY()
+          && topRight.getY() >= point.getY()
+          && bottomLeft.getZ() <= point.getZ()
+          && topRight.getZ() >= point.getZ();
    }
 
    @Override
