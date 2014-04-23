@@ -1,9 +1,10 @@
-package com.personal.parallelraytracer.drawing;
+package com.personal.parallelraytracer.drawing.tracers;
 
+import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.math.Ray;
 import java.awt.Color;
 
-class SingleSphere extends Tracer 
+public class SingleSphere extends Tracer 
 {
    public SingleSphere(World world)
    {

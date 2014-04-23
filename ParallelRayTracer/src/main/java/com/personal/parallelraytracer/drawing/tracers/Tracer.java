@@ -1,11 +1,12 @@
-package com.personal.parallelraytracer.drawing;
+package com.personal.parallelraytracer.drawing.tracers;
 
+import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.shapes.GeometricShape;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Ray;
 import java.awt.Color;
 
-abstract class Tracer 
+public abstract class Tracer 
 {
    World world;
    public Color color;

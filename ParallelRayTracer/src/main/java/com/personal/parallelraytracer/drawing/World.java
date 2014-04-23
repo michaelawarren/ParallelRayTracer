@@ -2,6 +2,8 @@ package com.personal.parallelraytracer.drawing;
 
 import com.personal.parallelraytracer.drawing.shapes.GeometricShape;
 import com.personal.parallelraytracer.drawing.shapes.Sphere;
+import com.personal.parallelraytracer.drawing.tracers.SingleSphere;
+import com.personal.parallelraytracer.drawing.tracers.Tracer;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
