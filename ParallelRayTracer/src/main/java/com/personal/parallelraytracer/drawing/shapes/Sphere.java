@@ -4,6 +4,7 @@ import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
+import java.awt.Color;
 
 public class Sphere extends GeometricShape
 {
@@ -27,7 +28,7 @@ public class Sphere extends GeometricShape
    {
       double tmin = Double.NaN;
       double t;
-      Vector temp = new Vector(ray.origin.subtract(position));
+      Vector temp = new Vector(ray.getOrigin().subtract(position));
       double a = ray.direction.dotProduct(ray.direction);
       double b = temp.scalarMultiply(2.0).dotProduct(ray.direction);
       double c = temp.dotProduct(temp) - radius * radius;
@@ -46,7 +47,7 @@ public class Sphere extends GeometricShape
       {
          // TODO: figure out ShadeRec
 //         sr.normal = temp.add(t, ray.direction).scalarMultiply(1 / radius);
-//         sr.local_hit_point = ray.origin.add(t, ray.direction);
+//         sr.local_hit_point = ray.getOrigin().add(t, ray.direction);
          return t;
       }
 
@@ -55,7 +56,7 @@ public class Sphere extends GeometricShape
       {
            // TODO: figure out ShadeRec
 //         sr.normal = new Normal(temp.add(t, ray.direction).scalarMultiply(1 / radius));
-//         sr.local_hit_point = ray.origin.add(t, ray.direction);
+//         sr.local_hit_point = ray.getOrigin().add(t, ray.direction);
          return t;
       }
 
@@ -85,7 +86,15 @@ public class Sphere extends GeometricShape
    {
       if (Double.isNaN(t))
          return null;
-      Vector temp = new Vector(ray.origin.subtract(position));
+      Vector temp = new Vector(ray.getOrigin().subtract(position));
       return new Normal(temp.add(ray.direction.scalarMultiply(t)));
+   }
+
+   public Color getColor()
+   {
+      if (material instanceof Color)
+         return (Color) material;
+      else 
+         return Color.BLACK;
    }
 }

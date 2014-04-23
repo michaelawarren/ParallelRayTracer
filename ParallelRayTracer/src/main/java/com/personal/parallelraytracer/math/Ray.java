@@ -13,7 +13,8 @@ package com.personal.parallelraytracer.math;
 public class Ray
 {
    public Vector direction;
-   public Point origin;
+   private Point origin;
+
    public Vector invDirection;
    public int[] sign;
 
@@ -33,5 +34,15 @@ public class Ray
    public Point findLocalHitPoint(double t)
    {
       return new Point(origin.add(direction.scalarMultiply(t)));
+   }
+
+   public Point getOrigin()
+   {
+      return origin;
+   }
+   
+   public void setOrigin(Point origin)
+   {
+      this.origin = origin;
    }
 }

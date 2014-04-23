@@ -61,13 +61,13 @@ public class Box extends GeometricShape
    {
       double tmin, tmax, tymin, tymax, tzmin, tzmax;
 
-      tmin = (parameters[ray.sign[0]].getX() - ray.origin.getX())
+      tmin = (parameters[ray.sign[0]].getX() - ray.getOrigin().getX())
           * ray.invDirection.getX();
-      tmax = (parameters[1 - ray.sign[0]].getX() - ray.origin.getX())
+      tmax = (parameters[1 - ray.sign[0]].getX() - ray.getOrigin().getX())
           * ray.invDirection.getX();
-      tymin = (parameters[ray.sign[1]].getY() - ray.origin.getY())
+      tymin = (parameters[ray.sign[1]].getY() - ray.getOrigin().getY())
           * ray.invDirection.getY();
-      tymax = (parameters[1 - ray.sign[1]].getY() - ray.origin.getY())
+      tymax = (parameters[1 - ray.sign[1]].getY() - ray.getOrigin().getY())
           * ray.invDirection.getY();
 
       if ((tmin > tymax) || (tymin > tmax))
@@ -82,9 +82,9 @@ public class Box extends GeometricShape
       {
          tmax = tymax;
       }
-      tzmin = (parameters[ray.sign[2]].getZ() - ray.origin.getZ())
+      tzmin = (parameters[ray.sign[2]].getZ() - ray.getOrigin().getZ())
           * ray.invDirection.getZ();
-      tzmax = (parameters[1 - ray.sign[2]].getZ() - ray.origin.getZ())
+      tzmax = (parameters[1 - ray.sign[2]].getZ() - ray.getOrigin().getZ())
           * ray.invDirection.getZ();
       if ((tmin > tzmax) || (tzmin > tmax))
       {

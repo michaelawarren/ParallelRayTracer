@@ -24,7 +24,7 @@ public class Plane extends GeometricShape
    @Override
    public double hitPoint(Ray ray)
    {
-      double t = position.subtract(ray.origin).dotProduct(normal)
+      double t = position.subtract(ray.getOrigin()).dotProduct(normal)
           / ray.direction.dotProduct(normal);
       
       if (!Double.isInfinite(t) && t > EPSIOLON)
@@ -43,7 +43,7 @@ public class Plane extends GeometricShape
 
    protected double intractableValue(Ray ray)
    {
-      if (contains(ray.origin))
+      if (contains(ray.getOrigin()))
          return EPSIOLON + EPSIOLON;
       else 
          return Double.NaN;

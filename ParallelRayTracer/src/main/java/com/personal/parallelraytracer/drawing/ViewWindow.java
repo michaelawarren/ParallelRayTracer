@@ -3,10 +3,10 @@ package com.personal.parallelraytracer.drawing;
 public class ViewWindow
 {
    // numRays = width x height
-   private final int width;
-   private final int height;
-   private final double pixelSize;
-   private final double gamma;
+   private final int width; // hres
+   private final int height; //vres
+   private final double pixelSize; //s
+   private final double gamma; 
    private final double invertGamma;
 
    public ViewWindow(int width, int height, double pixelSize, double gamma)

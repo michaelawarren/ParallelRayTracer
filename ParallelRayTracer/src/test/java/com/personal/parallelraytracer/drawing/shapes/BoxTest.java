@@ -165,7 +165,7 @@ public class BoxTest
       Vector vector = new Vector(0, 1, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, -1, 0);
+      Normal expected = new Normal(0, 1, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
@@ -177,7 +177,7 @@ public class BoxTest
       Vector vector = new Vector(1, 0, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(-1, 0, 0);
+      Normal expected = new Normal(1, 0, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
@@ -213,7 +213,7 @@ public class BoxTest
       Vector vector = new Vector(0, 0, -1);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 0, 1);
+      Normal expected = new Normal(0, 0, -1);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }

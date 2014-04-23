@@ -1,10 +1,12 @@
 package com.personal.parallelraytracer;
 
+import com.personal.parallelraytracer.drawing.World;
+
 public class ParallelRayTracer 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
-        
+        World world = new World();
+        world.renderScene();
     }
 }
