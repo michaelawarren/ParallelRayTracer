@@ -1,5 +1,7 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.drawing.RGBColor;
+import com.personal.parallelraytracer.drawing.materials.Matte;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -15,10 +17,11 @@ public abstract class GeometricShape
    protected boolean visible;
    protected boolean reflective;
    protected Point position;
-   protected Object material;
+   protected Matte material;
    protected Map<String, Comparable> hitStats;
 
-   public GeometricShape(boolean visible, boolean reflective, Object material, Point position)
+   public GeometricShape(boolean visible, boolean reflective, Matte material,
+       Point position)
    {
       this.visible = visible;
       this.reflective = reflective;
@@ -26,8 +29,14 @@ public abstract class GeometricShape
       this.material = material;
    }
 
+   public RGBColor getColor()
+   {
+      return material.getColor();
+   }
+
    public abstract double hitPoint(Ray ray);
+
    public abstract boolean contains(Point point);
-   // TODO: Implament getNormal for all gemoentric objects.
+
    public abstract Normal getNormal(Ray ray, double t);
 }

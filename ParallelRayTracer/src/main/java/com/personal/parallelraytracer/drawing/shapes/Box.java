@@ -1,5 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.drawing.materials.Matte;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -12,7 +13,7 @@ public class Box extends GeometricShape
    Point max;
    List<Surface> surfaces;
 
-   public Box(boolean visible, boolean reflective, Object material,
+   public Box(boolean visible, boolean reflective, Matte material,
        Point min, Point max)
    {
       super(visible, reflective, material, min);

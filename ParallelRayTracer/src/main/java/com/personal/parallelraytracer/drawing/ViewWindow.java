@@ -8,14 +8,21 @@ public class ViewWindow
    private final double pixelSize; //s
    private final double gamma; 
    private final double invertGamma;
+   private final int numSamples;
 
-   public ViewWindow(int width, int height, double pixelSize, double gamma)
+   public ViewWindow(int width, int height, double pixelSize, double gamma, int numSamples)
    {
       this.width = width;
       this.height = height;
       this.pixelSize = pixelSize;
       this.gamma = gamma;
       this.invertGamma = 1 / gamma;
+      this.numSamples = numSamples;
+   }
+
+   public int getNumSamples()
+   {
+      return numSamples;
    }
 
    public int getWidth()
@@ -56,7 +63,7 @@ public class ViewWindow
          throw new IllegalArgumentException(
              "column must be between 0 and width - 1");
       }
-      return pixelSize * (column - width / 2 + 0.5d);
+      return pixelSize * (column - 0.5 * (width - 1.0d));
    }
 
    /**
@@ -72,6 +79,16 @@ public class ViewWindow
          throw new IllegalArgumentException(
              "row must be between 0 and height - 1");
       }
-      return pixelSize * (row - height / 2 + 0.5d);
+      return pixelSize * (row - 0.5d * (height - 1.0d));
+   }
+
+   double getAX(int col, int n, int q)
+   {
+      return pixelSize * (col - 0.5d * (width) + (q + 0.5d) / n);
+   }
+
+   double getAY(int row, int n, int q)
+   {
+      return pixelSize * (row - 0.5d * (height) + (q + 0.5d) / n);
    }
 }

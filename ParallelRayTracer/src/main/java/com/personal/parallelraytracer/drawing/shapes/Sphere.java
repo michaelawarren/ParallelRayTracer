@@ -1,16 +1,16 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.drawing.materials.Matte;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
-import java.awt.Color;
 
 public class Sphere extends GeometricShape
 {
    double radius;
 
-   public Sphere(boolean visible, boolean reflective, Object material,
+   public Sphere(boolean visible, boolean reflective, Matte material,
        Point position, double radius)
    {
       super(visible, reflective, material, position);
@@ -88,13 +88,5 @@ public class Sphere extends GeometricShape
          return null;
       Vector temp = new Vector(ray.getOrigin().subtract(position));
       return new Normal(temp.add(ray.direction.scalarMultiply(t)));
-   }
-
-   public Color getColor()
-   {
-      if (material instanceof Color)
-         return (Color) material;
-      else 
-         return Color.BLACK;
    }
 }

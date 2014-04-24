@@ -1,8 +1,8 @@
 package com.personal.parallelraytracer.drawing.tracers;
 
+import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.math.Ray;
-import java.awt.Color;
 
 public class SingleSphere extends Tracer 
 {
@@ -12,7 +12,7 @@ public class SingleSphere extends Tracer
    }
 
    @Override
-   public Color trayRay(Ray ray)
+   public RGBColor trayRay(Ray ray)
    {
 //      ShadeRec sr = new ShadeRec(world);
       double t = world.sphere.hitPoint(ray);

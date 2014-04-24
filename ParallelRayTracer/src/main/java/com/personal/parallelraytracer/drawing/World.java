@@ -1,78 +1,90 @@
 package com.personal.parallelraytracer.drawing;
 
+import com.personal.parallelraytracer.drawing.materials.Matte;
+import com.personal.parallelraytracer.drawing.shapes.Box;
 import com.personal.parallelraytracer.drawing.shapes.GeometricShape;
+import com.personal.parallelraytracer.drawing.shapes.Plane;
 import com.personal.parallelraytracer.drawing.shapes.Sphere;
-import com.personal.parallelraytracer.drawing.tracers.SingleSphere;
+import com.personal.parallelraytracer.drawing.tracers.RayCasting;
 import com.personal.parallelraytracer.drawing.tracers.Tracer;
+import com.personal.parallelraytracer.drawing.utils.ShadeRec;
+import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
-import com.personal.parallelraytracer.math.Vector;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 public class World
 {
    public List<GeometricShape> shapes;
    public final Sphere sphere;
-   public final Color backgroundColor;
+   public final Box box;
+   public final RGBColor backgroundColor;
    public final ViewWindow viewWindow;
    public final Tracer tracer;
-   private BufferedImage image;
 
    public World()
    {
-      this.viewWindow = new ViewWindow(200, 200, 1.0, 1.0);
-      this.backgroundColor = Color.BLACK;
-      this.tracer = new SingleSphere(this);
+      this.viewWindow = new ViewWindow(200, 200, 1.0, 1.0, 1);
+      this.backgroundColor = RGBColor.BLACK;
+      this.tracer = new RayCasting(this);
       this.sphere
-          = new Sphere(true, false, Color.RED, new Point(0, 0, 0), 85.0d);
+          = new Sphere(true, false, new Matte(RGBColor.YELLOW), new Point(0, 0,
+                  0), 85.0d);
+      this.box = new Box(true, false, new Matte(RGBColor.BLUE), new Point(1, 1,
+          1),
+          new Point(50, 50, 50));
+
+      this.shapes = new ArrayList();
    }
 
-   public void renderScene()
+   public void setUpSceen1()
    {
-      Color pixelColor;
-      Ray ray;
-      double zw = 100.0d;
-      double x;
-      double y;
+      shapes.add(new Sphere(true, false,
+          new Matte(RGBColor.RED), new Point(0, -25, 0), 80));
+      shapes.add(new Sphere(true, false,
+          new Matte(RGBColor.YELLOW), new Point(0, 30, 0), 60));
+      shapes.add(new Plane(true, false, new Point(0, 0, 0),
+          new Normal(0, 1, 1), new Matte(new RGBColor(0, 0.3, 0))));
+      shapes.add(box);
+   }
 
-      openWindow(viewWindow.getWidth(), viewWindow.getHeight());
-      ray = new Ray(new Vector(0, 0, -1), new Point(0, 0, 0));
+   public ShadeRec hitBareBonesObjects(Ray ray)
+   {
+      ShadeRec sr = new ShadeRec(this);
+      double t;
+      double tmin = Double.MAX_VALUE;
 
-      for (int r = 0; r < viewWindow.getHeight(); r++)
+      for (GeometricShape shape : shapes)
       {
-         for (int c = 0; c < viewWindow.getWidth(); c++)
+         t = shape.hitPoint(ray);
+         if (!Double.isNaN(t) && t < tmin)
          {
-            x = viewWindow.getX(c);
-            y = viewWindow.getY(r);
-            ray.setOrigin(new Point(x, y, zw));
-            pixelColor = tracer.trayRay(ray);
-            displayPixel(r, c, pixelColor);
+            sr = setShadeRecProperties(sr, ray, t, shape);
+            tmin = t;
          }
       }
-      try
-      {
-         // retrieve image
-         File outputfile = new File("C:\\Users\\Michael\\Desktop\\image.png");
-         ImageIO.write(image, "png", outputfile);
-      }
-      catch (IOException e)
-      {
-         System.out.println(e.getMessage());
-      }
+      return sr;
    }
 
-   private void openWindow(int width, int height)
+   void addObject(GeometricShape shape)
    {
-      image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+      shapes.add(shape);
    }
 
-   private void displayPixel(int r, int c, Color pixelColor)
+   public Camera buildCamera()
    {
-      image.setRGB(c, r, pixelColor.getRGB());
+      return new Camera(viewWindow, tracer);
+   }
+
+   public static ShadeRec setShadeRecProperties(ShadeRec sr, Ray ray, double t,
+       GeometricShape shape)
+   {
+      // looks usless now but will leave in for now.
+      sr.hitAnObject = true;
+      sr.localhitPoint = ray.findLocalHitPoint(t);
+      sr.normal = shape.getNormal(ray, t);
+      sr.color = shape.getColor();
+      return sr;
    }
 }
