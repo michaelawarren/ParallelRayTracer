@@ -31,22 +31,21 @@ public class World
       this.sphere
           = new Sphere(true, false, new Matte(RGBColor.YELLOW), new Point(0, 0,
                   0), 85.0d);
-      this.box = new Box(true, false, new Matte(RGBColor.BLUE), new Point(1, 1,
-          1),
-          new Point(50, 50, 50));
-
-      this.shapes = new ArrayList();
+      this.box = new Box(true, false, new Matte(RGBColor.BLUE),
+          new Point(1, 1, 1), new Point(50, 50, 50));
    }
 
    public void setUpSceen1()
    {
+      this.shapes = new ArrayList();
       shapes.add(new Sphere(true, false,
           new Matte(RGBColor.RED), new Point(0, -25, 0), 80));
       shapes.add(new Sphere(true, false,
           new Matte(RGBColor.YELLOW), new Point(0, 30, 0), 60));
       shapes.add(new Plane(true, false, new Point(0, 0, 0),
           new Normal(0, 1, 1), new Matte(new RGBColor(0, 0.3, 0))));
-      shapes.add(box);
+      shapes.add(new Box(true, false, new Matte(RGBColor.BLUE),
+          new Point(0, 0, 0), 120, 120, 120));
    }
 
    public ShadeRec hitBareBonesObjects(Ray ray)

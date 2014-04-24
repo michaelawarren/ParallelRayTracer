@@ -22,4 +22,9 @@ public class Point extends Vector3D
   {
      super(array);
   }
+  
+  public Point midPoint(Point pt2)
+  {
+     return new Point(this.add(pt2).scalarMultiply(0.5d));
+  }
 }

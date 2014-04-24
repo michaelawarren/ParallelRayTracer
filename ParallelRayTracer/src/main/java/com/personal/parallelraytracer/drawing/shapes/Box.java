@@ -16,14 +16,27 @@ public class Box extends GeometricShape
    public Box(boolean visible, boolean reflective, Matte material,
        Point min, Point max)
    {
-      super(visible, reflective, material, min);
+      super(visible, reflective, material, min.midPoint(max));
+      build(min, max);
+   }
+
+   public Box(boolean visible, boolean reflective, Matte material,
+       Point center, double width, double height, double length)
+   {
+      super(visible, reflective, material, center);
+      final Point delta = delta(width, height, length);
+      build(new Point(center.subtract(delta)), new Point(center.add(delta)));
+   }
+
+   public final void build(Point min, Point max)
+   {
       parameters = new Point[]
       {
          min, max
       };
       this.max = max;
       surfaces = new ArrayList<>();
-  
+
       Point ooo = new Point(min.getX(), min.getY(), min.getZ());
       Point ool = new Point(min.getX(), min.getY(), max.getZ());
       Point olo = new Point(min.getX(), max.getY(), min.getZ());
@@ -32,15 +45,15 @@ public class Box extends GeometricShape
       Point lol = new Point(max.getX(), min.getY(), max.getZ());
       Point llo = new Point(max.getX(), max.getY(), min.getZ());
       Point lll = new Point(max.getX(), max.getY(), max.getZ());
-      
+
       // sides
       surfaces.add(new Surface(ooo, ool, olo, oll));
       surfaces.add(new Surface(llo, loo, lll, lol));
-      
+
       // top bottom
       surfaces.add(new Surface(ooo, loo, ool, lol));
       surfaces.add(new Surface(olo, llo, oll, lll));
-      
+
       // front back
       surfaces.add(new Surface(ooo, loo, olo, llo));
       surfaces.add(new Surface(ool, lol, oll, lll));
@@ -124,8 +137,15 @@ public class Box extends GeometricShape
       for (Surface surface : surfaces)
       {
          if (surface.contains(point))
+         {
             return surface.getNormal(ray, t);
+         }
       }
       return null;
+   }
+
+   private Point delta(double width, double height, double length)
+   {
+      return new Point(width / 2, height / 2, length / 2);
    }
 }
