@@ -8,12 +8,11 @@ public class PerfectSpecular extends BRDF
 {
    double kr;
    RGBColor cr;
-   
+
    @Override
    public RGBColor f(ShadeRec sr, Vector wi, Vector wo)
    {
-      //TODO: write f
-      throw new UnsupportedOperationException("Not supported yet.");
+      return RGBColor.BLACK;
    }
 
    @Override
@@ -26,8 +25,6 @@ public class PerfectSpecular extends BRDF
    @Override
    public RGBColor rho(ShadeRec sr, Vector ro)
    {
-      //TODO: write rho
-      throw new UnsupportedOperationException("Not supported yet.");
+      return RGBColor.BLACK;
    }
-
 }

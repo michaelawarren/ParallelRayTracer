@@ -27,8 +27,7 @@ public class GlossySpecular extends BRDF
    @Override
    public RGBColor rho(ShadeRec sr, Vector ro)
    {
-      //TODO: write rho
-      throw new UnsupportedOperationException("Not supported yet.");
+      return RGBColor.BLACK;
    }
 
 }
