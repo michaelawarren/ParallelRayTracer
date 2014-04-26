@@ -1,6 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.drawing.materials.Matte;
+import com.personal.parallelraytracer.drawing.materials.Material;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -9,35 +9,24 @@ import java.util.List;
 
 public class Box extends GeometricShape
 {
-   Point[] parameters;
-   Point max;
-   List<Surface> surfaces;
+   private final Point[] parameters;
+   private final Point max;
+   private final Point min;
+   private final List<Surface> surfaces;
 
-   public Box(boolean visible, boolean reflective, Matte material,
+   public Box(boolean visible, boolean reflective, Material material,
        Point min, Point max)
    {
       super(visible, reflective, material, min.midPoint(max));
-      build(min, max);
-   }
-
-   public Box(boolean visible, boolean reflective, Matte material,
-       Point center, double width, double height, double length)
-   {
-      super(visible, reflective, material, center);
-      final Point delta = delta(width, height, length);
-      build(new Point(center.subtract(delta)), new Point(center.add(delta)));
-   }
-
-   public final void build(Point min, Point max)
-   {
+      this.max = max;
+      this.min = min;
       parameters = new Point[]
       {
          min, max
       };
-      this.max = max;
       surfaces = new ArrayList<>();
-
-      Point ooo = new Point(min.getX(), min.getY(), min.getZ());
+      
+            Point ooo = new Point(min.getX(), min.getY(), min.getZ());
       Point ool = new Point(min.getX(), min.getY(), max.getZ());
       Point olo = new Point(min.getX(), max.getY(), min.getZ());
       Point oll = new Point(min.getX(), max.getY(), max.getZ());
@@ -57,6 +46,14 @@ public class Box extends GeometricShape
       // front back
       surfaces.add(new Surface(ooo, loo, olo, llo));
       surfaces.add(new Surface(ool, lol, oll, lll));
+   }
+
+   public Box(boolean visible, boolean reflective, Material material,
+       Point center, double width, double height, double length)
+   {
+      this(visible, reflective, material, 
+          new Point(center.subtract(delta(width, height, length))),
+          new Point(center.add(delta(width, height, length))));
    }
 
    /**
@@ -122,11 +119,11 @@ public class Box extends GeometricShape
    @Override
    public boolean contains(Point point)
    {
-      return position.getX() <= point.getX()
+      return min.getX() <= point.getX()
           && max.getX() >= point.getX()
-          && position.getY() <= point.getY()
+          && min.getY() <= point.getY()
           && max.getY() >= point.getY()
-          && position.getZ() <= point.getZ()
+          && min.getZ() <= point.getZ()
           && max.getZ() >= point.getZ();
    }
 
@@ -144,7 +141,7 @@ public class Box extends GeometricShape
       return null;
    }
 
-   private Point delta(double width, double height, double length)
+   private static Point delta(double width, double height, double length)
    {
       return new Point(width / 2, height / 2, length / 2);
    }
