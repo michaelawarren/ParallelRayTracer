@@ -1,6 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.drawing.materials.Matte;
+import com.personal.parallelraytracer.drawing.materials.Material;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -24,7 +24,7 @@ public class Surface extends Plane
     * @param topLeft
     * @param bottomRight used to officially define the plane
     */
-   public Surface(boolean visible, boolean reflective, Matte material,
+   public Surface(boolean visible, boolean reflective, Material material,
        Point bottomLeft, Point bottomRight, Point topLeft, Point topRight)
    {
       super(visible, reflective, bottomLeft,

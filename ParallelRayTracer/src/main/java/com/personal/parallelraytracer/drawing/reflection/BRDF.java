@@ -10,6 +10,26 @@ public abstract class BRDF
 {
    protected Sampler sampler;
    protected Normal normal;
+
+   public Sampler getSampler()
+   {
+      return sampler;
+   }
+
+   public void setSampler(Sampler sampler)
+   {
+      this.sampler = sampler;
+   }
+
+   public Normal getNormal()
+   {
+      return normal;
+   }
+
+   public void setNormal(Normal normal)
+   {
+      this.normal = normal;
+   }
    
    abstract public RGBColor f(ShadeRec sr, Vector wi, Vector wo);
    abstract public RGBColor sampleF(ShadeRec sr, Vector wi, Vector wo);

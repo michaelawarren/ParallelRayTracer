@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class ViewWindowTest
 {
-   ViewWindow viewWindow = new ViewWindow(6, 4, 1, 1, 1);
+   ViewPlane viewWindow = new ViewPlane(6, 4, 1, 1, 1, null);
 
    public ViewWindowTest()
    {

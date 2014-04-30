@@ -18,6 +18,12 @@ public class Ray
    public Vector invDirection;
    public int[] sign;
 
+   public Ray()
+   {
+      this(new Vector(0,0,0), new Point(0,0,0));
+   }
+   
+   
    public Ray(Vector direction, Point point)
    {
       this.direction = direction;
@@ -39,6 +45,16 @@ public class Ray
    public Point getOrigin()
    {
       return origin;
+   }
+
+   public Vector getDirection()
+   {
+      return direction;
+   }
+
+   public void setDirection(Vector direction)
+   {
+      this.direction = direction;
    }
    
    public void setOrigin(Point origin)

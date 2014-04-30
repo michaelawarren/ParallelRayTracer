@@ -1,16 +1,33 @@
 package com.personal.parallelraytracer.drawing;
 
-public class ViewWindow
+import com.personal.parallelraytracer.drawing.sampling.Jittered;
+import com.personal.parallelraytracer.drawing.sampling.Sampler;
+import com.personal.parallelraytracer.drawing.sampling.Regular;
+
+public class ViewPlane
 {
    // numRays = width x height
    private final int width; // hres
    private final int height; //vres
-   private final double pixelSize; //s
-   private final double gamma; 
+   private double pixelSize; //s
+   private final double gamma;
    private final double invertGamma;
-   private final int numSamples;
+   private int numSamples;
+   private Sampler sampler;
 
-   public ViewWindow(int width, int height, double pixelSize, double gamma, int numSamples)
+   public ViewPlane(ViewPlane viewPlane)
+   {
+      this.width = viewPlane.width;
+      this.height = viewPlane.height;
+      this.pixelSize = viewPlane.pixelSize;
+      this.gamma = viewPlane.gamma;
+      this.invertGamma = viewPlane.invertGamma;
+      this.numSamples = viewPlane.numSamples;
+      this.sampler = viewPlane.sampler;
+   }
+
+   public ViewPlane(int width, int height, double pixelSize, double gamma,
+       int numSamples, Sampler sampler)
    {
       this.width = width;
       this.height = height;
@@ -18,18 +35,28 @@ public class ViewWindow
       this.gamma = gamma;
       this.invertGamma = 1 / gamma;
       this.numSamples = numSamples;
+      this.sampler = sampler;
    }
+
 
    public int getNumSamples()
    {
       return numSamples;
    }
 
+   /**
+    * 
+    * @return hres
+    */
    public int getWidth()
    {
       return width;
    }
 
+   /**
+    * 
+    * @return vres
+    */
    public int getHeight()
    {
       return height;
@@ -50,6 +77,32 @@ public class ViewWindow
       return invertGamma;
    }
 
+   public void setPixelSize(double pixelSize)
+   {
+      this.pixelSize = pixelSize;
+   }
+
+   public Sampler getSampler()
+   {
+      return sampler;
+   }
+
+   public void setSampler(Sampler sampler)
+   {
+      this.numSamples = sampler.getNumSamples();
+      this.sampler = sampler;
+   }
+   
+   public void setSamples(int n)
+   {
+      numSamples = n;
+      
+      if (numSamples > 1)
+         sampler = new Jittered(numSamples);
+      else 
+         sampler = new Regular(1);
+   }
+   
    /**
     * Gives the x coordinate for a given column.
     *

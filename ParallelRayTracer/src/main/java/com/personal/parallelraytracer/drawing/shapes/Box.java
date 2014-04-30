@@ -57,8 +57,8 @@ public class Box extends GeometricShape
    }
 
    /**
-    * Ray-box intersection using IEEE numerical properties to ensure that the
-    * test is both robust and efficient, as described in:
+    * "Ray-box intersection using IEEE numerical properties to ensure that the
+    * test is both robust and efficient, as described in:"
     *
     * Amy Williams, Steve Barrus, R. Keith Morley, and Peter Shirley
     * "An Efficient and Robust Ray-Box Intersection Algorithm"

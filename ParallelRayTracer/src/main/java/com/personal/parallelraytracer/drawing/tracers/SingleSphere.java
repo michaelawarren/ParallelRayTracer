@@ -14,12 +14,38 @@ public class SingleSphere extends Tracer
    @Override
    public RGBColor trayRay(Ray ray)
    {
-//      ShadeRec sr = new ShadeRec(world);
       double t = world.sphere.hitPoint(ray);
       if (Double.isNaN(t))
          return world.backgroundColor;
-//      sr = setShadeRecProperties(sr, ray, t, world.sphere);
       
       return world.sphere.getColor();
+   }
+   
+   /**
+    * not supported will produce the same output as traceRa(ray)
+    * 
+    * @param ray
+    * @param depth
+    * @return 
+    */
+   @Deprecated
+   @Override
+   public RGBColor trayRay(Ray ray, int depth)
+   {
+      return trayRay(ray);
+   }
+   
+   /**
+    * not supported will produce the same output as traceRa(ray)
+    * 
+    * @param ray
+    * @param depth
+    * @return 
+    */
+   @Deprecated
+   @Override
+   public RGBColor trayRay(Ray ray, double tmin, int depth)
+   {
+      return trayRay(ray);
    }
 }

@@ -9,12 +9,20 @@ import com.personal.parallelraytracer.math.Vector;
 
 /**
  * Based off of Ray Tracing from the Ground up
- * 
+ *
  */
 public class Lambertian extends BRDF
 {
    double kd;
    RGBColor cd;
+
+   public Lambertian()
+   {
+      this.kd = 0;
+      this.cd = RGBColor.WHITE;
+      this.normal = new Normal(0, 0, 0);
+      this.sampler = null;
+   }
 
    public Lambertian(double kd, RGBColor cd, Normal normal, Sampler sampler)
    {
@@ -33,19 +41,30 @@ public class Lambertian extends BRDF
    {
       return cd;
    }
-   
+
+   public void setKd(double kd)
+   {
+      this.kd = kd;
+   }
+
+   public void setCd(RGBColor cd)
+   {
+      this.cd = cd;
+   }
+
    @Override
    public RGBColor f(ShadeRec sr, Vector wi, Vector wo)
    {
-      return new RGBColor(cd.scalarMultiply(kd).scalarMultiply(MathConst.INV_PIE));
+      return new RGBColor(cd.scalarMultiply(kd)
+          .scalarMultiply(MathConst.INV_PIE));
    }
 
    /**
-    * 
+    *
     * @param sr
     * @param wi changeable
     * @param wo
-    * @return 
+    * @return
     */
    @Override
    public RGBColor sampleF(ShadeRec sr, Vector wi, Vector wo)
@@ -59,5 +78,4 @@ public class Lambertian extends BRDF
    {
       return new RGBColor(cd.scalarMultiply(kd));
    }
-
 }

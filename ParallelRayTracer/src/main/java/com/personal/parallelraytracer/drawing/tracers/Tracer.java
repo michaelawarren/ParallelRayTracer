@@ -11,4 +11,7 @@ public abstract class Tracer
    public Color color;
    
    public abstract RGBColor trayRay(Ray ray);
+   public abstract RGBColor trayRay(Ray ray, int depth);
+   public abstract RGBColor trayRay(Ray ray, double tmin, int depth);
+   
 }

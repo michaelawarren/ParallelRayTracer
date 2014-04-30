@@ -16,4 +16,36 @@ public abstract class Light
    {
       return new RGBColor(color.scalarMultiply(ls));
    }
+
+   public boolean isShadow()
+   {
+      return shadow;
+   }
+
+   public void setShadow(boolean shadow)
+   {
+      this.shadow = shadow;
+   }
+
+   public double getLs()
+   {
+      return ls;
+   }
+
+   public void setLs(double ls)
+   {
+      this.ls = ls;
+   }
+
+   public RGBColor getColor()
+   {
+      return color;
+   }
+
+   public void setColor(RGBColor color)
+   {
+      this.color = color;
+   }
+   
+   
 }

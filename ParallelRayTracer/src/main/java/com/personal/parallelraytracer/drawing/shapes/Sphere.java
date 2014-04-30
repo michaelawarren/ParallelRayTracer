@@ -1,6 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.drawing.materials.Matte;
+import com.personal.parallelraytracer.drawing.materials.Material;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -10,7 +10,7 @@ public class Sphere extends GeometricShape
 {
    double radius;
 
-   public Sphere(boolean visible, boolean reflective, Matte material,
+   public Sphere(boolean visible, boolean reflective, Material material,
        Point position, double radius)
    {
       super(visible, reflective, material, position);
@@ -45,18 +45,12 @@ public class Sphere extends GeometricShape
 
       if (t > EPSIOLON)
       {
-         // TODO: figure out ShadeRec
-//         sr.normal = temp.add(t, ray.direction).scalarMultiply(1 / radius);
-//         sr.local_hit_point = ray.getOrigin().add(t, ray.direction);
          return t;
       }
 
       t = (-b + e) / denom; // larger root
       if (t > EPSIOLON)
       {
-           // TODO: figure out ShadeRec
-//         sr.normal = new Normal(temp.add(t, ray.direction).scalarMultiply(1 / radius));
-//         sr.local_hit_point = ray.getOrigin().add(t, ray.direction);
          return t;
       }
 

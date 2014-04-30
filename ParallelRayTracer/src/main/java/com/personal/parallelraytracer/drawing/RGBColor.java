@@ -24,7 +24,7 @@ public class RGBColor extends Vector3D
       super(vector3D.toArray());
    }
 
-   public RGBColor componmentMultiply(RGBColor rGBColor)
+   public RGBColor componmentMultiply(Vector3D rGBColor)
    {
       return new RGBColor(this.getX() * rGBColor.getX(),
           this.getY() * rGBColor.getY(), this.getZ() * rGBColor.getZ());

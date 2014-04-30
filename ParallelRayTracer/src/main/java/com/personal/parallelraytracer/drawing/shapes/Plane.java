@@ -1,6 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
-import com.personal.parallelraytracer.drawing.materials.Matte;
+import com.personal.parallelraytracer.drawing.materials.Material;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -9,7 +9,7 @@ public class Plane extends GeometricShape
 {
    Normal normal;
    public Plane(boolean visible, boolean reflective, Point position,
-       Normal normal, Matte material)
+       Normal normal, Material material)
    {
       super(visible, reflective, material, position);
       this.normal = normal;

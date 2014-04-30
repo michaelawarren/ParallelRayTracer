@@ -5,9 +5,9 @@ import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Ray;
 
-public class RayCasting extends Tracer 
+public class RayCast extends Tracer 
 {
-   public RayCasting(World world)
+   public RayCast(World world)
    {
       this.world = world;
    }
@@ -20,5 +20,24 @@ public class RayCasting extends Tracer
          return sr.color;
       
       return world.backgroundColor;
+   }
+
+   @Override
+   public RGBColor trayRay(Ray ray, int depth)
+   {
+      ShadeRec sr = new ShadeRec(world.hitObjects(ray));
+      if (sr.hitAnObject)
+      {
+         sr.ray = ray;
+         return sr.material.shade(sr);
+      }
+      else 
+         return world.backgroundColor;
+   }
+
+   @Override
+   public RGBColor trayRay(Ray ray, double tmin, int depth)
+   {
+      return trayRay(ray, depth);
    }
 }
