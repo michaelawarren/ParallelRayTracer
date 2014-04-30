@@ -28,6 +28,7 @@ public abstract class Sampler
       this.numSamples = numSamples;
       samples = new ArrayList<>();
       shuffledIndices = new ArrayList<>();
+      this.numSets = 1;
    }
 
    public Sampler(int numSamples, int numSets, List<Vector2D> samples,
@@ -59,6 +60,8 @@ public abstract class Sampler
       {
          count = 0;
       }
+      if (samples.isEmpty())
+         generateSamples();
       return samples.get((int) (count++ % (numSamples * numSets)));
    }
 

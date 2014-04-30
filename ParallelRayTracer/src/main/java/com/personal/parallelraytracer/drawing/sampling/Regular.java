@@ -4,8 +4,9 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 public class Regular extends Sampler
 {
-   public Regular(int i)
+   public Regular(int numSamples)
    {
+      super(numSamples);
    }
 
    @Override

@@ -61,7 +61,7 @@ public class Surface extends Plane
    @Override
    public boolean contains(Point point)
    {
-      return super.contains(point) && min.getX() <= point.getX()
+      return min.getX() <= point.getX()
           && max.getX() >= point.getX()
           && min.getY() <= point.getY()
           && max.getY() >= point.getY()

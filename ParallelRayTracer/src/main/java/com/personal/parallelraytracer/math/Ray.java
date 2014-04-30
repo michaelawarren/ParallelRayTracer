@@ -23,7 +23,6 @@ public class Ray
       this(new Vector(0,0,0), new Point(0,0,0));
    }
    
-   
    public Ray(Vector direction, Point point)
    {
       this.direction = direction;
@@ -55,6 +54,13 @@ public class Ray
    public void setDirection(Vector direction)
    {
       this.direction = direction;
+      this.invDirection = new Vector(1 / direction.getX(), 1 / direction.getY(), 1 / direction.getZ());
+      this.sign = new int[]
+      {
+         (invDirection.getX() < 0.0d) ? 1 : 0,
+         (invDirection.getY() < 0.0d) ? 1 : 0,
+         (invDirection.getZ() < 0.0d) ? 1 : 0
+      };
    }
    
    public void setOrigin(Point origin)

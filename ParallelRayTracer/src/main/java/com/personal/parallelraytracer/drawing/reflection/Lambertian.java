@@ -20,7 +20,7 @@ public class Lambertian extends BRDF
    {
       this.kd = 0;
       this.cd = RGBColor.WHITE;
-      this.normal = new Normal(0, 0, 0);
+      this.normal = new Normal(1, 1, 1);
       this.sampler = null;
    }
 

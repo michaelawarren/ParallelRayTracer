@@ -32,14 +32,14 @@ public abstract class GeometricShape
 
    public RGBColor getColor()
    {
-      return color;
+      return material.getColor();
    }
 
    public abstract double hitPoint(Ray ray);
 
    public abstract boolean contains(Point point);
 
-   public abstract Normal getNormal(Ray ray, double t);
+    public abstract Normal getNormal(Ray ray, double t);
 
    public boolean isVisible()
    {
