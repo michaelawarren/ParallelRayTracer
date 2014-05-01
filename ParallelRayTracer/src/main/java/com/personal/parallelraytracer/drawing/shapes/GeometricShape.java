@@ -70,6 +70,11 @@ public abstract class GeometricShape
    {
       this.material = material;
    }
+
+   public double shadowHit(Ray ray)
+   {
+      return hitPoint(ray);
+   }
    
    
 }

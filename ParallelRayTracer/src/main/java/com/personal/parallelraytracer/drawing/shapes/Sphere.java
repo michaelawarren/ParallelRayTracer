@@ -14,6 +14,7 @@ public class Sphere extends GeometricShape
        Point position, double radius)
    {
       super(visible, reflective, material, position);
+      EPSIOLON = EPSIOLON * 1000;
       this.radius = radius;
    }
 

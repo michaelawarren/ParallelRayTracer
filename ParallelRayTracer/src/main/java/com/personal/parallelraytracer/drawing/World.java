@@ -87,18 +87,31 @@ public class World
       lights.add(new PointLight(new Point(100, 50, 150), 3.0f, RGBColor.WHITE,
           true));
 
-      Matte matte = new Matte();
-      matte.setKa(0.25d);
-      matte.setKd(0.65d);
-      matte.setCd(new RGBColor(1, 1, 0));
-      shapes.add(new Sphere(true, false, matte, new Point(0, 0, 10), 10));
+      Matte matteSphere1 = new Matte();
+      matteSphere1.setKa(0.25d);
+      matteSphere1.setKd(0.65d);
+      matteSphere1.setCd(new RGBColor(1, 1, 0));
+      shapes.add(new Sphere(true, false, matteSphere1, new Point(0, 0, 10), 10));
       
-      Matte matteBox = new Matte();
-      matteBox.setKa(0.25d);
-      matteBox.setKd(0.65d);
-      matteBox.setCd(new RGBColor(0, 0, 1));
+      Matte matteBox1 = new Matte();
+      matteBox1.setKa(0.25d);
+      matteBox1.setKd(0.65d);
+      matteBox1.setCd(new RGBColor(0, 0, 1));
       shapes
-          .add(new Box(true, false, matteBox, new Point(0, 0, -10), 20, 20, 20));
+          .add(new Box(true, false, matteBox1, new Point(0, 0, -10), 20, 20, 20));
+      
+      Matte matteSphere2 = new Matte();
+      matteSphere2.setKa(0.25d);
+      matteSphere2.setKd(0.65d);
+      matteSphere2.setCd(new RGBColor(1, 1, 0));
+      shapes.add(new Sphere(true, false, matteSphere2, new Point(20, 10, 10), 10));
+      
+      Matte matteBox2 = new Matte();
+      matteBox2.setKa(0.25d);
+      matteBox2.setKd(0.65d);
+      matteBox2.setCd(new RGBColor(0, 0, 1));
+      shapes
+          .add(new Box(true, false, matteBox2, new Point(20, 10, -10), 20, 20, 20));
       
       Matte mattePlane = new Matte();
       mattePlane.setKa(0.25d);
@@ -232,6 +245,7 @@ public class World
    {
       // looks usless now but will leave in for now.
       sr.hitAnObject = true;
+      sr.hitPoint = ray.findLocalHitPoint(t);
       sr.localHitPoint = ray.findLocalHitPoint(t);
       sr.normal = shape.getNormal(ray, t);
       sr.color = shape.getColor();

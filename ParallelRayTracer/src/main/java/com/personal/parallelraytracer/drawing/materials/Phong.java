@@ -2,21 +2,18 @@ package com.personal.parallelraytracer.drawing.materials;
 
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.light.Light;
+import com.personal.parallelraytracer.drawing.reflection.GlossySpecular;
 import com.personal.parallelraytracer.drawing.reflection.Lambertian;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-public class Matte extends Material
+public class Phong extends Material
 {
    private Lambertian ambientBRDF;
    private Lambertian diffuseBRDF;
-
-   public Matte()
-   {
-      ambientBRDF = new Lambertian();
-      diffuseBRDF = new Lambertian();
-   }
+   private GlossySpecular specularBRDF;
 
    public void setKa(double ka)
    {
@@ -27,32 +24,29 @@ public class Matte extends Material
    {
       diffuseBRDF.setKd(kd);
    }
-
-   public void setCd(RGBColor color)
+  
+   public void setKs(double ks)
    {
-      diffuseBRDF.setCd(color);
-      ambientBRDF.setCd(color);
-      this.color = color;
+      specularBRDF.setKs(ks);
    }
 
    @Override
    public RGBColor shade(ShadeRec sr)
    {
       Vector wo = new Vector(sr.ray.direction.negate());
-      RGBColor l = ambientBRDF.rho(sr, wo).componmentMultiply(sr.world.ambient
-          .L(sr));
+      Vector3D L = ambientBRDF.rho(sr, wo).componmentMultiply(sr.world.ambient
+          .L(
+              sr));
+
       for (Light light : sr.world.lights)
       {
          Vector wi = light.getDirection(sr);
-         if (sr.normal == null || wi == null)
-         {
-            return RGBColor.BLACK;
-         }
-         double nDotwWi = sr.normal.dotProduct(wi);
+         double ndotwi = sr.normal.dotProduct(wi);
 
-         if (nDotwWi > 0.0d)
+         if (ndotwi > 0.0)
          {
             boolean inShadow = false;
+
             if (light.castsShadows())
             {
                Ray shadowRay = new Ray(wi, sr.hitPoint);
@@ -61,13 +55,15 @@ public class Matte extends Material
 
             if (!inShadow)
             {
-               l = new RGBColor(l.add(diffuseBRDF.f(sr, wo, wi)
-                   .componmentMultiply(
-                       light.L(sr).scalarMultiply(nDotwWi))));
+               L = L
+                   .add(new RGBColor(diffuseBRDF.f(sr, wi, wo)
+                       .add(specularBRDF.f(sr, wi, wo)))
+                       .componmentMultiply(light.L(sr).scalarMultiply(ndotwi)));
             }
          }
       }
-      return l;
+
+      return new RGBColor(L);
    }
 
    @Override

@@ -2,6 +2,7 @@ package com.personal.parallelraytracer.drawing.light;
 
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
+import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 
 public abstract class Light
@@ -17,7 +18,7 @@ public abstract class Light
       return new RGBColor(color.scalarMultiply(ls));
    }
 
-   public boolean isShadow()
+   public boolean castsShadows()
    {
       return shadow;
    }
@@ -46,6 +47,6 @@ public abstract class Light
    {
       this.color = color;
    }
-   
-   
+
+   public abstract boolean inShadow(Ray shadowRay, ShadeRec sr);
 }

@@ -2,6 +2,7 @@ package com.personal.parallelraytracer.drawing.light;
 
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
+import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 
 public class Ambient extends Light
@@ -23,5 +24,11 @@ public class Ambient extends Light
    public Vector getDirection(ShadeRec sr)
    {
       return new Vector(0,0,0);
+   }
+
+   @Override
+   public boolean inShadow(Ray shadowRay, ShadeRec sr)
+   {
+      return false;
    }
 }
