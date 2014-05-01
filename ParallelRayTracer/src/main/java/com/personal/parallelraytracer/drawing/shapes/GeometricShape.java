@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public abstract class GeometricShape
 {
-   public final double EPSIOLON = 10e-6d;
+   public double EPSIOLON = 10e-6d;
    protected boolean visible;
    protected boolean reflective;
    protected Point position;

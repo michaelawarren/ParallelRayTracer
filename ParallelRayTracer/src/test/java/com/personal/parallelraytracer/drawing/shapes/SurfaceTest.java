@@ -1,5 +1,6 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
+import com.personal.parallelraytracer.drawing.shapes.Surface.Side;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import static org.junit.Assert.*;
@@ -18,6 +19,6 @@ public class SurfaceTest
       Point q = new Point(3, 1, 4);
       Point r = new Point(0, -1, 2);
       Normal normal = new Normal(2, -8, 5);
-      assertEquals(normal, Surface.buildNormal(p, q, r));
+      assertEquals(normal, Surface.buildNormal(p, q, r, Side.TOP));
    }
 }

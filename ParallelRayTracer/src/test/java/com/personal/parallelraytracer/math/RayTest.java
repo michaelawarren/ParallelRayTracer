@@ -29,7 +29,7 @@ public class RayTest
    public void testFindPoint3()
    {
       Ray testRay = new Ray(new Vector(1, 1, 1), new Point(0, 0, 0));
-      final double oneThird = 1.0d / 3.0d;
+      final double oneThird = .333d;
       Point expectedPoint = new Point(oneThird, oneThird, oneThird);
       final Point testPoint = testRay.findLocalHitPoint(oneThird);
 

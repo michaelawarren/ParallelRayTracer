@@ -9,7 +9,6 @@ import com.personal.parallelraytracer.drawing.light.PointLight;
 import com.personal.parallelraytracer.drawing.materials.ColorMaterial;
 import com.personal.parallelraytracer.drawing.materials.Matte;
 import com.personal.parallelraytracer.drawing.sampling.Jittered;
-import com.personal.parallelraytracer.drawing.sampling.Regular;
 import com.personal.parallelraytracer.drawing.sampling.Sampler;
 import com.personal.parallelraytracer.drawing.shapes.Box;
 import com.personal.parallelraytracer.drawing.shapes.GeometricShape;
@@ -69,10 +68,10 @@ public class World
           new Point(0, 0, 0), 120, 120, 120));
    }
 
-   public void setUpScene2()
+   public void setUpShadowTest()
    {
       this.shapes = new ArrayList(); // empty the array
-      this.vp = new ViewPlane(400, 400, 1.0, 1.0, 30, new Jittered(30));
+      this.vp = new ViewPlane(400, 400, 1.0, 1.0, 25, new Jittered(25));
       this.backgroundColor = RGBColor.BLACK;
 
       this.tracer = new RayCast(this);
@@ -86,16 +85,26 @@ public class World
 
       this.lights = new ArrayList<>();
       lights.add(new PointLight(new Point(100, 50, 150), 3.0f, RGBColor.WHITE,
-          false));
+          true));
 
       Matte matte = new Matte();
       matte.setKa(0.25d);
       matte.setKd(0.65d);
       matte.setCd(new RGBColor(1, 1, 0));
-      // shapes.add(new Sphere(true, false, matte, new Point(10, -5, 0), 27));
+      shapes.add(new Sphere(true, false, matte, new Point(0, 0, 10), 10));
+      
+      Matte matteBox = new Matte();
+      matteBox.setKa(0.25d);
+      matteBox.setKd(0.65d);
+      matteBox.setCd(new RGBColor(0, 0, 1));
       shapes
-          .add(new Box(true, false, matte, new Point(0, 0, 0), 30, 30, 30));
-
+          .add(new Box(true, false, matteBox, new Point(0, 0, -10), 20, 20, 20));
+      
+      Matte mattePlane = new Matte();
+      mattePlane.setKa(0.25d);
+      mattePlane.setKd(0.65d);
+      mattePlane.setCd(new RGBColor(0, .5, .5));
+      shapes.add(new Plane(true, true, new Point(0,0,-20), new Normal(0, 0, 1), mattePlane));
    }
 
    public void setUpTestScene1()

@@ -1,6 +1,7 @@
 package com.personal.parallelraytracer.drawing.shapes;
 
 import com.personal.parallelraytracer.drawing.materials.Material;
+import com.personal.parallelraytracer.drawing.shapes.Surface.Side;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
@@ -18,6 +19,7 @@ public class Box extends GeometricShape
        Point min, Point max)
    {
       super(visible, reflective, material, min.midPoint(max));
+      EPSIOLON = .001d;
       this.max = max;
       this.min = min;
       parameters = new Point[]
@@ -36,16 +38,16 @@ public class Box extends GeometricShape
       Point lll = new Point(max.getX(), max.getY(), max.getZ());
 
       // sides
-      surfaces.add(new Surface(ooo, ool, olo, oll));
-      surfaces.add(new Surface(llo, loo, lll, lol));
+      surfaces.add(new Surface(ooo, ool, olo, oll, Side.LEFT));
+      surfaces.add(new Surface(llo, loo, lll, lol, Side.RIGHT));
 
       // top bottom
-      surfaces.add(new Surface(ooo, loo, ool, lol));
-      surfaces.add(new Surface(olo, llo, oll, lll));
+      surfaces.add(new Surface(olo, llo, oll, lll, Side.TOP));
+      surfaces.add(new Surface(ooo, loo, ool, lol, Side.BOTTOM));
 
       // front back
-      surfaces.add(new Surface(ooo, loo, olo, llo));
-      surfaces.add(new Surface(ool, lol, oll, lll));
+      surfaces.add(new Surface(ooo, loo, olo, llo, Side.BACK));
+      surfaces.add(new Surface(ool, lol, oll, lll, Side.FRONT));
    }
 
    public Box(boolean visible, boolean reflective, Material material,

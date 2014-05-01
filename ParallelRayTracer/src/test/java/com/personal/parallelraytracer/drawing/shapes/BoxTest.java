@@ -147,19 +147,19 @@ public class BoxTest
    }
 
    @Test
-   public void testGetNormal1()
+   public void testGetNormalBottom()
    {
       Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(0, -1, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 1, 0);
+      Normal expected = new Normal(0, -1, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
 
    @Test
-   public void testGetNormal2()
+   public void testGetNormalTop()
    {
       Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(0, 1, 0);
@@ -171,7 +171,7 @@ public class BoxTest
    }
 
    @Test
-   public void testGetNormal3()
+   public void testGetNormalRight()
    {
       Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(1, 0, 0);
@@ -183,31 +183,31 @@ public class BoxTest
    }
 
    @Test
-   public void testGetNormal4()
+   public void testGetNormalLeft()
    {
       Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(-1, 0, 0);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(1, 0, 0);
+      Normal expected = new Normal(-1, 0, 0);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
 
    @Test
-   public void testGetNormal5()
+   public void testGetNormalFront()
    {
       Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(0, 0, 1);
       Ray ray = new Ray(vector, point);
       final double t = testBox.hitPoint(ray);
-      Normal expected = new Normal(0, 0, -1);
+      Normal expected = new Normal(0, 0, 1);
       Normal acutal = testBox.getNormal(ray, t);
       assertEquals("Invalid normal", expected, acutal);
    }
 
    @Test
-   public void testGetNormal6()
+   public void testGetNormalBack()
    {
       Point point = new Point(2, 1.5, 2.5);
       Vector vector = new Vector(0, 0, -1);

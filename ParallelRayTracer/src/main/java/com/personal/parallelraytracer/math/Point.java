@@ -12,19 +12,22 @@ public class Point extends Vector3D
    {
       super(x, y, z);
    }
-   
-  public Point(Vector3D vector)
-  {
-     super(vector.toArray());
-  }
-  
-  public Point(double[] array)
-  {
-     super(array);
-  }
-  
-  public Point midPoint(Point pt2)
-  {
-     return new Point(this.add(pt2).scalarMultiply(0.5d));
-  }
+
+   public Point(Vector3D vector)
+   {
+      // rounding taking place to turn close to zero to zero
+      super(Math.round(vector.getX() * 1000) / 1000d,
+          Math.round(vector.getY() * 1000) / 1000d,
+          Math.round(vector.getZ() * 1000) / 1000d);
+   }
+
+   public Point(double[] array)
+   {
+      super(array);
+   }
+
+   public Point midPoint(Point pt2)
+   {
+      return new Point(this.add(pt2).scalarMultiply(0.5d));
+   }
 }
