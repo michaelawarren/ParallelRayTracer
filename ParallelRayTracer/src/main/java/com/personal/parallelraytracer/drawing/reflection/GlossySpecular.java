@@ -17,22 +17,16 @@ public class GlossySpecular extends BRDF
       RGBColor L = RGBColor.BLACK;
 
       double ndotwi = sr.normal.dotProduct(wi);
-      Vector3D r = wi.negate().add(sr.normal.scalarMultiply(2.0d)
-          .scalarMultiply(ndotwi));
+      Vector3D r = wi.negate().add((sr.normal.scalarMultiply(2.0d)).scalarMultiply(ndotwi));
       double rdotwo = r.dotProduct(wo);
 
       if (rdotwo > 0.0d)
       {
-         double l = ks * Math.pow(rdotwo, exp);
-         L = new RGBColor(l, l, l);
+         double lvar = ks * Math.pow(rdotwo, exp);
+         L = new RGBColor(lvar, lvar, lvar);
       }
 
       return L;
-   }
-
-   public void setKs(double ks)
-   {
-      this.ks = ks;
    }
 
    @Override
@@ -46,5 +40,30 @@ public class GlossySpecular extends BRDF
    public RGBColor rho(ShadeRec sr, Vector ro)
    {
       return RGBColor.BLACK;
+   }
+
+   public void setKs(double ks)
+   {
+      this.ks = ks;
+   }
+
+   public RGBColor getCs()
+   {
+      return cs;
+   }
+
+   public void setCs(RGBColor cs)
+   {
+      this.cs = cs;
+   }
+
+   public double getExp()
+   {
+      return exp;
+   }
+
+   public void setExp(double exp)
+   {
+      this.exp = exp;
    }
 }

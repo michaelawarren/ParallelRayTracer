@@ -15,6 +15,21 @@ public class Phong extends Material
    private Lambertian diffuseBRDF;
    private GlossySpecular specularBRDF;
 
+   public Phong(Lambertian ambientBRDF, Lambertian diffuseBRDF,
+       GlossySpecular specularBRDF)
+   {
+      this.ambientBRDF = ambientBRDF;
+      this.diffuseBRDF = diffuseBRDF;
+      this.specularBRDF = specularBRDF;
+   }
+
+   public Phong()
+   {
+      this.ambientBRDF = new Lambertian();
+      this.diffuseBRDF = new Lambertian();
+      this.specularBRDF = new GlossySpecular();
+   }
+
    public void setKa(double ka)
    {
       ambientBRDF.setKd(ka);
@@ -24,19 +39,30 @@ public class Phong extends Material
    {
       diffuseBRDF.setKd(kd);
    }
-  
+
    public void setKs(double ks)
    {
       specularBRDF.setKs(ks);
    }
 
+   public void setCd(RGBColor cd)
+   {
+      specularBRDF.setCs(cd);
+      ambientBRDF.setCd(cd);
+      diffuseBRDF.setCd(cd);
+   }
+   
+   public void setExp(double exp)
+   {
+      specularBRDF.setExp(exp);
+   }
+   
    @Override
    public RGBColor shade(ShadeRec sr)
    {
       Vector wo = new Vector(sr.ray.direction.negate());
-      Vector3D L = ambientBRDF.rho(sr, wo).componmentMultiply(sr.world.ambient
-          .L(
-              sr));
+      Vector3D L = ambientBRDF.rho(sr, wo)
+          .componmentMultiply(sr.world.ambient.L(sr));
 
       for (Light light : sr.world.lights)
       {
@@ -55,10 +81,10 @@ public class Phong extends Material
 
             if (!inShadow)
             {
-               L = L
-                   .add(new RGBColor(diffuseBRDF.f(sr, wi, wo)
-                       .add(specularBRDF.f(sr, wi, wo)))
-                       .componmentMultiply(light.L(sr).scalarMultiply(ndotwi)));
+               RGBColor dAddS = new RGBColor(diffuseBRDF.f(sr, wi, wo)
+                   .add(specularBRDF.f(sr, wi, wo)));
+               L = L.add(dAddS.componmentMultiply(light.L(sr)
+                   .scalarMultiply(ndotwi)));
             }
          }
       }

@@ -32,6 +32,10 @@ public class RGBColor extends Vector3D
 
    public Color getColor()
    {
-      return new Color((float) getX(), (float) getY(), (float) getZ());
+      // if a color portion is greater than 1 make it one for now
+      return new Color(
+          getX() > 1.0d ? 1.0f : (float) getX(),
+          getY() > 1.0d ? 1.0f : (float) getY(),
+          getZ() > 1.0d ? 1.0f : (float) getZ());
    }
 }

@@ -8,6 +8,7 @@ import com.personal.parallelraytracer.drawing.light.Light;
 import com.personal.parallelraytracer.drawing.light.PointLight;
 import com.personal.parallelraytracer.drawing.materials.ColorMaterial;
 import com.personal.parallelraytracer.drawing.materials.Matte;
+import com.personal.parallelraytracer.drawing.materials.Phong;
 import com.personal.parallelraytracer.drawing.sampling.Jittered;
 import com.personal.parallelraytracer.drawing.sampling.Sampler;
 import com.personal.parallelraytracer.drawing.shapes.Box;
@@ -87,15 +88,18 @@ public class World
       lights.add(new PointLight(new Point(100, 50, 150), 3.0f, RGBColor.WHITE,
           true));
 
-      Matte matteSphere1 = new Matte();
-      matteSphere1.setKa(0.25d);
-      matteSphere1.setKd(0.65d);
+      Phong matteSphere1 = new Phong();
+      matteSphere1.setKa(0.15d);
+      matteSphere1.setKd(0.55d);
+      matteSphere1.setKs(0.20d);
+      matteSphere1.setExp(100);
       matteSphere1.setCd(new RGBColor(1, 1, 0));
       shapes.add(new Sphere(true, false, matteSphere1, new Point(0, 0, 10), 10));
       
       Matte matteBox1 = new Matte();
-      matteBox1.setKa(0.25d);
-      matteBox1.setKd(0.65d);
+      matteBox1.setKa(0.15d);
+      matteBox1.setKd(0.55d);
+//      matteBox1.setKs(0.20d);
       matteBox1.setCd(new RGBColor(0, 0, 1));
       shapes
           .add(new Box(true, false, matteBox1, new Point(0, 0, -10), 20, 20, 20));
@@ -117,7 +121,7 @@ public class World
       mattePlane.setKa(0.25d);
       mattePlane.setKd(0.65d);
       mattePlane.setCd(new RGBColor(0, .5, .5));
-      shapes.add(new Plane(true, true, new Point(0,0,-20), new Normal(0, 0, 1), mattePlane));
+//      shapes.add(new Plane(true, true, new Point(0,0,-20), new Normal(0, 0, 1), mattePlane));
    }
 
    public void setUpTestScene1()

@@ -56,7 +56,7 @@ public class PinHole extends Camera
          for (int c = 0; c < vp.getWidth(); c++)
          {
             L = RGBColor.BLACK;
-
+            
             for (int j = 0; j < vp.getNumSamples(); j++)
             {
                sp = vp.getSampler().sampleUnitSquare();
