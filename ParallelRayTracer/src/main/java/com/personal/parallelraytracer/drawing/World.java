@@ -70,7 +70,7 @@ public class World
           new Point(0, 0, 0), 120, 120, 120));
    }
 
-   public void setRequiermentScene()
+   public void setRequiermentScene(Tracer tracer, int width, int height)
    {
       this.shapes = new ArrayList(); // empty the array
       this.vp = new ViewPlane(500, 500, 1.0, 1.0, 9, new Jittered(9));
@@ -298,8 +298,8 @@ public class World
       return camera;
    }
 
-   public void build()
+   public void setTracer(Tracer tracer)
    {
-
+      this.tracer = tracer;
    }
 }
