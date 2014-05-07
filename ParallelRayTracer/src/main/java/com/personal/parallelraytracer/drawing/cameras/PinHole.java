@@ -24,11 +24,12 @@ public class PinHole extends Camera
     * @param exposureTime 
     */
    public PinHole(double d, double zoom, Point eye, Point lookat, Vector up,
-       double exposureTime)
+       double exposureTime, String fileName)
    {
       super(eye, lookat, up, exposureTime);
       this.d = d;
       this.zoom = zoom;
+      this.fileName = fileName;
    }
 
    public PinHole()
@@ -72,12 +73,18 @@ public class PinHole extends Camera
             displayPixel(r, c, new RGBColor(L));
          }
       }
-      writeImageToFile();
+      writeImageToFile(fileName);
    }
 
    private Vector rayDirection(Vector2D p)
    {
       return new Vector(u.scalarMultiply(p.getX()).add(v
           .scalarMultiply(p.getY())).subtract(w.scalarMultiply(d)).normalize());
+   }
+
+   @Override
+   public String toString()
+   {
+      return "1 core 1 comp";
    }
 }

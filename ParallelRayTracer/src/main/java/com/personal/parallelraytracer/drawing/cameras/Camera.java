@@ -19,6 +19,7 @@ public abstract class Camera
    protected Vector w;
    double exposureTime;
    protected BufferedImage image;
+   protected String fileName;
 
    public Camera(Point eye, Point lookat, Vector up, double exposureTime)
    {
@@ -46,6 +47,16 @@ public abstract class Camera
       w = new Vector(eye.subtract(lookat).normalize());
       u = new Vector(up.crossProduct(w).normalize());
       v = new Vector(w.crossProduct(u));
+   }
+
+   public String getFileName()
+   {
+      return fileName;
+   }
+
+   public void setFileName(String fileName)
+   {
+      this.fileName = fileName;
    }
 
    public Point getEye()
@@ -128,12 +139,12 @@ public abstract class Camera
       image.setRGB(c, r, pixelColor.getColor().getRGB());
    }
 
-   public void writeImageToFile()
+   public void writeImageToFile(String fileName)
    {
       try
       {
          // retrieve image
-         File outputfile = new File("image.png");
+         File outputfile = new File(fileName);
          ImageIO.write(image, "png", outputfile);
       }
       catch (IOException e)

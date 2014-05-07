@@ -70,20 +70,19 @@ public class World
           new Point(0, 0, 0), 120, 120, 120));
    }
 
-   public void setRequiermentScene(Tracer tracer, int width, int height)
+   public void setRequiermentScene(Camera camera, int width, int height)
    {
       this.shapes = new ArrayList(); // empty the array
       this.vp = new ViewPlane(width, height, 1.0, 1.0, 9, new Jittered(9));
       this.vp.setMaxDepth(40);
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = tracer;
+      this.tracer = new RayTraceSingle(this);
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);
 
-      this.camera = new PinHole(850.0d, 1, new Point(100, 100, 100),
-          new Point(-5, 0, 0), new Vector(1, 1, 0), 1);
+      this.camera = camera;
       this.camera.computeUvw();
 
       this.lights = new ArrayList<>();
@@ -175,7 +174,7 @@ public class World
       final Point lookAt = new Point(-5, 0, 0);
       final Vector up = new Vector(0, 1, 0);
 
-      this.camera = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d);
+      this.camera = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d, "test1.png");
       this.camera.computeUvw();
 
       this.lights = new ArrayList<>();
@@ -203,7 +202,7 @@ public class World
       final Point lookAt = new Point(-5, 0, 0);
       final Vector up = new Vector(0, 1, 0);
 
-      this.camera = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d);
+      this.camera = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d, "test2.png");
       this.camera.computeUvw();
 
       this.lights = new ArrayList<>();
