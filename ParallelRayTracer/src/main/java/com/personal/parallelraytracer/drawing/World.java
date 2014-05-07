@@ -8,14 +8,14 @@ import com.personal.parallelraytracer.drawing.light.Light;
 import com.personal.parallelraytracer.drawing.light.PointLight;
 import com.personal.parallelraytracer.drawing.materials.ColorMaterial;
 import com.personal.parallelraytracer.drawing.materials.Matte;
-import com.personal.parallelraytracer.drawing.materials.Phong;
+import com.personal.parallelraytracer.drawing.materials.Reflective;
 import com.personal.parallelraytracer.drawing.sampling.Jittered;
 import com.personal.parallelraytracer.drawing.sampling.Sampler;
 import com.personal.parallelraytracer.drawing.shapes.Box;
 import com.personal.parallelraytracer.drawing.shapes.GeometricShape;
 import com.personal.parallelraytracer.drawing.shapes.Plane;
 import com.personal.parallelraytracer.drawing.shapes.Sphere;
-import com.personal.parallelraytracer.drawing.tracers.RayCast;
+import com.personal.parallelraytracer.drawing.tracers.RayTrace;
 import com.personal.parallelraytracer.drawing.tracers.Tracer;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Normal;
@@ -40,9 +40,10 @@ public class World
    public World()
    {
       final Sampler jittered = new Jittered(16);
-      this.vp = new ViewPlane(400, 400, 1.0, 1.0, 16, jittered);
+      this.vp = new ViewPlane(500, 500, 1.0, 1.0, 16, jittered);
+
       this.backgroundColor = RGBColor.BLACK;
-      this.tracer = new RayCast(this);
+      this.tracer = new RayTrace(this);
       this.lights = new ArrayList<>();
       this.ambient = new Ambient();
       ambient.setLs(1.0);
@@ -69,13 +70,14 @@ public class World
           new Point(0, 0, 0), 120, 120, 120));
    }
 
-   public void setUpShadowTest()
+   public void setRequiermentScene()
    {
       this.shapes = new ArrayList(); // empty the array
-      this.vp = new ViewPlane(400, 400, 1.0, 1.0, 25, new Jittered(25));
+      this.vp = new ViewPlane(500, 500, 1.0, 1.0, 9, new Jittered(9));
+      this.vp.setMaxDepth(80);
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = new RayCast(this);
+      this.tracer = new RayTrace(this);
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);
@@ -88,40 +90,75 @@ public class World
       lights.add(new PointLight(new Point(100, 50, 150), 3.0f, RGBColor.WHITE,
           true));
 
-      Phong matteSphere1 = new Phong();
-      matteSphere1.setKa(0.15d);
-      matteSphere1.setKd(0.55d);
-      matteSphere1.setKs(0.20d);
-      matteSphere1.setExp(100);
-      matteSphere1.setCd(new RGBColor(1, 1, 0));
-      shapes.add(new Sphere(true, false, matteSphere1, new Point(0, 0, 10), 10));
-      
-      Matte matteBox1 = new Matte();
-      matteBox1.setKa(0.15d);
-      matteBox1.setKd(0.55d);
-//      matteBox1.setKs(0.20d);
-      matteBox1.setCd(new RGBColor(0, 0, 1));
+      Reflective reflectiveSphere = new Reflective();
+      reflectiveSphere.setKa(0.25d);
+      reflectiveSphere.setKd(0.50d);
+      reflectiveSphere.setCd(new RGBColor(.75, .8, .8));
+      reflectiveSphere.setKs(0.15d);
+      reflectiveSphere.setExp(100);
+      reflectiveSphere.setKr(0.75d);
+      reflectiveSphere.setCr(RGBColor.WHITE);
+
+      shapes.add(
+          new Sphere(true, true, reflectiveSphere, new Point(-5, 10, 10), 10));
+
+      Reflective reflectiveBox = new Reflective();
+      reflectiveBox.setKa(0.25d);
+      reflectiveBox.setKd(0.50d);
+      reflectiveBox.setCd(new RGBColor(.75, .75, 1));
+      reflectiveBox.setKs(0.15d);
+      reflectiveBox.setExp(100);
+      reflectiveBox.setKr(0.75d);
+      reflectiveBox.setCr(RGBColor.WHITE);
       shapes
-          .add(new Box(true, false, matteBox1, new Point(0, 0, -10), 20, 20, 20));
-      
+          .add(new Box(true, true, reflectiveBox, new Point(-5, 10, -10), 20,
+                  20, 20));
+
       Matte matteSphere2 = new Matte();
       matteSphere2.setKa(0.25d);
       matteSphere2.setKd(0.65d);
       matteSphere2.setCd(new RGBColor(1, 1, 0));
-      shapes.add(new Sphere(true, false, matteSphere2, new Point(20, 10, 10), 10));
-      
+      shapes.add(
+          new Sphere(true, false, matteSphere2, new Point(20, 10, 10), 10));
+
       Matte matteBox2 = new Matte();
       matteBox2.setKa(0.25d);
       matteBox2.setKd(0.65d);
       matteBox2.setCd(new RGBColor(0, 0, 1));
       shapes
-          .add(new Box(true, false, matteBox2, new Point(20, 10, -10), 20, 20, 20));
+          .add(new Box(true, false, matteBox2, new Point(20, 10, -10), 20, 20,
+                  20));
+
+      Reflective reflectivePlane = new Reflective();
+      reflectivePlane.setKa(0.25d);
+      reflectivePlane.setKd(0.50d);
+      reflectivePlane.setCd(new RGBColor(.75, .75, 1));
+      reflectivePlane.setKs(0.15d);
+      reflectivePlane.setExp(100);
+      reflectivePlane.setKr(0.75d);
+      reflectivePlane.setCr(RGBColor.WHITE);
+      shapes.add(
+          new Plane(true, true, new Point(0, 0, -20), new Normal(0, 0, 1),
+              reflectivePlane));
       
-      Matte mattePlane = new Matte();
-      mattePlane.setKa(0.25d);
-      mattePlane.setKd(0.65d);
-      mattePlane.setCd(new RGBColor(0, .5, .5));
-//      shapes.add(new Plane(true, true, new Point(0,0,-20), new Normal(0, 0, 1), mattePlane));
+      Matte matteSphere = new Matte();
+      matteSphere.setKa(0.25d);
+      matteSphere.setKd(0.65d);
+      matteSphere.setCd(new RGBColor(.0, .75, .75));
+      shapes
+          .add(new Box(true, true, matteSphere, new Point(-5, -40, 15), 40,
+                  40, 20));
+      
+      Reflective reflectiveBox2 = new Reflective();
+      reflectiveBox2.setKa(0.25d);
+      reflectiveBox2.setKd(0.50d);
+      reflectiveBox2.setCd(new RGBColor(.10, .10, .10));
+      reflectiveBox2.setKs(0.15d);
+      reflectiveBox2.setExp(100);
+      reflectiveBox2.setKr(0.75d);
+      reflectiveBox2.setCr(RGBColor.WHITE);
+      shapes.add(
+          new Sphere(true, false, reflectiveBox2, new Point(-20, -20, 10), 10));
    }
 
    public void setUpTestScene1()
@@ -130,7 +167,7 @@ public class World
       this.vp = new ViewPlane(400, 400, 1.0, 1.0, 16, new Jittered(16));
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = new RayCast(this);
+      this.tracer = new RayTrace(this);
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);
@@ -151,14 +188,14 @@ public class World
       matte.setCd(new RGBColor(1, 1, 0));
       shapes.add(new Sphere(true, false, matte, new Point(10, -5, 0), 27));
    }
-   
+
    public void setUpTestScene2()
    {
       this.shapes = new ArrayList(); // empty the array
       this.vp = new ViewPlane(400, 400, 1.0, 1.0, 16, new Jittered(16));
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = new RayCast(this);
+      this.tracer = new RayTrace(this);
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);

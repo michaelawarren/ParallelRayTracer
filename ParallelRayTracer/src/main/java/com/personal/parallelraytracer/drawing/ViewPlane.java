@@ -14,6 +14,7 @@ public class ViewPlane
    private final double invertGamma;
    private int numSamples;
    private Sampler sampler;
+   private int maxDepth;
 
    public ViewPlane(ViewPlane viewPlane)
    {
@@ -143,5 +144,15 @@ public class ViewPlane
    double getAY(int row, int n, int q)
    {
       return pixelSize * (row - 0.5d * (height) + (q + 0.5d) / n);
+   }
+
+   void setMaxDepth(int maxDepth)
+   {
+     this.maxDepth = maxDepth;
+   }
+
+   public int getMaxDepth()
+   {
+      return maxDepth;
    }
 }
