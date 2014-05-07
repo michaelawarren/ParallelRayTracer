@@ -73,11 +73,11 @@ public class World
    public void setRequiermentScene(Tracer tracer, int width, int height)
    {
       this.shapes = new ArrayList(); // empty the array
-      this.vp = new ViewPlane(500, 500, 1.0, 1.0, 9, new Jittered(9));
-      this.vp.setMaxDepth(80);
+      this.vp = new ViewPlane(width, height, 1.0, 1.0, 9, new Jittered(9));
+      this.vp.setMaxDepth(40);
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = new RayTrace(this);
+      this.tracer = tracer;
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);
@@ -141,14 +141,10 @@ public class World
           new Plane(true, true, new Point(0, 0, -20), new Normal(0, 0, 1),
               reflectivePlane));
       
-      Matte matteSphere = new Matte();
-      matteSphere.setKa(0.25d);
-      matteSphere.setKd(0.65d);
-      matteSphere.setCd(new RGBColor(.0, .75, .75));
-      shapes
-          .add(new Box(true, true, matteSphere, new Point(-5, -40, 15), 40,
-                  40, 20));
-      
+//      Matte matteSphere = new Matte();
+//      matteSphere.setKa(0.25d);
+//      matteSphere.setKd(0.65d);
+//      matteSphere.setCd(new RGBColor(.0, .75, .75));
       Reflective reflectiveBox2 = new Reflective();
       reflectiveBox2.setKa(0.25d);
       reflectiveBox2.setKd(0.50d);
@@ -157,6 +153,10 @@ public class World
       reflectiveBox2.setExp(100);
       reflectiveBox2.setKr(0.75d);
       reflectiveBox2.setCr(RGBColor.WHITE);
+      shapes
+          .add(new Box(true, true, reflectiveBox2, new Point(-5, -40, 15), 40,
+                  40, 20));
+      
       shapes.add(
           new Sphere(true, false, reflectiveBox2, new Point(-20, -20, 10), 10));
    }

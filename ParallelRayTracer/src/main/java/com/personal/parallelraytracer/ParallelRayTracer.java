@@ -8,7 +8,7 @@ public class ParallelRayTracer
 {
    public static void main(String[] args)
    {
-      double[][] matrix = new double[3][7];
+      long[][] matrix = new long[3][7];
 
       World world = new World();
 
@@ -21,19 +21,27 @@ public class ParallelRayTracer
          new Size(500, 500), new Size(500, 1000), new Size(1000, 1000)
       };
 
-      System.out.println("             1 core 1 comp | 2 core 1 comp | 4 core 1 comp | 2 core 2 comp | 4 core 2 comp | 8 core 2 comp | 16 core 4 comp");
-      for (int i = 0; i < tracers.length; i++)
+      for (int tracerIndex = 0; tracerIndex < tracers.length; tracerIndex++)
       {
-         for (int j = 0; j < size.length; j++)
+         for (int sizeIndex = 0; sizeIndex < size.length; sizeIndex++)
          {
-            
-            world.setRequiermentScene(tracers[i], size[j].width, size[j].height);
+            world.setRequiermentScene(tracers[tracerIndex], size[sizeIndex].width, size[sizeIndex].height);
             long start = System.currentTimeMillis();
             world.getCamera().renderScene(world);
-            matrix[i][j] = (System.currentTimeMillis() - start) / 1000.0d;
+            matrix[sizeIndex][tracerIndex] = (System.currentTimeMillis() - start);
          }
       }
-      System.out.println("DrawTime: " + matrix[0][0] + " seconds");
+      System.out.println("             1 core 1 comp | 2 core 1 comp | 4 core 1 comp | 2 core 2 comp | 4 core 2 comp | 8 core 2 comp | 16 core 4 comp |");
+      
+      for (int i = 0; i < matrix.length; i++)
+      {
+         System.out.printf("%11s:",size[i]);
+         for (int j = 0; j < matrix[i].length; j++)
+         {
+            System.out.printf("%11d ms |", matrix[i][j]);
+         }
+         System.out.println();
+      }
 
    }
 
