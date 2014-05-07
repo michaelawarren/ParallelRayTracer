@@ -5,10 +5,11 @@ import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Ray;
 
-public class RayTrace extends Tracer 
+public class RayTraceSingle extends Tracer 
 {
-   public RayTrace(World world)
+   public RayTraceSingle(World world)
    {
+      super("1 core 1 comp");
       this.world = world;
    }
 

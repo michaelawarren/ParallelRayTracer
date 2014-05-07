@@ -1,7 +1,7 @@
 package com.personal.parallelraytracer;
 
 import com.personal.parallelraytracer.drawing.World;
-import com.personal.parallelraytracer.drawing.tracers.RayTrace;
+import com.personal.parallelraytracer.drawing.tracers.RayTraceSingle;
 import com.personal.parallelraytracer.drawing.tracers.Tracer;
 
 public class ParallelRayTracer
@@ -14,7 +14,7 @@ public class ParallelRayTracer
 
       Tracer[] tracers = new Tracer[]
       {
-         new RayTrace(world)
+         new RayTraceSingle(world)
       };
       Size[] size = new Size[]
       {

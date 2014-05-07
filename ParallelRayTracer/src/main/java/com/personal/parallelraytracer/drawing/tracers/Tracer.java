@@ -9,6 +9,14 @@ public abstract class Tracer
 {
    World world;
    public Color color;
+   public String name;
+
+   public Tracer(String name)
+   {
+      this.name = name;
+   }
+   
+   
    
    public abstract RGBColor trayRay(Ray ray);
    public abstract RGBColor trayRay(Ray ray, int depth);

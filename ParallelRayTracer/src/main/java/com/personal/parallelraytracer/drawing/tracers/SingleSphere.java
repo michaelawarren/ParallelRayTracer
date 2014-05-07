@@ -6,8 +6,9 @@ import com.personal.parallelraytracer.math.Ray;
 
 public class SingleSphere extends Tracer 
 {
-   public SingleSphere(World world)
+   public SingleSphere(World world, String name)
    {
+      super(name);
       this.world = world;
    }
 

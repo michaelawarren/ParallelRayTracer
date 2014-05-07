@@ -15,7 +15,7 @@ import com.personal.parallelraytracer.drawing.shapes.Box;
 import com.personal.parallelraytracer.drawing.shapes.GeometricShape;
 import com.personal.parallelraytracer.drawing.shapes.Plane;
 import com.personal.parallelraytracer.drawing.shapes.Sphere;
-import com.personal.parallelraytracer.drawing.tracers.RayTrace;
+import com.personal.parallelraytracer.drawing.tracers.RayTraceSingle;
 import com.personal.parallelraytracer.drawing.tracers.Tracer;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Normal;
@@ -43,7 +43,7 @@ public class World
       this.vp = new ViewPlane(500, 500, 1.0, 1.0, 16, jittered);
 
       this.backgroundColor = RGBColor.BLACK;
-      this.tracer = new RayTrace(this);
+      this.tracer = new RayTraceSingle(this);
       this.lights = new ArrayList<>();
       this.ambient = new Ambient();
       ambient.setLs(1.0);
@@ -167,7 +167,7 @@ public class World
       this.vp = new ViewPlane(400, 400, 1.0, 1.0, 16, new Jittered(16));
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = new RayTrace(this);
+      this.tracer = new RayTraceSingle(this);
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);
@@ -195,7 +195,7 @@ public class World
       this.vp = new ViewPlane(400, 400, 1.0, 1.0, 16, new Jittered(16));
       this.backgroundColor = RGBColor.BLACK;
 
-      this.tracer = new RayTrace(this);
+      this.tracer = new RayTraceSingle(this);
 
       this.ambient = new Ambient();
       ambient.setLs(1.0);

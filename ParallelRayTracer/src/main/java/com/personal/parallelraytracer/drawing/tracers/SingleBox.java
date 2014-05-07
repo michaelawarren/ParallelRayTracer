@@ -6,8 +6,9 @@ import com.personal.parallelraytracer.math.Ray;
 
 public class SingleBox extends Tracer 
 {
-   public SingleBox(World world)
+   public SingleBox(World world, String name)
    {
+      super(name);
       this.world = world;
    }
 
