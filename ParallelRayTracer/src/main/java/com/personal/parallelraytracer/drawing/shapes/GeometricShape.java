@@ -75,6 +75,4 @@ public abstract class GeometricShape
    {
       return hitPoint(ray);
    }
-   
-   
 }

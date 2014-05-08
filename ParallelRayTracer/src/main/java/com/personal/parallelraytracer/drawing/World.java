@@ -1,7 +1,6 @@
 package com.personal.parallelraytracer.drawing;
 
 import com.personal.parallelraytracer.drawing.cameras.Camera;
-import com.personal.parallelraytracer.drawing.cameras.Camera2;
 import com.personal.parallelraytracer.drawing.cameras.PinHole;
 import com.personal.parallelraytracer.drawing.light.Ambient;
 import com.personal.parallelraytracer.drawing.light.Light;
@@ -25,11 +24,9 @@ import com.personal.parallelraytracer.math.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class World
+public class World 
 {
    public List<GeometricShape> shapes;
-   public final Sphere sphere;
-   public final Box box;
    public RGBColor backgroundColor;
    public ViewPlane vp;
    public Tracer tracer;
@@ -47,14 +44,6 @@ public class World
       this.lights = new ArrayList<>();
       this.ambient = new Ambient();
       ambient.setLs(1.0);
-      camera = new Camera2(vp, tracer);
-
-      this.sphere
-          = new Sphere(true, false, new ColorMaterial(RGBColor.YELLOW),
-              new Point(0, 0,
-                  0), 85.0d);
-      this.box = new Box(true, false, new ColorMaterial(RGBColor.BLUE),
-          new Point(1, 1, 1), new Point(50, 50, 50));
    }
 
    public void setUpScene1()
@@ -139,11 +128,7 @@ public class World
       shapes.add(
           new Plane(true, true, new Point(0, 0, -20), new Normal(0, 0, 1),
               reflectivePlane));
-      
-//      Matte matteSphere = new Matte();
-//      matteSphere.setKa(0.25d);
-//      matteSphere.setKd(0.65d);
-//      matteSphere.setCd(new RGBColor(.0, .75, .75));
+
       Reflective reflectiveBox2 = new Reflective();
       reflectiveBox2.setKa(0.25d);
       reflectiveBox2.setKd(0.50d);
@@ -155,7 +140,7 @@ public class World
       shapes
           .add(new Box(true, true, reflectiveBox2, new Point(-5, -40, 15), 40,
                   40, 20));
-      
+
       shapes.add(
           new Sphere(true, false, reflectiveBox2, new Point(-20, -20, 10), 10));
    }
@@ -174,7 +159,8 @@ public class World
       final Point lookAt = new Point(-5, 0, 0);
       final Vector up = new Vector(0, 1, 0);
 
-      this.camera = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d, "test1.png");
+      this.camera
+          = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d, "test1.png");
       this.camera.computeUvw();
 
       this.lights = new ArrayList<>();
@@ -202,7 +188,8 @@ public class World
       final Point lookAt = new Point(-5, 0, 0);
       final Vector up = new Vector(0, 1, 0);
 
-      this.camera = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d, "test2.png");
+      this.camera
+          = new PinHole(850.0d, 1.0d, eye, lookAt, up, 1.0d, "test2.png");
       this.camera.computeUvw();
 
       this.lights = new ArrayList<>();
@@ -265,22 +252,17 @@ public class World
       return sr;
    }
 
-   void addObject(GeometricShape shape)
+   public void addObject(GeometricShape shape)
    {
       shapes.add(shape);
    }
 
-   void addLight(Light light)
+   public void addLight(Light light)
    {
       lights.add(light);
    }
 
-   public Camera2 buildCamera()
-   {
-      return new Camera2(vp, tracer);
-   }
-
-   public static ShadeRec setShadeRecProperties(ShadeRec sr, Ray ray, double t,
+   private static ShadeRec setShadeRecProperties(ShadeRec sr, Ray ray, double t,
        GeometricShape shape)
    {
       // looks usless now but will leave in for now.
@@ -300,5 +282,35 @@ public class World
    public void setTracer(Tracer tracer)
    {
       this.tracer = tracer;
+   }
+
+   public List<GeometricShape> getShapes()
+   {
+      return shapes;
+   }
+
+   public RGBColor getBackgroundColor()
+   {
+      return backgroundColor;
+   }
+
+   public ViewPlane getVp()
+   {
+      return vp;
+   }
+
+   public Tracer getTracer()
+   {
+      return tracer;
+   }
+
+   public Light getAmbient()
+   {
+      return ambient;
+   }
+
+   public List<Light> getLights()
+   {
+      return lights;
    }
 }
