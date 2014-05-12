@@ -2,8 +2,12 @@ package com.personal.parallelraytracer.drawing;
 
 import java.awt.Color;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONString;
+import org.json.JSONStringer;
 
-public class RGBColor extends Vector3D
+public class RGBColor extends Vector3D implements JSONString
 {
    //Constance
    public static final RGBColor BLACK = new RGBColor(0, 0, 0);
@@ -23,6 +27,11 @@ public class RGBColor extends Vector3D
    {
       super(vector3D.toArray());
    }
+   
+   public RGBColor(JSONObject color) throws JSONException
+   {
+      super(color.getDouble("x"), color.getDouble("y"), color.getDouble("z"));
+   }
 
    public RGBColor componmentMultiply(Vector3D rGBColor)
    {
@@ -37,5 +46,27 @@ public class RGBColor extends Vector3D
           getX() > 1.0d ? 1.0f : (float) getX(),
           getY() > 1.0d ? 1.0f : (float) getY(),
           getZ() > 1.0d ? 1.0f : (float) getZ());
+   }
+
+   @Override
+   public String toJSONString()
+   {
+      try
+      {
+         return new JSONStringer()
+             .object()
+             .key("x")
+             .value(getX())
+             .key("y")
+             .value(getY())
+             .key("z")
+             .value(getZ())
+             .endObject()
+             .toString();
+      }
+      catch (JSONException ex)
+      {
+         return "error: \n" + ex.toString();
+      }
    }
 }

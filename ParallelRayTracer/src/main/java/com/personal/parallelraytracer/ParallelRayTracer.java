@@ -2,10 +2,11 @@ package com.personal.parallelraytracer;
 
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.cameras.Camera;
-import com.personal.parallelraytracer.drawing.cameras.PinHole;
-import com.personal.parallelraytracer.drawing.cameras.PinHoleParallel;
+import com.personal.parallelraytracer.drawing.cameras.PinHoleMaster;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParallelRayTracer
 {
@@ -18,20 +19,28 @@ public class ParallelRayTracer
       }
       long[][] matrix = new long[3][7];
 
+      List<String> host1 = new ArrayList<>();
+      host1.add("Aus213L15");
+      host1.add("Aus213L16");
+      host1.add("Aus213L17");
+      host1.add("Aus213L18");
+
       World world = new World();
 
       Camera[] cameras = new Camera[]
       {
-         new PinHole(850.0d, 1, new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "Single.png"),
-         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
-            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 2),
-         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
-            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4)
+//         new PinHole(850.0d, 1, new Point(100, 100, 100), new Point(-5, 0, 0),
+//            new Vector(1, 1, 0), 1, "Single.png"),
+//         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
+//            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 2),
+//         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
+//            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4)
+         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+            new Vector(1, 1, 0), 1, "cluster.png", 1, host1)
       };
       Size[] sizes = new Size[]
       {
-         new Size(500, 500)//, new Size(500, 1000), new Size(1000, 1000)
+         new Size(10, 10)//, new Size(500, 1000), new Size(1000, 1000)
       };
 
       for (int tracerIndex = 0; tracerIndex < cameras.length; tracerIndex++)
