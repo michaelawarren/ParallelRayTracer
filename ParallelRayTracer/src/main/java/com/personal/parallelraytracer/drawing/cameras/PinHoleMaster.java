@@ -25,7 +25,8 @@ public class PinHoleMaster extends Camera
    private final int numThreads;
    private ExecutorService threadPool;
    private final List<String> comptuers;
-   protected List<Connection> connections;
+   final protected List<Connection> connections;
+   
 
    /**
     *
@@ -44,6 +45,7 @@ public class PinHoleMaster extends Camera
       this.numThreads = numThreads;
       this.fileName = fileName;
       this.comptuers = computers;
+      this.connections = new ArrayList<>();
    }
 
    @Override
@@ -77,6 +79,7 @@ public class PinHoleMaster extends Camera
          {
             connection.close();
          }
+         connections.clear();
          writeImageToFile(fileName);
       }
       catch (IOException ex)
@@ -124,8 +127,7 @@ public class PinHoleMaster extends Camera
                   jSONArray.put(new Pixel(row, c));
                }
                connection.sendMessage(jSONArray.toString() + "\n");
-               final JSONArray jsonObject
-                   = new JSONArray(connection.readLine());
+               final JSONArray jsonObject = new JSONArray(connection.readLine());
                releaseConnection(connection);
                return jsonObject;
             }
@@ -135,15 +137,13 @@ public class PinHoleMaster extends Camera
 
    public List<Connection> initializeConnections(World world) throws IOException, JSONException
    {
-      connections = new ArrayList<>();
       for (String hostName : comptuers)
       {
-         final Connection connection
-             = new Connection(new Socket(hostName, 6789));
+         final Connection connection = new Connection(hostName);
          connection.sendMessage(
              new JSONStringer()
              .object()
-             .key("initialize").value(1)
+             .key("status").value(200)
              .key("width").value(world.vp.getWidth())
              .key("height").value(world.vp.getHeight())
              .key("numThreads").value(numThreads)
@@ -176,7 +176,7 @@ public class PinHoleMaster extends Camera
 
    public void releaseConnection(Connection connection)
    {
-      synchronized (connections)
+      synchronized(connections)
       {
          connections.add(connection);
          connection = null;
@@ -199,7 +199,7 @@ public class PinHoleMaster extends Camera
    @Override
    public String toString()
    {
-      return numThreads + " core " + comptuers.size() + " comp";
+      return numThreads * comptuers.size() + " core " + comptuers.size() + " comp";
    }
 
    private abstract class RowRunnable implements Runnable

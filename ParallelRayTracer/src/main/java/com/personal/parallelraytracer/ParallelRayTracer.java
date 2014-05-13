@@ -9,7 +9,6 @@ import com.personal.parallelraytracer.drawing.cameras.PinHoleParallel;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -51,6 +50,8 @@ public class ParallelRayTracer
             new Vector(1, 1, 0), 1, "cluster.png", 4, host1.subList(1, 3)),
          new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
             new Vector(1, 1, 0), 1, "cluster.png", 4, host1.subList(1, 5))
+//         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+//         new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(0, 1))
       };
       Size[] sizes = new Size[]
       {
@@ -88,11 +89,11 @@ public class ParallelRayTracer
       {
          try
          {
-            Socket socket = new Socket(string, 6789);
-            Connection connection = new Connection(socket);
+            Connection connection = new Connection(string);
             connection.sendMessage(new JSONStringer().object()
-                .key("uninitialize").value(404)
+                .key("status").value(400)
                 .endObject().toString() + "\n");
+            connection.close();
          }
          catch (IOException ex)
          {
