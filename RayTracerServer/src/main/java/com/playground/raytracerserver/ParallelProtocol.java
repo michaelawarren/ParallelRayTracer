@@ -3,10 +3,13 @@ package com.playground.raytracerserver;
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.cameras.PinHoleWorker;
+import com.personal.parallelraytracer.math.Point;
+import com.personal.parallelraytracer.math.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 class ParallelProtocol
@@ -28,7 +31,15 @@ class ParallelProtocol
          {
             try
             {
+               JSONObject jSONObject = new JSONObject(input);
                state = State.WAITING;
+               world.setRequiermentScene(
+                   new PinHoleWorker(850.0d, 1, new Point(100, 100, 100),
+                       new Point(-5, 0, 0),
+                       new Vector(1, 1, 0), 1, "Single.png",
+                       jSONObject.getInt("numThreads")),
+                   jSONObject.getInt("width"),
+                   jSONObject.getInt("height"));
                return stringer.object().key("status").value("initialized")
                    .endObject().toString();
             }

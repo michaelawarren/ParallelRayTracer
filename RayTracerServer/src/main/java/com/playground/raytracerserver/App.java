@@ -23,9 +23,7 @@ public class App
    {
       try
       {
-         final Camera pinHole
-             = new PinHoleWorker(850.0d, 1, new Point(100, 100, 100), new Point(-5, 0, 0),
-                 new Vector(1, 1, 0), 1, "Single.png", 1);
+
          
          int port = 6789;
 
@@ -38,13 +36,9 @@ public class App
          {
             String inputLine, outputLine;
             final World world = new World();
-            world.setRequiermentScene(pinHole, 500, 500);
             // Initiate conversation with client
             ParallelProtocol kkp = new ParallelProtocol(world);
             
-            outputLine = kkp.processInput(null);
-            System.out.println(outputLine);
-
             while ((inputLine = in.readLine()) != null)
             {
                outputLine = kkp.processInput(inputLine);
