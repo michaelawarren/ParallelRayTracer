@@ -12,10 +12,10 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.Future;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -24,7 +24,7 @@ public class PinHoleMaster extends Camera
    private final int numThreads;
    private ExecutorService threadPool;
    private final List<String> comptuers;
-   private final List<Socket> sockets;
+   protected List<Connection> connections;
 
    /**
     *
@@ -43,7 +43,6 @@ public class PinHoleMaster extends Camera
       this.numThreads = numThreads;
       this.fileName = fileName;
       this.comptuers = computers;
-      this.sockets = new ArrayList<>();
    }
 
    @Override
@@ -53,50 +52,25 @@ public class PinHoleMaster extends Camera
       {
          final int height = world.vp.getHeight();
          final int width = world.vp.getWidth();
-         // initailzie our clients
-         threadPool = Executors.newFixedThreadPool(numThreads);
-//       List<Future> futures = new ArrayList<>();
-         List<Connection> connections = new ArrayList<>();
-         for (String hostName : comptuers)
-         {
-            connections.add(new Connection(new Socket(hostName, 6789)));
-         }
 
-         // Construct a 1K buffer to hold bytes on their way to the socket.
+         threadPool = Executors.newFixedThreadPool(comptuers.size());
+         List<Future> futures = new ArrayList<>();
+         initializeConnections();
+
          openWindow(width, height);
-         for (int r = 0; r < height; r++)
-         {
-            JSONArray jSONArray = new JSONArray();
+         renderImage(height, futures, width);
 
-            for (int c = 0; c < width; c++)
+         for (Future future : futures)
+         {
+            try
             {
-               jSONArray.put(new Pixel(r, c));
+               future.get();
             }
-            connections.get(0).sendMessage(jSONArray.toString() + "\n");
-            final JSONArray jsonObject
-                = new JSONArray(connections.get(0).readLine());
-            System.out.println(jSONArray.toString());
-            for (int i = 0; i < jsonObject.length(); i++)
+            catch (InterruptedException | ExecutionException ex)
             {
-               displayPixel(
-                   jsonObject.getJSONObject(i).getInt("r"),
-                   jsonObject.getJSONObject(i).getInt("c"),
-                   new RGBColor(jsonObject.getJSONObject(i).getJSONObject(
-                           "color")));
+               ex.printStackTrace();
             }
          }
-
-//         for (Future future : futures)
-//         {
-//            try
-//            {
-//               future.get();
-//            }
-//            catch (InterruptedException | ExecutionException ex)
-//            {
-//               ex.printStackTrace();
-//            }
-//         }
          threadPool.shutdown();
          for (Connection connection : connections)
          {
@@ -108,10 +82,100 @@ public class PinHoleMaster extends Camera
       {
          ex.printStackTrace();
       }
-      catch (JSONException ex)
+   }
+
+   public void renderImage(int height, List<Future> futures, final int width)
+   {
+      for (int r = 0; r < height; r++)
       {
-         Logger.getLogger(PinHoleMaster.class.getName()).log(Level.SEVERE, null,
-             ex);
+         futures.add(threadPool.submit(new RowRunnable(r)
+         {
+            @Override
+            public void run()
+            {
+               Connection connection = aquireConnection();
+
+               try
+               {
+                  JSONArray jsonObject = getColors(connection);
+
+                  System.out.println(jsonObject.toString());
+                  saveToImage(jsonObject);
+               }
+               catch (IOException ex)
+               {
+                  ex.printStackTrace();
+                  releaseConnection(connection);
+               }
+               catch (JSONException ex)
+               {
+                  ex.printStackTrace();
+               }
+            }
+
+            public JSONArray getColors(Connection connection) throws JSONException, IOException
+            {
+               JSONArray jSONArray = new JSONArray();
+               for (int c = 0; c < width; c++)
+               {
+                  jSONArray.put(new Pixel(row, c));
+               }
+               connection.sendMessage(jSONArray.toString() + "\n");
+               final JSONArray jsonObject
+                   = new JSONArray(connection.readLine());
+               releaseConnection(connection);
+               return jsonObject;
+            }
+         }));
+      }
+   }
+
+   public List<Connection> initializeConnections() throws IOException
+   {
+      connections = new ArrayList<>();
+      for (String hostName : comptuers)
+      {
+         connections.add(new Connection(new Socket(hostName, 6789)));
+      }
+      return connections;
+   }
+
+   public Connection aquireConnection()
+   {
+      // get available connection
+      Connection connection = null;
+      while (connection == null)
+      {
+         synchronized (connections)
+         {
+            if (!connections.isEmpty())
+            {
+               connection = connections.remove(0);
+            }
+         }
+      }
+      return connection;
+   }
+
+   public void releaseConnection(Connection connection)
+   {
+      synchronized (connections)
+      {
+         connections.add(connection);
+         connection = null;
+      }
+   }
+
+   public void saveToImage(final JSONArray jsonObject) throws JSONException
+   {
+      for (int i = 0; i < jsonObject.length(); i++)
+      {
+         displayPixel(
+             jsonObject.getJSONObject(i).getInt("r"),
+             jsonObject.getJSONObject(i).getInt("c"),
+             new RGBColor(jsonObject.getJSONObject(i)
+                 .getJSONObject(
+                     "color")));
       }
    }
 
@@ -131,10 +195,12 @@ public class PinHoleMaster extends Camera
 
       public Connection(Socket socket) throws IOException
       {
-         is = socket.getInputStream();
+         this.socket = socket;
+         is = this.socket.getInputStream();
          ir = new InputStreamReader(is);
          bufferedReader = new BufferedReader(ir);
-         os = new DataOutputStream(socket.getOutputStream());
+
+         os = new DataOutputStream(this.socket.getOutputStream());
       }
 
       public void sendMessage(String message) throws IOException
@@ -147,15 +213,25 @@ public class PinHoleMaster extends Camera
          os.write(buffer, 0, bytes);
          os.flush();
       }
-      
+
       public String readLine() throws IOException
       {
          return bufferedReader.readLine();
       }
-      
+
       public void close() throws IOException
       {
          socket.close();
+      }
+   }
+
+   private abstract class RowRunnable implements Runnable
+   {
+      protected int row;
+
+      public RowRunnable(int row)
+      {
+         this.row = row;
       }
    }
 }

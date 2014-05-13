@@ -20,6 +20,7 @@ public class ParallelRayTracer
       long[][] matrix = new long[3][7];
 
       List<String> host1 = new ArrayList<>();
+//      host1.add("LocalHost");
       host1.add("Aus213L15");
       host1.add("Aus213L16");
       host1.add("Aus213L17");
@@ -40,7 +41,7 @@ public class ParallelRayTracer
       };
       Size[] sizes = new Size[]
       {
-         new Size(10, 10)//, new Size(500, 1000), new Size(1000, 1000)
+         new Size(500, 500)//, new Size(500, 1000), new Size(1000, 1000)
       };
 
       for (int tracerIndex = 0; tracerIndex < cameras.length; tracerIndex++)
