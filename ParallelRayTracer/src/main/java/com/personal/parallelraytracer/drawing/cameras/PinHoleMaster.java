@@ -136,18 +136,18 @@ public class PinHoleMaster extends Camera
    public List<Connection> initializeConnections(World world) throws IOException, JSONException
    {
       connections = new ArrayList<>();
-      final JSONStringer jsonStringer = new JSONStringer();
       for (String hostName : comptuers)
       {
          final Connection connection
              = new Connection(new Socket(hostName, 6789));
          connection.sendMessage(
-             jsonStringer
+             new JSONStringer()
              .object()
              .key("initialize").value(1)
              .key("width").value(world.vp.getWidth())
              .key("height").value(world.vp.getHeight())
              .key("numThreads").value(numThreads)
+             .endObject()
              .toString() + "\n"
          );
          connection.readLine();
@@ -200,46 +200,6 @@ public class PinHoleMaster extends Camera
    public String toString()
    {
       return numThreads + " core " + comptuers.size() + " comp";
-   }
-
-   private class Connection
-   {
-      Socket socket;
-      InputStream is;
-      InputStreamReader ir;
-      BufferedReader bufferedReader;
-      DataOutputStream os;
-
-      public Connection(Socket socket) throws IOException
-      {
-         this.socket = socket;
-         is = this.socket.getInputStream();
-         ir = new InputStreamReader(is);
-         bufferedReader = new BufferedReader(ir);
-
-         os = new DataOutputStream(this.socket.getOutputStream());
-      }
-
-      public void sendMessage(String message) throws IOException
-      {
-         byte[] buffer = message.getBytes();
-         int bytes = 0;
-
-         // Copy requested file into the socket's output stream.
-         bytes = buffer.length;
-         os.write(buffer, 0, bytes);
-         os.flush();
-      }
-
-      public String readLine() throws IOException
-      {
-         return bufferedReader.readLine();
-      }
-
-      public void close() throws IOException
-      {
-         socket.close();
-      }
    }
 
    private abstract class RowRunnable implements Runnable

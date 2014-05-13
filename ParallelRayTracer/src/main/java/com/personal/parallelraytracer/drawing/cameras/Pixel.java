@@ -29,7 +29,7 @@ public class Pixel implements JSONString
    {
       return "Pixel{" + "r=" + r + ", c=" + c + ", color=" + color + '}';
    }
-   
+
    @Override
    public String toJSONString()
    {
@@ -37,12 +37,9 @@ public class Pixel implements JSONString
       {
          return new JSONStringer()
              .object()
-             .key("r")
-             .value(r)
-             .key("c")
-             .value(c)
-             .key("color")
-             .value(color)
+             .key("r").value(r)
+             .key("c").value(c)
+             .key("color").value(color)
              .endObject()
              .toString();
       }
