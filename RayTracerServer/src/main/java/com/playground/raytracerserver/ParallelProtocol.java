@@ -1,7 +1,8 @@
 package com.playground.raytracerserver;
 
+import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.World;
-import com.personal.parallelraytracer.drawing.cameras.Pixel;
+import com.personal.parallelraytracer.drawing.cameras.PinHoleWorker;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
@@ -18,7 +19,7 @@ class ParallelProtocol
    {
       this.world = world;
    }
-   
+
    public String processInput(String input)
    {
       switch (state)
@@ -42,13 +43,9 @@ class ParallelProtocol
             state = State.PROCESSING;
             try
             {
-               JSONArray array = new JSONArray(input);
-               for (int i = 0; i < array.length(); i++)
-               {
-                  Pixel pixel = (Pixel) array.get(i);
-                  System.out.println(pixel.toString());
-               }
-               input = array.toString(3);
+               JSONArray array = ((PinHoleWorker) world.getCamera())
+                   .renderScene(world, new JSONArray(input));
+               input = array.toString();
             }
             catch (JSONException ex)
             {
@@ -58,10 +55,11 @@ class ParallelProtocol
             {
                state = State.WAITING;
             }
+            // just display what we got
             return input;
          }
          case PROCESSING:
-            return input;
+            return "processing";
          default:
             return "in a bad state please restart";
       }
