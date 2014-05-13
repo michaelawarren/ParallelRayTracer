@@ -1,20 +1,15 @@
 package com.personal.parallelraytracer.drawing.cameras;
 
-public class PixelRunable extends RayRunable
-{
-   Pixel pixel;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-   public PixelRunable(Pixel pixel)
+public abstract class PixelRunable extends RayRunable
+{
+   JSONObject pixel;
+
+   public PixelRunable(JSONObject pixel) throws JSONException
    {
-      super(pixel.r, pixel.c);
+      super(pixel.getInt("r"), pixel.getInt("c"));
       this.pixel = pixel;
    }
-   
-   @Override
-   public void run()
-   {
-      //TODO: write run
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
-
 }

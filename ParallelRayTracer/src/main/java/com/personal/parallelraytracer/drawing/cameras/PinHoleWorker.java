@@ -12,8 +12,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class PinHoleWorker extends Camera
 {
@@ -21,7 +25,7 @@ public class PinHoleWorker extends Camera
    private final double zoom;
    private int numThreads;
    private ExecutorService threadPool;
-   private List<Pixel> pixels;
+   private JSONArray pixels;
 
    /**
     *
@@ -49,7 +53,7 @@ public class PinHoleWorker extends Camera
       zoom = 0;
    }
 
-   public List<Pixel> renderScene(World world, List<Pixel> pixels)
+   public JSONArray renderScene(World world, JSONArray pixels)
    {
       this.pixels = pixels;
       renderScene(world);
@@ -70,42 +74,56 @@ public class PinHoleWorker extends Camera
       openWindow(vp.getWidth(), vp.getHeight());
       threadPool = Executors.newFixedThreadPool(numThreads);
       List<Future> futures = new ArrayList<>();
-      for (Pixel pixel : pixels)
+      for (int i = 0; i < pixels.length(); i++)
       {
-         futures.add(threadPool.submit(new PixelRunable(pixel)
+         try
          {
-            @Override
-            public void run()
-            {
-               try
-               {
-                  int depth = 0;
-                  Vector3D L = RGBColor.BLACK;
+            futures.add(threadPool.submit(new PixelRunable(pixels.getJSONObject(
+                i))
+                {
+                   @Override
+                   public void run()
+                   {
+                      try
+                      {
+                         int depth = 0;
+                         Vector3D L = RGBColor.BLACK;
 
-                  for (int j = 0; j < viewPlane.getNumSamples(); j++)
-                  {
-                     Vector2D sp = viewPlane.getSampler().sampleUnitSquare();
-                     Vector2D pp = new Vector2D(
-                         viewPlane.getPixelSize() * (c - 0.5d * viewPlane
-                         .getWidth() + sp
-                         .getX()),
-                         viewPlane.getPixelSize() * (r - 0.5d * viewPlane
-                         .getHeight() + sp
-                         .getY()));
-                     Ray ray = new Ray(rayDirection(pp), eye);
-                     L = L.add(w.tracer.trayRay(ray, depth));
-                  }
+                         for (int j = 0; j < viewPlane.getNumSamples(); j++)
+                         {
+                            Vector2D sp = viewPlane.getSampler()
+                            .sampleUnitSquare();
+                            Vector2D pp = new Vector2D(
+                                viewPlane.getPixelSize() * (c - 0.5d * viewPlane
+                                .getWidth() + sp
+                                .getX()),
+                                viewPlane.getPixelSize() * (r - 0.5d * viewPlane
+                                .getHeight() + sp
+                                .getY()));
+                            Ray ray = new Ray(rayDirection(pp), eye);
+                            L = L.add(w.tracer.trayRay(ray, depth));
+                         }
 
-                  L = L.scalarMultiply(1.0d / viewPlane.getNumSamples());
-                  L = L.scalarMultiply(exposureTime);
-                  this.pixel.color = new RGBColor(L);
-               }
-               catch (NullPointerException ex)
-               {
-                  ex.printStackTrace();
-               }
-            }
-         }));
+                         L = L.scalarMultiply(1.0d / viewPlane.getNumSamples());
+                         L = L.scalarMultiply(exposureTime);
+                         this.pixel.put("color", new RGBColor(L));
+                      }
+                      catch (NullPointerException ex)
+                      {
+                         ex.printStackTrace();
+                      }
+                      catch (JSONException ex)
+                      {
+                         ex.printStackTrace();
+                      }
+                   }
+                }));
+         }
+         catch (JSONException ex)
+         {
+            Logger.getLogger(PinHoleWorker.class.getName())
+                .log(Level.SEVERE, null, ex);
+         }
       }
       for (Future future : futures)
       {
@@ -132,5 +150,9 @@ public class PinHoleWorker extends Camera
    {
       return numThreads + " core 1 comp";
    }
-   
+
+   public void setNumThreads(int numThreads)
+   {
+      this.numThreads = numThreads;
+   }
 }

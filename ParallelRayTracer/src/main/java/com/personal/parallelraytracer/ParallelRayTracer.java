@@ -37,7 +37,7 @@ public class ParallelRayTracer
 //         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
 //            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4)
          new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "cluster.png", 1, host1)
+            new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(0, 2)) // 0, 1
       };
       Size[] sizes = new Size[]
       {

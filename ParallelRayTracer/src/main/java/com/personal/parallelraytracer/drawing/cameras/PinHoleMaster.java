@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONStringer;
 
 public class PinHoleMaster extends Camera
 {
@@ -55,7 +56,7 @@ public class PinHoleMaster extends Camera
 
          threadPool = Executors.newFixedThreadPool(comptuers.size());
          List<Future> futures = new ArrayList<>();
-         initializeConnections();
+         initializeConnections(world);
 
          openWindow(width, height);
          renderImage(height, futures, width);
@@ -82,6 +83,10 @@ public class PinHoleMaster extends Camera
       {
          ex.printStackTrace();
       }
+      catch (JSONException ex)
+      {
+         ex.printStackTrace();
+      }
    }
 
    public void renderImage(int height, List<Future> futures, final int width)
@@ -98,8 +103,6 @@ public class PinHoleMaster extends Camera
                try
                {
                   JSONArray jsonObject = getColors(connection);
-
-                  System.out.println(jsonObject.toString());
                   saveToImage(jsonObject);
                }
                catch (IOException ex)
@@ -130,12 +133,26 @@ public class PinHoleMaster extends Camera
       }
    }
 
-   public List<Connection> initializeConnections() throws IOException
+   public List<Connection> initializeConnections(World world) throws IOException, JSONException
    {
       connections = new ArrayList<>();
+      final JSONStringer jsonStringer = new JSONStringer();
       for (String hostName : comptuers)
       {
-         connections.add(new Connection(new Socket(hostName, 6789)));
+         final Connection connection
+             = new Connection(new Socket(hostName, 6789));
+         connection.sendMessage(
+             jsonStringer
+             .object()
+             .key("initialize").value(1)
+             .key("width").value(world.vp.getWidth())
+             .key("height").value(world.vp.getHeight())
+             .key("numThreads").value(numThreads)
+             .toString() + "\n"
+         );
+         connection.readLine();
+
+         connections.add(connection);
       }
       return connections;
    }
