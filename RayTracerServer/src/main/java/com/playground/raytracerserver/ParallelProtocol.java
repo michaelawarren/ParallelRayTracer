@@ -32,6 +32,8 @@ class ParallelProtocol
             try
             {
                JSONObject jSONObject = new JSONObject(input);
+               if (jSONObject.has("initialize"))
+                  return "Done";
                state = State.WAITING;
                world.setRequiermentScene(
                    new PinHoleWorker(850.0d, 1, new Point(100, 100, 100),
@@ -51,6 +53,8 @@ class ParallelProtocol
          }
          case WAITING:
          {
+            if (input.contains("uninitialize"))
+               return "Done";
             state = State.PROCESSING;
             try
             {

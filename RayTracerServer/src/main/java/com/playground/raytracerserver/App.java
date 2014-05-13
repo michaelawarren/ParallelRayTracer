@@ -23,30 +23,33 @@ public class App
    {
       try
       {
-
-         
+         System.out.println("Hello");
          int port = 6789;
-
-         try (
-             ServerSocket listenSocket = new ServerSocket(port);
-             Socket socket = listenSocket.accept();
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket
-                     .getInputStream()));)
+         while (true)
          {
-            String inputLine, outputLine;
-            final World world = new World();
-            // Initiate conversation with client
-            ParallelProtocol kkp = new ParallelProtocol(world);
-            
-            while ((inputLine = in.readLine()) != null)
+            try (
+                ServerSocket listenSocket = new ServerSocket(port);
+                Socket socket = listenSocket.accept();
+                PrintWriter out
+                = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        socket
+                        .getInputStream()));)
             {
-               outputLine = kkp.processInput(inputLine);
-               //System.out.println(outputLine);
-               out.println(outputLine);
-               if (outputLine.equals("Bye."))
+               String inputLine, outputLine;
+               final World world = new World();
+               // Initiate conversation with client
+               ParallelProtocol kkp = new ParallelProtocol(world);
+
+               while ((inputLine = in.readLine()) != null)
                {
-                  break;
+                  outputLine = kkp.processInput(inputLine);
+                  out.println(outputLine);
+                  if (outputLine.equals("Done"))
+                  {
+                     System.out.println("GoodBye");
+                     return;
+                  }
                }
             }
          }
@@ -56,6 +59,4 @@ public class App
          System.out.println(ex.toString());
       }
    }
-   
-
 }

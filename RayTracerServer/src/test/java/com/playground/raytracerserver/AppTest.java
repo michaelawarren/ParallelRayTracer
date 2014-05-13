@@ -1,8 +1,12 @@
 package com.playground.raytracerserver;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.json.JSONException;
+import org.json.JSONStringer;
 
 /**
  * Unit test for simple App.
@@ -33,6 +37,20 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+       try
+       {
+          String actual = new JSONStringer()
+              .object()
+              .key("initialize").value(1)
+              .key("width").value(500)
+              .key("height").value(500)
+              .key("numThreads").value(2)
+              .endObject()
+              .toString();
+       }
+       catch (JSONException ex)
+       {
+          ex.printStackTrace();
+       }
     }
 }
