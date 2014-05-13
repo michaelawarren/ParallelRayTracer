@@ -32,7 +32,7 @@ class ParallelProtocol
             try
             {
                JSONObject jSONObject = new JSONObject(input);
-               if (jSONObject.has("initialize"))
+               if (jSONObject.has("status") && jSONObject.getInt("status") != 200)
                   return "Done";
                state = State.WAITING;
                world.setRequiermentScene(
