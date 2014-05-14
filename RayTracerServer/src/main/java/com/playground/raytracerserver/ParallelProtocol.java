@@ -2,7 +2,6 @@ package com.playground.raytracerserver;
 
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.cameras.PinHoleWorker;
-import com.personal.parallelraytracer.drawing.cameras.Pixel;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
 import java.util.logging.Level;
