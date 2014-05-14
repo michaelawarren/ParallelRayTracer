@@ -1,11 +1,6 @@
 package com.playground.raytracerserver;
 
 import com.personal.parallelraytracer.drawing.World;
-import com.personal.parallelraytracer.drawing.cameras.Camera;
-import com.personal.parallelraytracer.drawing.cameras.PinHole;
-import com.personal.parallelraytracer.drawing.cameras.PinHoleWorker;
-import com.personal.parallelraytracer.math.Point;
-import com.personal.parallelraytracer.math.Vector;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

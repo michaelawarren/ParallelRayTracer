@@ -1,15 +1,11 @@
 package com.personal.parallelraytracer.drawing.cameras;
 
+import com.personal.parallelraytracer.ParallelRayTracer.Size;
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -18,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 public class PinHoleMaster extends Camera
@@ -26,7 +23,6 @@ public class PinHoleMaster extends Camera
    private ExecutorService threadPool;
    private final List<String> comptuers;
    final protected List<Connection> connections;
-   
 
    /**
     *
@@ -47,7 +43,7 @@ public class PinHoleMaster extends Camera
       this.comptuers = computers;
       this.connections = new ArrayList<>();
    }
-
+   
    @Override
    public void renderScene(World world)
    {
@@ -55,14 +51,13 @@ public class PinHoleMaster extends Camera
       {
          final int height = world.vp.getHeight();
          final int width = world.vp.getWidth();
-
+         
          threadPool = Executors.newFixedThreadPool(comptuers.size());
          List<Future> futures = new ArrayList<>();
-         initializeConnections(world);
-
+         
          openWindow(width, height);
-         renderImage(height, futures, width);
-
+         renderImage(height, futures);
+         
          for (Future future : futures)
          {
             try
@@ -86,13 +81,9 @@ public class PinHoleMaster extends Camera
       {
          ex.printStackTrace();
       }
-      catch (JSONException ex)
-      {
-         ex.printStackTrace();
-      }
    }
-
-   public void renderImage(int height, List<Future> futures, final int width)
+   
+   public void renderImage(int height, List<Future> futures)
    {
       for (int r = 0; r < height; r++)
       {
@@ -101,41 +92,34 @@ public class PinHoleMaster extends Camera
             @Override
             public void run()
             {
-               Connection connection = aquireConnection();
-
+               Connection connection = connections.get(row % connections.size()); 
+               
                try
                {
                   JSONArray jsonObject = getColors(connection);
                   saveToImage(jsonObject);
                }
-               catch (IOException ex)
-               {
-                  ex.printStackTrace();
-                  releaseConnection(connection);
-               }
-               catch (JSONException ex)
+               catch (IOException | JSONException | IllegalStateException ex)
                {
                   ex.printStackTrace();
                }
             }
-
+            
             public JSONArray getColors(Connection connection) throws JSONException, IOException
             {
-               JSONArray jSONArray = new JSONArray();
-               for (int c = 0; c < width; c++)
-               {
-                  jSONArray.put(new Pixel(row, c));
-               }
-               connection.sendMessage(jSONArray.toString() + "\n");
-               final JSONArray jsonObject = new JSONArray(connection.readLine());
-               releaseConnection(connection);
+               connection.sendMessage(new JSONStringer().object()
+                   .key("r").value(row)
+                   .endObject()
+                   .toString() + "\n");
+               final String line = connection.readLine();
+               final JSONArray jsonObject = new JSONArray(line);
                return jsonObject;
             }
          }));
       }
    }
-
-   public List<Connection> initializeConnections(World world) throws IOException, JSONException
+   
+   public List<Connection> initializeConnections(Size size) throws IOException, JSONException
    {
       for (String hostName : comptuers)
       {
@@ -144,68 +128,50 @@ public class PinHoleMaster extends Camera
              new JSONStringer()
              .object()
              .key("status").value(200)
-             .key("width").value(world.vp.getWidth())
-             .key("height").value(world.vp.getHeight())
+             .key("width").value(size.width)
+             .key("height").value(size.height)
              .key("numThreads").value(numThreads)
              .endObject()
              .toString() + "\n"
          );
          connection.readLine();
-
+         
          connections.add(connection);
       }
       return connections;
    }
-
-   public Connection aquireConnection()
+   
+   public void saveToImage(final JSONArray jsonArray) throws IllegalStateException, JSONException
    {
-      // get available connection
-      Connection connection = null;
-      while (connection == null)
+      for (int i = 0; i < jsonArray.length(); i++)
       {
-         synchronized (connections)
+         try
          {
-            if (!connections.isEmpty())
-            {
-               connection = connections.remove(0);
-            }
+            final JSONObject jsonObject = jsonArray.getJSONObject(i);
+            displayPixel(
+                jsonObject.getInt("r"),
+                jsonObject.getInt("c"),
+                new RGBColor(jsonObject
+                    .getJSONObject(
+                        "color")));
+         }
+         catch (JSONException ex)
+         {
+            throw new IllegalStateException(jsonArray.get(i).toString(), ex);
          }
       }
-      return connection;
    }
-
-   public void releaseConnection(Connection connection)
-   {
-      synchronized(connections)
-      {
-         connections.add(connection);
-         connection = null;
-      }
-   }
-
-   public void saveToImage(final JSONArray jsonObject) throws JSONException
-   {
-      for (int i = 0; i < jsonObject.length(); i++)
-      {
-         displayPixel(
-             jsonObject.getJSONObject(i).getInt("r"),
-             jsonObject.getJSONObject(i).getInt("c"),
-             new RGBColor(jsonObject.getJSONObject(i)
-                 .getJSONObject(
-                     "color")));
-      }
-   }
-
+   
    @Override
    public String toString()
    {
       return numThreads * comptuers.size() + " core " + comptuers.size() + " comp";
    }
-
+   
    private abstract class RowRunnable implements Runnable
    {
       protected int row;
-
+      
       public RowRunnable(int row)
       {
          this.row = row;

@@ -26,6 +26,7 @@ public class PinHoleWorker extends Camera
    private int numThreads;
    private ExecutorService threadPool;
    private JSONArray pixels;
+   private int row;
 
    /**
     *
@@ -53,9 +54,10 @@ public class PinHoleWorker extends Camera
       zoom = 0;
    }
 
-   public JSONArray renderScene(World world, JSONArray pixels)
+   public JSONArray renderScene(World world, int row)
    {
-      this.pixels = pixels;
+      this.row = row;
+      this.pixels = new JSONArray();
       renderScene(world);
       return this.pixels;
    }
@@ -74,56 +76,46 @@ public class PinHoleWorker extends Camera
       openWindow(vp.getWidth(), vp.getHeight());
       threadPool = Executors.newFixedThreadPool(numThreads);
       List<Future> futures = new ArrayList<>();
-      for (int i = 0; i < pixels.length(); i++)
+      for (int col = 0; col < world.vp.getWidth(); col++)
       {
-         try
+         futures.add(threadPool.submit(new RayRunable(row, col)
          {
-            futures.add(threadPool.submit(new PixelRunable(pixels.getJSONObject(
-                i))
-                {
-                   @Override
-                   public void run()
-                   {
-                      try
-                      {
-                         int depth = 0;
-                         Vector3D L = RGBColor.BLACK;
+            @Override
+            public void run()
+            {
+               try
+               {
+                  int depth = 0;
+                  Vector3D L = RGBColor.BLACK;
 
-                         for (int j = 0; j < viewPlane.getNumSamples(); j++)
-                         {
-                            Vector2D sp = viewPlane.getSampler()
-                            .sampleUnitSquare();
-                            Vector2D pp = new Vector2D(
-                                viewPlane.getPixelSize() * (c - 0.5d * viewPlane
-                                .getWidth() + sp
-                                .getX()),
-                                viewPlane.getPixelSize() * (r - 0.5d * viewPlane
-                                .getHeight() + sp
-                                .getY()));
-                            Ray ray = new Ray(rayDirection(pp), eye);
-                            L = L.add(w.tracer.trayRay(ray, depth));
-                         }
+                  for (int j = 0; j < viewPlane.getNumSamples(); j++)
+                  {
+                     Vector2D sp = viewPlane.getSampler()
+                         .sampleUnitSquare();
+                     Vector2D pp = new Vector2D(
+                         viewPlane.getPixelSize() * (c - 0.5d * viewPlane
+                         .getWidth() + sp
+                         .getX()),
+                         viewPlane.getPixelSize() * (r - 0.5d * viewPlane
+                         .getHeight() + sp
+                         .getY()));
+                     Ray ray = new Ray(rayDirection(pp), eye);
+                     L = L.add(w.tracer.trayRay(ray, depth));
+                  }
 
-                         L = L.scalarMultiply(1.0d / viewPlane.getNumSamples());
-                         L = L.scalarMultiply(exposureTime);
-                         this.pixel.put("color", new RGBColor(L));
-                      }
-                      catch (NullPointerException ex)
-                      {
-                         ex.printStackTrace();
-                      }
-                      catch (JSONException ex)
-                      {
-                         ex.printStackTrace();
-                      }
-                   }
-                }));
-         }
-         catch (JSONException ex)
-         {
-            Logger.getLogger(PinHoleWorker.class.getName())
-                .log(Level.SEVERE, null, ex);
-         }
+                  L = L.scalarMultiply(1.0d / viewPlane.getNumSamples());
+                  L = L.scalarMultiply(exposureTime);
+                  synchronized (pixels)
+                  {
+                     pixels.put(new Pixel(r, c, new RGBColor(L)));
+                  }
+               }
+               catch (NullPointerException ex)
+               {
+                  ex.printStackTrace();
+               }
+            }
+         }));
       }
       for (Future future : futures)
       {

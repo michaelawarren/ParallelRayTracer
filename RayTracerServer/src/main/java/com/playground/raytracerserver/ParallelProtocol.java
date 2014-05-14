@@ -1,8 +1,8 @@
 package com.playground.raytracerserver;
 
-import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.cameras.PinHoleWorker;
+import com.personal.parallelraytracer.drawing.cameras.Pixel;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
 import java.util.logging.Level;
@@ -33,7 +33,9 @@ class ParallelProtocol
             {
                JSONObject jSONObject = new JSONObject(input);
                if (jSONObject.has("status") && jSONObject.getInt("status") != 200)
+               {
                   return "Done";
+               }
                state = State.WAITING;
                world.setRequiermentScene(
                    new PinHoleWorker(850.0d, 1, new Point(100, 100, 100),
@@ -53,13 +55,15 @@ class ParallelProtocol
          }
          case WAITING:
          {
-            if (input.contains("uninitialize"))
+            if (input == null || input.contains(("status")))
+            {
                return "Done";
+            }
             state = State.PROCESSING;
             try
             {
                JSONArray array = ((PinHoleWorker) world.getCamera())
-                   .renderScene(world, new JSONArray(input));
+                   .renderScene(world, new JSONObject(input).getInt("r"));
                input = array.toString();
             }
             catch (JSONException ex)

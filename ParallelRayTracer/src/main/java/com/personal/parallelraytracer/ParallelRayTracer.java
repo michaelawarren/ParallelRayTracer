@@ -20,58 +20,32 @@ public class ParallelRayTracer
    {
       if (args.length > 0 && "server".equals(args[0]))
       {
-         System.out.println("Starting server...");
          return;
       }
+
+      System.out.println("Starting tests");
+      boolean debug = false;
+
       long[][] matrix = new long[3][7];
 
       List<String> host1 = new ArrayList<>();
       host1.add("LocalHost");
-      host1.add("Aus213L15");
-      host1.add("Aus213L16");
-      host1.add("Aus213L17");
-      host1.add("Aus213L18");
-
-      World world = new World();
-
-      Camera[] cameras = new Camera[]
+      if (!debug)
       {
-         new PinHole(850.0d, 1, new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "Single.png"),
-         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
-            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 2),
-         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
-            new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4),
-         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(1, 3)),
-         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "cluster.png", 2, host1.subList(1, 3)),
-         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "cluster.png", 4, host1.subList(1, 3)),
-         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
-            new Vector(1, 1, 0), 1, "cluster.png", 4, host1.subList(1, 5))
-//         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
-//         new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(0, 1))
-      };
+         host1.add("Aus213L15");
+         host1.add("Aus213L16");
+         host1.add("Aus213L17");
+         host1.add("Aus213L18");
+      }
+      Camera[] cameras = (debug) ? debug(host1) : noDebug(host1);
+
       Size[] sizes = new Size[]
       {
          new Size(500, 500), new Size(500, 1000), new Size(1000, 1000)
       };
 
-      for (int tracerIndex = 0; tracerIndex < cameras.length; tracerIndex++)
-      {
-         for (int sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++)
-         {
-            cameras[tracerIndex].setFileName(cameras[tracerIndex].toString()
-                + sizes[sizeIndex].toString() + ".png");
-            world.setRequiermentScene(cameras[tracerIndex],
-                sizes[sizeIndex].width, sizes[sizeIndex].height);
-            long start = System.currentTimeMillis();
-            world.getCamera().renderScene(world);
-            matrix[sizeIndex][tracerIndex]
-                = (System.currentTimeMillis() - start);
-         }
-      }
+      runTests(cameras, sizes, matrix);
+
       System.out.println("             1 core 1 comp | 2 core 1 comp | "
           + "4 core 1 comp | 2 core 2 comp | 4 core 2 comp | 8 core 2 comp "
           + "| 16 core 4 comp |");
@@ -93,7 +67,7 @@ public class ParallelRayTracer
             connection.sendMessage(new JSONStringer().object()
                 .key("status").value(400)
                 .endObject().toString() + "\n");
-            connection.close();
+            connection.readLine();
          }
          catch (IOException ex)
          {
@@ -106,6 +80,75 @@ public class ParallelRayTracer
 
       }
 
+   }
+
+   public static void runTests(Camera[] cameras, Size[] sizes, long[][] matrix)
+   {
+      World world = new World();
+      for (int tracerIndex = 0; tracerIndex < cameras.length; tracerIndex++)
+      {
+         for (int sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++)
+         {
+            cameras[tracerIndex].setFileName(cameras[tracerIndex].toString()
+                + sizes[sizeIndex].toString() + ".png");
+            initializeWorld(cameras, tracerIndex, sizes, sizeIndex, world);
+            long start = System.currentTimeMillis();
+            world.getCamera().renderScene(world);
+            matrix[sizeIndex][tracerIndex]
+                = (System.currentTimeMillis() - start);
+         }
+      }
+   }
+
+   public static void initializeWorld(Camera[] cameras, int cameraIndex,
+       Size[] sizes, int sizeIndex, World world)
+   {
+      if (cameras[cameraIndex] instanceof PinHoleMaster)
+      {
+         try
+         {
+            ((PinHoleMaster) cameras[cameraIndex]).initializeConnections(
+                sizes[sizeIndex]);
+         }
+         catch (IOException | JSONException ex)
+         {
+            ex.printStackTrace();
+         }
+      }
+      world.setRequiermentScene(cameras[cameraIndex], sizes[sizeIndex].width,
+          sizes[sizeIndex].height);
+   }
+
+   public static Camera[] debug(List<String> host1)
+   {
+      return new Camera[]
+      {
+
+         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+         new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(0, 1))
+      };
+
+   }
+
+   public static Camera[] noDebug(List<String> host1)
+   {
+      return new Camera[]
+      {
+         new PinHole(850.0d, 1, new Point(100, 100, 100), new Point(-5, 0, 0),
+         new Vector(1, 1, 0), 1, "Single.png"),
+         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
+         new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 2),
+         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
+         new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4),
+         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+         new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(1, 3)),
+         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+         new Vector(1, 1, 0), 1, "cluster.png", 2, host1.subList(1, 3)),
+         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+         new Vector(1, 1, 0), 1, "cluster.png", 4, host1.subList(1, 3)),
+         new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
+         new Vector(1, 1, 0), 1, "cluster.png", 4, host1.subList(1, 5))
+      };
    }
 
    public static class Size
