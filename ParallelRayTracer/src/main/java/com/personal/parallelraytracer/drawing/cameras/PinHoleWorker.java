@@ -107,7 +107,7 @@ public class PinHoleWorker extends Camera
                   L = L.scalarMultiply(exposureTime);
                   synchronized (pixels)
                   {
-                     pixels.put(new Pixel(r, c, new RGBColor(L)));
+                     pixels.put(new Pixel(r, c, new RGBColor(L).getColor().getRGB()));
                   }
                }
                catch (NullPointerException ex)

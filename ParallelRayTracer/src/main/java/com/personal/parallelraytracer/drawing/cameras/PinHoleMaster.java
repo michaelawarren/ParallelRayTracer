@@ -151,9 +151,7 @@ public class PinHoleMaster extends Camera
             displayPixel(
                 jsonObject.getInt("r"),
                 jsonObject.getInt("c"),
-                new RGBColor(jsonObject
-                    .getJSONObject(
-                        "color")));
+                jsonObject.getInt("color"));
          }
          catch (JSONException ex)
          {
