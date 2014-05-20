@@ -134,11 +134,6 @@ public abstract class Camera
       image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
    }
 
-   public void displayPixel(int r, int c, int pixelColor)
-   {
-      image.setRGB(c, r, pixelColor);
-   }
-   
    public void displayPixel(int r, int c, RGBColor pixelColor)
    {
       image.setRGB(c, r, pixelColor.getColor().getRGB());

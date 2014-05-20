@@ -10,7 +10,6 @@ public class Pixel implements JSONString
    public int r;
    public int c;
    public RGBColor color;
-   public int rgb;
 
    public Pixel(int r, int c)
    {
@@ -23,13 +22,6 @@ public class Pixel implements JSONString
       this.r = r;
       this.c = c;
       this.color = color;
-   }
-   
-   public Pixel(int r, int c, int rgb)
-   {
-      this.r = r;
-      this.c = c;
-      this.rgb = rgb;
    }
 
    @Override
@@ -47,7 +39,7 @@ public class Pixel implements JSONString
              .object()
              .key("r").value(r)
              .key("c").value(c)
-             .key("color").value(rgb)
+             .key("color").value(color)
              .endObject()
              .toString();
       }
