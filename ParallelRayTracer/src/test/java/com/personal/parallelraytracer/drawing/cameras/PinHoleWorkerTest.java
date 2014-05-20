@@ -22,12 +22,13 @@ public class PinHoleWorkerTest
           new Point(-5, 0, 0),
           new Vector(1, 1, 0), 1, "Single.png",
           4);
-      for (int i = 0; i < world.vp.getHeight(); i++)
+      final int height = world.vp.getHeight();
+      for (int i = 0; i < height; i++)
       {
-         final JSONArray row = phw.renderScene(world, i);
+         JSONArray row = new JSONArray();
+         row = phw.renderScene(world, i, row);
          String string = row.toString();
          assertFalse(string.contains("null"));
-
       }
    }
 

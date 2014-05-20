@@ -6,26 +6,15 @@ import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 public class PinHoleWorker extends Camera
 {
    private final double d;
    private final double zoom;
    private int numThreads;
-   private ExecutorService threadPool;
-   private JSONArray pixels;
    private int row;
 
    /**
@@ -54,81 +43,93 @@ public class PinHoleWorker extends Camera
       zoom = 0;
    }
 
-   public JSONArray renderScene(World world, int row)
+   public JSONArray renderScene(World world, int row, JSONArray pixels)
    {
-      this.row = row;
-      this.pixels = new JSONArray();
-      renderScene(world);
-      return this.pixels;
+      ViewPlane vp = new ViewPlane(world.vp);
+      vp.setPixelSize(vp.getPixelSize() / zoom);
+      final int width = world.vp.getWidth();
+
+      for (int c = 0; c < width; c++)
+      {
+         try
+         {
+            int depth = 0;
+            Vector3D L = RGBColor.BLACK;
+
+            for (int j = 0; j < vp.getNumSamples(); j++)
+            {
+               Vector2D sp = vp.getSampler()
+                   .sampleUnitSquare();
+               Vector2D pp = new Vector2D(
+                   vp.getPixelSize() * (c - 0.5d * vp.getWidth() + sp.getX()),
+                   vp.getPixelSize() * (row - 0.5d * vp.getHeight() + sp.getY()));
+               Ray ray = new Ray(rayDirection(pp), eye);
+               L = L.add(world.tracer.trayRay(ray, depth));
+            }
+
+            L = L.scalarMultiply(1.0d / vp.getNumSamples());
+            L = L.scalarMultiply(exposureTime);
+
+            pixels.put(new Pixel(row, c, new RGBColor(L).getColor().getRGB()));
+         }
+         catch (NullPointerException ex)
+         {
+            ex.printStackTrace();
+         }
+         catch (Exception ex)
+         {
+            ex.printStackTrace();
+         }
+      }
+
+      if (pixels.length() < width)
+      {
+         throw new IllegalStateException("less pixels than there is really are.");
+      }
+      return pixels;
    }
 
    @Override
    public void renderScene(World world)
    {
+      throw new UnsupportedOperationException("Method: renderScene not implemented");
+      /*
+      final JSONArray pixels = new JSONArray();
       ViewPlane vp = new ViewPlane(world.vp);
       vp.setPixelSize(vp.getPixelSize() / zoom);
 
-      // samples need to be generated before threads start else we could get a null pointer.
-      vp.getSampler().generateSamples();
-      final ViewPlane viewPlane = new ViewPlane(vp);
-      final World w = world;
-
-      openWindow(vp.getWidth(), vp.getHeight());
-      threadPool = Executors.newFixedThreadPool(numThreads);
-      List<Future> futures = new ArrayList<>();
-      for (int col = 0; col < world.vp.getWidth(); col++)
-      {
-         futures.add(threadPool.submit(new RayRunable(row, col)
-         {
-            @Override
-            public void run()
-            {
-               try
-               {
-                  int depth = 0;
-                  Vector3D L = RGBColor.BLACK;
-
-                  for (int j = 0; j < viewPlane.getNumSamples(); j++)
-                  {
-                     Vector2D sp = viewPlane.getSampler()
-                         .sampleUnitSquare();
-                     Vector2D pp = new Vector2D(
-                         viewPlane.getPixelSize() * (c - 0.5d * viewPlane
-                         .getWidth() + sp
-                         .getX()),
-                         viewPlane.getPixelSize() * (r - 0.5d * viewPlane
-                         .getHeight() + sp
-                         .getY()));
-                     Ray ray = new Ray(rayDirection(pp), eye);
-                     L = L.add(w.tracer.trayRay(ray, depth));
-                  }
-
-                  L = L.scalarMultiply(1.0d / viewPlane.getNumSamples());
-                  L = L.scalarMultiply(exposureTime);
-                  synchronized (pixels)
-                  {
-                     pixels.put(new Pixel(r, c, new RGBColor(L)));
-                  }
-               }
-               catch (NullPointerException ex)
-               {
-                  ex.printStackTrace();
-               }
-            }
-         }));
-      }
-      for (Future future : futures)
+      for (int c = 0; c < world.vp.getWidth(); c++)
       {
          try
          {
-            future.get();
+            int depth = 0;
+            Vector3D L = RGBColor.BLACK;
+
+            for (int j = 0; j < vp.getNumSamples(); j++)
+            {
+               Vector2D sp = vp.getSampler()
+                   .sampleUnitSquare();
+               Vector2D pp = new Vector2D(
+                   vp.getPixelSize() * (c - 0.5d * vp
+                   .getWidth() + sp
+                   .getX()),
+                   vp.getPixelSize() * (r - 0.5d * vp
+                   .getHeight() + sp
+                   .getY()));
+               Ray ray = new Ray(rayDirection(pp), eye);
+               L = L.add(world.tracer.trayRay(ray, depth));
+            }
+
+            L = L.scalarMultiply(1.0d / vp.getNumSamples());
+            L = L.scalarMultiply(exposureTime);
+
+            pixels.put(new Pixel(r, c, new RGBColor(L).getColor().getRGB()));
          }
-         catch (InterruptedException | ExecutionException ex)
+         catch (NullPointerException ex)
          {
             ex.printStackTrace();
          }
-      }
-      threadPool.shutdown();
+      }*/
    }
 
    private Vector rayDirection(Vector2D p)

@@ -17,7 +17,7 @@ public class Connection
 
    public Connection(String hostName) throws IOException
    {
-      this.socket = new Socket(hostName, 6789);
+      this.socket = new Socket(hostName, 6780);
       is = this.socket.getInputStream();
       ir = new InputStreamReader(is);
       bufferedReader = new BufferedReader(ir);

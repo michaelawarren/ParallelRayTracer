@@ -2,9 +2,9 @@ package com.playground.raytracerserver;
 
 import com.personal.parallelraytracer.drawing.World;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,42 +16,54 @@ public class App
 {
    public static void main(String[] args)
    {
-      try
+      int port = 6780;
+      try (ServerSocket listenSocket = new ServerSocket(port);)
       {
          System.out.println("Hello");
-         int port = 6789;
          while (true)
          {
             try (
-                ServerSocket listenSocket = new ServerSocket(port);
                 Socket socket = listenSocket.accept();
-                PrintWriter out
-                = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
-                        socket
-                        .getInputStream()));)
+                        socket.getInputStream()));)
             {
                String inputLine, outputLine;
                final World world = new World();
                // Initiate conversation with client
-               ParallelProtocol kkp = new ParallelProtocol(world);
+               ParallelProtocol protocol = new ParallelProtocol(world, socket);
 
-               while ((inputLine = in.readLine()) != null)
+               protocol.processInput(inputLine = in.readLine());
+               outputLine = protocol.processInput(inputLine);
+
+               protocol.sendMessage(outputLine);
+
+               if (outputLine.equals("Done\n"))
                {
-                  outputLine = kkp.processInput(inputLine);
-                  out.println(outputLine);
-                  if (outputLine.equals("Done"))
-                  {
-                     System.out.println("GoodBye");
-                     return;
-                  }
+                  System.out.println("GoodBye");
+                  protocol.out.close();
+                  return;
                }
+            }
+            catch (IOException ex)
+            {
+               ex.printStackTrace();
             }
          }
       }
-      catch (IOException ex)
+      catch (Exception ex)
       {
-         System.out.println(ex.toString());
+         ex.printStackTrace();
       }
+   }
+
+   public static void sendMessage(String message, DataOutputStream os) throws IOException
+   {
+      byte[] buffer = message.getBytes();
+      int bytes = 0;
+
+      // Copy requested file into the socket's output stream.
+      bytes = buffer.length;
+      os.write(buffer, 0, bytes);
+      os.flush();
    }
 }

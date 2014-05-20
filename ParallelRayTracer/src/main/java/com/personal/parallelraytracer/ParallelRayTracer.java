@@ -47,7 +47,7 @@ public class ParallelRayTracer
       runTests(cameras, sizes, matrix);
 
       System.out.println("             1 core 1 comp | 2 core 1 comp | "
-          + "4 core 1 comp | 2 core 2 comp | 4 core 2 comp | 8 core 2 comp "
+          + "2 core 2 comp | 4 core 1 comp | 4 core 2 comp | 8 core 2 comp "
           + "| 16 core 4 comp |");
 
       for (int i = 0; i < sizes.length; i++)
@@ -77,24 +77,22 @@ public class ParallelRayTracer
          {
             ex.printStackTrace();
          }
-
       }
-
    }
 
    public static void runTests(Camera[] cameras, Size[] sizes, long[][] matrix)
    {
       World world = new World();
-      for (int tracerIndex = 0; tracerIndex < cameras.length; tracerIndex++)
+      for (int cameraIndex = 0; cameraIndex < cameras.length; cameraIndex++)
       {
          for (int sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++)
          {
-            cameras[tracerIndex].setFileName(cameras[tracerIndex].toString()
+            cameras[cameraIndex].setFileName(cameras[cameraIndex].toString()
                 + sizes[sizeIndex].toString() + ".png");
-            initializeWorld(cameras, tracerIndex, sizes, sizeIndex, world);
+            initializeWorld(cameras, cameraIndex, sizes, sizeIndex, world);
             long start = System.currentTimeMillis();
             world.getCamera().renderScene(world);
-            matrix[sizeIndex][tracerIndex]
+            matrix[sizeIndex][cameraIndex]
                 = (System.currentTimeMillis() - start);
          }
       }
@@ -103,6 +101,8 @@ public class ParallelRayTracer
    public static void initializeWorld(Camera[] cameras, int cameraIndex,
        Size[] sizes, int sizeIndex, World world)
    {
+      world.setRequiermentScene(cameras[cameraIndex], sizes[sizeIndex].width,
+          sizes[sizeIndex].height);
       if (cameras[cameraIndex] instanceof PinHoleMaster)
       {
          try
@@ -115,8 +115,6 @@ public class ParallelRayTracer
             ex.printStackTrace();
          }
       }
-      world.setRequiermentScene(cameras[cameraIndex], sizes[sizeIndex].width,
-          sizes[sizeIndex].height);
    }
 
    public static Camera[] debug(List<String> host1)
@@ -138,10 +136,10 @@ public class ParallelRayTracer
          new Vector(1, 1, 0), 1, "Single.png"),
          new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
          new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 2),
-         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
-         new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4),
          new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
          new Vector(1, 1, 0), 1, "cluster.png", 1, host1.subList(1, 3)),
+         new PinHoleParallel(850.0d, 1, new Point(100, 100, 100),
+         new Point(-5, 0, 0), new Vector(1, 1, 0), 1, "Parallel.png", 4),
          new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),
          new Vector(1, 1, 0), 1, "cluster.png", 2, host1.subList(1, 3)),
          new PinHoleMaster(new Point(100, 100, 100), new Point(-5, 0, 0),

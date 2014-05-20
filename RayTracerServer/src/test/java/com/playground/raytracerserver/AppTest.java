@@ -1,7 +1,5 @@
 package com.playground.raytracerserver;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

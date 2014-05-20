@@ -138,6 +138,11 @@ public abstract class Camera
    {
       image.setRGB(c, r, pixelColor.getColor().getRGB());
    }
+   
+   public void displayPixel(int r, int c, int pixelColor)
+   {
+      image.setRGB(c, r, pixelColor);
+   }
 
    public void writeImageToFile(String fileName)
    {

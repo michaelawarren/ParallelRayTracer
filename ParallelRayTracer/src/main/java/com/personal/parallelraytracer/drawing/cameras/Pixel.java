@@ -9,7 +9,8 @@ public class Pixel implements JSONString
 {
    public int r;
    public int c;
-   public RGBColor color;
+//   public RGBColor color;
+   public int rgb;
 
    public Pixel(int r, int c)
    {
@@ -17,17 +18,24 @@ public class Pixel implements JSONString
       this.c = c;
    }
 
+   public Pixel(int r, int c, int rgb)
+   {
+      this.r = r;
+      this.c = c;
+      this.rgb = rgb;
+   }
+
    public Pixel(int r, int c, RGBColor color)
    {
       this.r = r;
       this.c = c;
-      this.color = color;
+      this.rgb = color.getColor().getRGB();
    }
 
    @Override
    public String toString()
    {
-      return "Pixel{" + "r=" + r + ", c=" + c + ", color=" + color + '}';
+      return "Pixel{" + "r=" + r + ", c=" + c + ", color=" + rgb + '}';
    }
 
    @Override
@@ -39,7 +47,7 @@ public class Pixel implements JSONString
              .object()
              .key("r").value(r)
              .key("c").value(c)
-             .key("color").value(color)
+             .key("color").value(rgb)
              .endObject()
              .toString();
       }

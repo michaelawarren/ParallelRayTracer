@@ -23,7 +23,7 @@ public class PixelTest {
    public void testToJSONString2()
    {
       Pixel pixel = new Pixel(1, 2);
-      pixel.color = RGBColor.BLACK;
+      pixel.rgb = RGBColor.BLACK.getColor().getRGB();
       String actual = pixel.toJSONString();
      
       assertFalse(actual, actual.contains("error"));
