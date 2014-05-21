@@ -46,19 +46,6 @@ public class ParallelRayTracer
 
       runTests(cameras, sizes, matrix);
 
-      System.out.println("             1 core 1 comp | 2 core 1 comp | "
-          + "2 core 2 comp | 4 core 1 comp | 4 core 2 comp | 8 core 2 comp "
-          + "| 16 core 4 comp |");
-
-      for (int i = 0; i < sizes.length; i++)
-      {
-         System.out.printf("%11s:", sizes[i]);
-         for (int j = 0; j < matrix[i].length; j++)
-         {
-            System.out.printf("%11d ms |", matrix[i][j]);
-         }
-         System.out.println();
-      }
       for (String string : host1)
       {
          try
@@ -83,18 +70,24 @@ public class ParallelRayTracer
    public static void runTests(Camera[] cameras, Size[] sizes, long[][] matrix)
    {
       World world = new World();
-      for (int cameraIndex = 0; cameraIndex < cameras.length; cameraIndex++)
+      System.out.println("             1 core 1 comp | 2 core 1 comp | "
+          + "2 core 2 comp | 4 core 1 comp | 4 core 2 comp | 8 core 2 comp "
+          + "| 16 core 4 comp|");
+      for (int sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++)
       {
-         for (int sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++)
+         System.out.printf("%11s:", sizes[sizeIndex]);
+         for (int cameraIndex = 0; cameraIndex < cameras.length; cameraIndex++)
          {
+            long start = System.currentTimeMillis();
             cameras[cameraIndex].setFileName(cameras[cameraIndex].toString()
                 + sizes[sizeIndex].toString() + ".png");
             initializeWorld(cameras, cameraIndex, sizes, sizeIndex, world);
-            long start = System.currentTimeMillis();
             world.getCamera().renderScene(world);
             matrix[sizeIndex][cameraIndex]
                 = (System.currentTimeMillis() - start);
+            System.out.printf("%11d ms |", matrix[sizeIndex][cameraIndex]);
          }
+         System.out.println();
       }
    }
 
