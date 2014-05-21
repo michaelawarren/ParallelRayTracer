@@ -6,11 +6,9 @@ import org.json.JSONArray;
 public abstract class RowRunnable implements Callable<JSONArray>
 {
    protected int row;
-   protected int height;
 
-   public RowRunnable(int row, int height)
+   public RowRunnable(int row)
    {
       this.row = row;
-      this.height = height;
    }
 }

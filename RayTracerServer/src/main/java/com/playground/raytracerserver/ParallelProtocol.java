@@ -61,16 +61,17 @@ class ParallelProtocol
 
    public String processRows(String input)
    {
+      ExecutorService threadPool = Executors.newFixedThreadPool(
+          this.numThreads);
+      System.out.println("There are " + this.numThreads + " threads working");
       try
       {
-         ExecutorService threadPool = Executors.newFixedThreadPool(
-             this.numThreads);
          List<Future<JSONArray>> futures = new ArrayList<>();
          world.vp.getSampler().generateSamples();
          final PinHoleWorker camera = (PinHoleWorker) world.getCamera();
-         for (int row = rowStart; row <= rowEnd; row++)
+         for (int r = rowStart; r <= rowEnd; r++)
          {
-            futures.add(threadPool.submit(new RowRunnable(row, rowEnd)
+            futures.add(threadPool.submit(new RowRunnable(r)
             {
                @Override
                public JSONArray call()
@@ -81,7 +82,7 @@ class ParallelProtocol
                      array = camera.renderScene(world, row, array);
                      return array;
                   }
-                  catch(Exception ex)
+                  catch (Exception ex)
                   {
                      ex.printStackTrace();
                      return null;
@@ -90,33 +91,19 @@ class ParallelProtocol
             }));
          }
 
-         int count = 0;
-         while (!futures.isEmpty())
+         for (Future<JSONArray> future : futures)
          {
-            final Future<JSONArray> removed = futures.remove(0);
-            JSONArray array = removed.get();
-            if (removed.isDone())
+            try
             {
-               try
-               {
-                  sendMessage(array.toString() + "\n");
-                  count++;
-               }
-               catch (IOException ex)
-               {
-                  ex.printStackTrace();
-                  threadPool.shutdownNow();
-                  throw new IllegalStateException(
-                      "Bad stuff happened. count = " + count, ex);
-               }
-               catch(Exception ex)
-               {
-                  ex.printStackTrace();
-               }
+               sendMessage(future.get().toString() + "\n");
+            }
+            catch (IOException ex)
+            {
+               ex.printStackTrace();
+               throw new IllegalStateException("not all rows where sent.");
             }
          }
-
-         threadPool.shutdown();
+         sendMessage("finished\n");
       }
       catch (InterruptedException | ExecutionException ex)
       {
@@ -125,9 +112,11 @@ class ParallelProtocol
       finally
       {
          state = State.UNINITIALIZED;
-      }
+         threadPool.shutdown();
       // just display what we got
-      return "finished\n";
+         
+         return "finished\n";
+      }
    }
 
    public String initializeScene(String input)
@@ -163,11 +152,7 @@ class ParallelProtocol
    public synchronized void sendMessage(String message) throws IOException
    {
       byte[] buffer = message.getBytes();
-      int bytes = 0;
-
-      // Copy requested file into the socket's output stream.
-      bytes = buffer.length;
-      out.write(buffer, 0, bytes);
+      out.write(buffer);
       out.flush();
    }
 

@@ -1,11 +1,11 @@
 package com.personal.parallelraytracer.drawing.cameras;
 
 import com.personal.parallelraytracer.ParallelRayTracer.Size;
-import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -84,22 +84,30 @@ public class PinHoleMaster extends Camera
             {
                String line = "";
                int count = 0;
-               int countBef = 0;
                try
                {
                   connection.sendMessage("start\n");
-                  while ((line = connection.readLine()) != null
-                      && !line.equals("finished"))
+                  while ((line = connection.readLine()) != null)
                   {
-                     countBef++;
+                     if ((line.equals("finished") || line.equals("finished\n")))
+                     {
+                        break;
+                     }
                      saveToImage(new JSONArray(line));
                      count++;
                   }
+                  connection.sendMessage("finished!");
                }
-               catch (IOException | JSONException | IllegalStateException ex)
+               catch (JSONException | IllegalStateException ex)
                {
+
+                  // display last line received
                   System.out.println("count: " + count + "\n" + line);
                   ex.printStackTrace();
+               }
+               catch (IOException ex)
+               {
+                     ex.printStackTrace();
                }
             }
          }));
@@ -116,11 +124,13 @@ public class PinHoleMaster extends Camera
             ex.printStackTrace();
          }
       }
+      
    }
 
    public List<Connection> initializeConnections(Size size) throws IOException, JSONException
    {
-      final int multiplier = (int) Math.ceil((double) size.height / comptuers.size());
+      final int multiplier = (int) Math.ceil((double) size.height / comptuers
+          .size());
       for (String hostName : comptuers)
       {
          final Connection connection = new Connection(hostName);
@@ -132,12 +142,10 @@ public class PinHoleMaster extends Camera
              .key("height").value(size.height)
              .key("numThreads").value(numThreads)
              .key("rs")
-             .value((connections.isEmpty())? 0 : connections.size() * multiplier - 1)
+             .value( // 0 - 124, 125-249, 250-374, 375-499
+                 (connections.isEmpty()) ? 0 : connections.size() * multiplier)
              .key("re")
-             .value(
-                 ((connections.size() + 1) < comptuers.size())
-                 ? (connections.size() + 1) * multiplier
-                 : size.height - 1)
+             .value(((connections.size() + 1) * multiplier) - 1) // 1,2,3,4
              .key("fileName").value(fileName + ".png")
              .endObject()
              .toString() + "\n"

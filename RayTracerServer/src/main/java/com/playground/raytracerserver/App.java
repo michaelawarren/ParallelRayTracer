@@ -27,22 +27,24 @@ public class App
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         socket.getInputStream()));)
             {
-               String inputLine, outputLine;
+               String inputLine;
+               String outputLine;
                final World world = new World();
                // Initiate conversation with client
                ParallelProtocol protocol = new ParallelProtocol(world, socket);
 
                protocol.processInput(inputLine = in.readLine());
                outputLine = protocol.processInput(inputLine);
-
-               protocol.sendMessage(outputLine);
-
-               if (outputLine.equals("Done\n"))
+               // wait to close connection till client responds
+               
+               if (outputLine.contains("Done"))
                {
                   System.out.println("GoodBye");
                   protocol.out.close();
                   return;
                }
+               in.readLine();
+               protocol.out.close();
             }
             catch (IOException ex)
             {

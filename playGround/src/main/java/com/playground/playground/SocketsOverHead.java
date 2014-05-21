@@ -20,14 +20,12 @@ public class SocketsOverHead
             long start = System.currentTimeMillis();
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             // Construct a 1K buffer to hold bytes on their way to the socket.
-            String message = "wall Hello";
+            String message = "wall ";
 
-            byte[] buffer = message.getBytes();
-            int bytes = 0;
-
-            // Copy requested file into the socket's output stream.
-            bytes = buffer.length;
-            os.write(buffer, 0, bytes);
+            for (int i = 0; i < 5; i++)
+            {
+               sendMessage(message + i, os);
+            }
             long end = System.currentTimeMillis();
             System.out.println(end - start);
          }
@@ -36,6 +34,16 @@ public class SocketsOverHead
       {
          System.out.println(ex.toString());
       }
+   }
+
+   private static void sendMessage(String message, DataOutputStream os) throws IOException
+   {
+      byte[] buffer = message.getBytes();
+      int bytes = 0;
+
+      // Copy requested file into the socket's output stream.
+      bytes = buffer.length;
+      os.write(buffer, 0, bytes);
    }
 
    private static void initializeClient(int port)

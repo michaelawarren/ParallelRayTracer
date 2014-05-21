@@ -62,7 +62,6 @@ public abstract class Sampler
       }
       if (samples.isEmpty())
       {
-         System.out.println("generating samples");
          generateSamples();
       }
       return samples.get((int) (count++ % (numSamples * numSets)));
