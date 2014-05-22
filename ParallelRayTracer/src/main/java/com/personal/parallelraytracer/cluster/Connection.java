@@ -1,4 +1,4 @@
-package com.personal.parallelraytracer.drawing.cameras;
+package com.personal.parallelraytracer.cluster;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

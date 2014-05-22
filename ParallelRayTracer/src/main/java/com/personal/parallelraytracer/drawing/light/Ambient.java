@@ -5,6 +5,10 @@ import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public class Ambient extends Light
 {
    public Ambient()

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public abstract class Sampler
 {
    protected int numSamples;

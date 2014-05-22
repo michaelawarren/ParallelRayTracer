@@ -16,8 +16,6 @@ public abstract class Tracer
       this.name = name;
    }
    
-   
-   
    public abstract RGBColor trayRay(Ray ray);
    public abstract RGBColor trayRay(Ray ray, int depth);
    public abstract RGBColor trayRay(Ray ray, double tmin, int depth);

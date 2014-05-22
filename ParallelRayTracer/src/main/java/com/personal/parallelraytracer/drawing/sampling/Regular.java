@@ -2,6 +2,10 @@ package com.personal.parallelraytracer.drawing.sampling;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public class Regular extends Sampler
 {
    public Regular(int numSamples)

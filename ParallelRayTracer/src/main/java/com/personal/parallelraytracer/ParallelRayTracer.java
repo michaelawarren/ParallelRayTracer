@@ -2,7 +2,7 @@ package com.personal.parallelraytracer;
 
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.drawing.cameras.Camera;
-import com.personal.parallelraytracer.drawing.cameras.Connection;
+import com.personal.parallelraytracer.cluster.Connection;
 import com.personal.parallelraytracer.drawing.cameras.PinHole;
 import com.personal.parallelraytracer.drawing.cameras.PinHoleMaster;
 import com.personal.parallelraytracer.drawing.cameras.PinHoleParallel;
@@ -26,27 +26,26 @@ public class ParallelRayTracer
       System.out.println("Starting tests");
       boolean debug = false;
 
-      long[][] matrix = new long[3][7];
-
-      List<String> host1 = new ArrayList<>();
-      host1.add("LocalHost");
+      List<String> hosts = new ArrayList<>();
+      hosts.add("LocalHost");
       if (!debug)
       {
-         host1.add("Aus213L15");
-         host1.add("Aus213L16");
-         host1.add("Aus213L17");
-         host1.add("Aus213L18");
+         hosts.add("Aus213L15");
+         hosts.add("Aus213L16");
+         hosts.add("Aus213L17");
+         hosts.add("Aus213L18");
       }
-      Camera[] cameras = (debug) ? debug(host1) : noDebug(host1);
+      Camera[] cameras = (debug) ? debug(hosts) : noDebug(hosts);
 
       Size[] sizes = new Size[]
       {
          new Size(500, 500), new Size(500, 1000), new Size(1000, 1000)
       };
 
+      long[][] matrix = new long[sizes.length][cameras.length];
       runTests(cameras, sizes, matrix);
 
-      for (String string : host1)
+      for (String string : hosts)
       {
          try
          {

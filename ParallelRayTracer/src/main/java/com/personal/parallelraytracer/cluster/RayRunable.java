@@ -1,9 +1,9 @@
-package com.personal.parallelraytracer.drawing.cameras;
+package com.personal.parallelraytracer.cluster;
 
 public abstract class RayRunable implements Runnable
 {
-   int r; 
-   int c;
+   public int r; 
+   public int c;
 
    public RayRunable(int r, int c)
    {

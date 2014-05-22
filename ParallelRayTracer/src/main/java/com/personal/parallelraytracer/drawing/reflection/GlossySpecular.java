@@ -5,6 +5,10 @@ import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Vector;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public class GlossySpecular extends BRDF
 {
    double ks;

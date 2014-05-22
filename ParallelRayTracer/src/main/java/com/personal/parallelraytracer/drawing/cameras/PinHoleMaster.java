@@ -1,11 +1,11 @@
 package com.personal.parallelraytracer.drawing.cameras;
 
+import com.personal.parallelraytracer.cluster.Connection;
 import com.personal.parallelraytracer.ParallelRayTracer.Size;
 import com.personal.parallelraytracer.drawing.World;
 import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Vector;
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -107,7 +107,7 @@ public class PinHoleMaster extends Camera
                }
                catch (IOException ex)
                {
-                     ex.printStackTrace();
+                  ex.printStackTrace();
                }
             }
          }));
@@ -124,7 +124,7 @@ public class PinHoleMaster extends Camera
             ex.printStackTrace();
          }
       }
-      
+
    }
 
    public List<Connection> initializeConnections(Size size) throws IOException, JSONException
@@ -134,6 +134,7 @@ public class PinHoleMaster extends Camera
       for (String hostName : comptuers)
       {
          final Connection connection = new Connection(hostName);
+         final int rowEnd = ((connections.size() + 1) * multiplier) - 1; // 1,2,3,4
          connection.sendMessage(
              new JSONStringer()
              .object()
@@ -145,7 +146,7 @@ public class PinHoleMaster extends Camera
              .value( // 0 - 124, 125-249, 250-374, 375-499
                  (connections.isEmpty()) ? 0 : connections.size() * multiplier)
              .key("re")
-             .value(((connections.size() + 1) * multiplier) - 1) // 1,2,3,4
+             .value(((rowEnd) >= size.height) ? size.height - 1: rowEnd) // 1,2,3,4
              .key("fileName").value(fileName + ".png")
              .endObject()
              .toString() + "\n"
@@ -160,19 +161,24 @@ public class PinHoleMaster extends Camera
    {
       for (int i = 0; i < jsonArray.length(); i++)
       {
+         int row = -1;
+         int col = -1;
          try
          {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
-            displayPixel(
-                jsonObject.getInt("r"),
-                jsonObject.getInt("c"),
-                jsonObject.getInt("color"));
+            col = jsonObject.getInt("c");
+            row = jsonObject.getInt("r");
+            displayPixel(row, col, jsonObject.getInt("color"));
          }
          catch (JSONException ex)
          {
             System.out.println(jsonArray.toString(3) + "\n\n\n\n\n");
             System.out.println("length: " + jsonArray.length() + " i: " + i);
             throw new IllegalStateException(jsonArray.get(i).toString(), ex);
+         }
+         catch (ArrayIndexOutOfBoundsException ex)
+         {
+            System.out.println("row: " + row + " col: " + col);
          }
       }
    }

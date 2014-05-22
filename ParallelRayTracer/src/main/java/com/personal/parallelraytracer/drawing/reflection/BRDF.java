@@ -6,6 +6,10 @@ import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 import com.personal.parallelraytracer.math.Normal;
 import com.personal.parallelraytracer.math.Vector;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public abstract class BRDF
 {
    protected Sampler sampler;
@@ -30,8 +34,10 @@ public abstract class BRDF
    {
       this.normal = normal;
    }
-   
+
    abstract public RGBColor f(ShadeRec sr, Vector wi, Vector wo);
+
    abstract public RGBColor sampleF(ShadeRec sr, Vector wi, Vector wo);
+
    abstract public RGBColor rho(ShadeRec sr, Vector ro);
 }

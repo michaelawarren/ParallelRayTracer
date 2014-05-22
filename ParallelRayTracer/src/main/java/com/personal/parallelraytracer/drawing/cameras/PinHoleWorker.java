@@ -43,6 +43,15 @@ public class PinHoleWorker extends Camera
       zoom = 0;
    }
 
+   /**
+    * Algorithm for rendering scene is from Ray Tracing From the Ground Up 
+    * by Kevin Suffern
+    * 
+    * @param world
+    * @param row
+    * @param pixels
+    * @return 
+    */
    public JSONArray renderScene(World world, int row, JSONArray pixels)
    {
       ViewPlane vp = new ViewPlane(world.vp);

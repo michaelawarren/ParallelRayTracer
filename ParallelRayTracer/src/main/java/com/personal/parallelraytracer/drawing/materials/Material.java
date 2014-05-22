@@ -3,6 +3,10 @@ package com.personal.parallelraytracer.drawing.materials;
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.utils.ShadeRec;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public abstract class Material
 {
    RGBColor color;

@@ -38,6 +38,11 @@ public class PinHole extends Camera
       zoom = 0;
    }
 
+   /**
+    * Algorithm comes from Ray Tracing from the Ground Up. by Kevin Suffern
+    * 
+    * @param w 
+    */
    @Override
    public void renderScene(World w)
    {

@@ -9,6 +9,10 @@ import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public class Phong extends Material
 {
    private Lambertian ambientBRDF;

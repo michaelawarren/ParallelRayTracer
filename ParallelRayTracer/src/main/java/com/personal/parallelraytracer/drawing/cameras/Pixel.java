@@ -9,7 +9,6 @@ public class Pixel implements JSONString
 {
    public int r;
    public int c;
-//   public RGBColor color;
    public int rgb;
 
    public Pixel(int r, int c)

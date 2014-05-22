@@ -1,5 +1,6 @@
 package com.personal.parallelraytracer.drawing.cameras;
 
+import com.personal.parallelraytracer.cluster.RayRunable;
 import com.personal.parallelraytracer.drawing.RGBColor;
 import com.personal.parallelraytracer.drawing.ViewPlane;
 import com.personal.parallelraytracer.drawing.World;
@@ -62,12 +63,18 @@ public class PinHoleParallel extends Camera
       openWindow(vp.getWidth(), vp.getHeight());
       threadPool = Executors.newFixedThreadPool(numThreads);
       List<Future> futures = new ArrayList<>();
+
       for (int r = 0; r < vp.getHeight(); r++)
       {
          for (int c = 0; c < vp.getWidth(); c++)
          {
             futures.add(threadPool.submit(new RayRunable(r, c)
             {
+               /**
+                * alrogirthm credited to Ray Tracing from the ground up
+                * by Kevin Suffern
+                * 
+                */
                @Override
                public void run()
                {

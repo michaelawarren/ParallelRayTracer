@@ -7,6 +7,10 @@ import com.personal.parallelraytracer.math.Point;
 import com.personal.parallelraytracer.math.Ray;
 import com.personal.parallelraytracer.math.Vector;
 
+/**
+ * Based off of Ray Tracing from the Ground up
+ *
+ */
 public class PointLight extends Light
 {
    Point location;
